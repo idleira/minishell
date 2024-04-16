@@ -74,7 +74,7 @@ t_split *tokenize(char *s)
 	i = 0;
 	while (s[i])
 	{
-		if (isspace(s[i]) || s[i] == '|' || s[i] == '<' || s[i] == '>')
+		if (is_space(s[i]) || s[i] == '|' || s[i] == '<' || s[i] == '>')
 		{
 			handle_token(tokens, &start, s, &i, CMD);
 			handle_token(tokens, &start, s, &i, OPERATOR);
