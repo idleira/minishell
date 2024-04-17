@@ -1,36 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/16 11:18:34 by ibeliaie          #+#    #+#             */
-/*   Updated: 2024/02/11 18:28:43 by ibeliaie         ###   ########.fr       */
+/*   Created: 2023/05/18 13:06:56 by ibeliaie          #+#    #+#             */
+/*   Updated: 2024/01/12 15:59:39 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/* get string length */
-int	ft_strlen(const char *str)
+/* apply ’f’ on each char of str and create new str with modified result */
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int	i;
+	int		i;
+	int		len;
+	char	*str;
 
 	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
+	len = ft_strlen(s);
+	str = malloc(sizeof(char) * (len + 1));
+	if (!str || !s)
+		return (NULL);
+	while (i < len)
+	{
+		str[i] = f(i, s[i]);
 		i++;
-	return (i);
+	}
+	str[i] = '\0';
+	return (str);
 }
-
-// int main() {
-//     char str[] = "A noisy noise annoys an oyster most.";
-//     size_t length = ft_strlen(str);
-//     printf("Length of the string: %zu\n", length);
-//     return 0;
-// }
-//
-//size_t is guaranteed to be big enough to contain the size
-//of the biggest object system can handle.
