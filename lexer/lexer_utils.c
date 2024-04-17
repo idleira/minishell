@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibeliaie <ibeliaie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 17:29:05 by ibeliaie          #+#    #+#             */
-/*   Updated: 2024/04/15 17:33:44 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:59:00 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "lexer.h"
 
 int	is_space(char c)
 {
