@@ -6,7 +6,7 @@
 /*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:24:27 by ibeliaie          #+#    #+#             */
-/*   Updated: 2024/02/11 18:28:25 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:39:50 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_list
 }					t_list;
 
 //part 1
-int		ft_isalpha(int c);
+int		ft_isalpha(int c); 
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);
