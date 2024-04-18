@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 16:54:18 by ibeliaie          #+#    #+#             */
-/*   Updated: 2024/04/16 16:56:16 by ibeliaie         ###   ########.fr       */
+/*   Created: 2024/04/18 16:37:09 by ibeliaie          #+#    #+#             */
+/*   Updated: 2024/04/18 16:37:32 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef PARSER_H
+# define PARSER_H
 
-static void	parse_command(char *input)
-{
-    // implement command parsing
-}
+# include <string.h>
+# include <stdlib.h>
+# include <stddef.h>
+# include <unistd.h>
+#include "../libft/libft.h"
 
-static void	parse_arguments(char *input)
-{
-    // implement argument parsing
-}
-
-void		parse_input(char *input)
-{
-    parse_command(input);
-    parse_arguments(input);
-}
+#endif
