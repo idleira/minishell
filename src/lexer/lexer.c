@@ -6,7 +6,7 @@
 /*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:04:11 by ibeliaie          #+#    #+#             */
-/*   Updated: 2024/04/18 17:56:24 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/04/18 18:23:40 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	print_tokens(t_split *tokens)
 	t_split *current_token;
 
 	current_token = tokens;
-    while (current_token != NULL)
+    while (current_token)
 	{
 		printf("value: %s, type: %s\n", current_token->value, current_token->type);
 		current_token = current_token->next;
