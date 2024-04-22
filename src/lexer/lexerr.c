@@ -6,7 +6,7 @@
 /*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 17:59:10 by ibeliaie          #+#    #+#             */
-/*   Updated: 2024/04/22 18:08:26 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:20:29 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int	commands_count(char **str)
 	i = 0;
 	while (str[i] && str[i][0] != '|')
 	{
-		printf("str in count cmd is %s\n", str[i]);
+		printf("string being counted rn: %s\n", str[i]);
 		i++;
 	}
 	return (i);
@@ -136,7 +136,6 @@ t_lexer	*new_node(char **str)
 
 	i = -1;
 	cmd_count = commands_count(str);
-	printf("cmd count =  %d\n", cmd_count);
 	node = malloc(sizeof(t_lexer));
 	node->cmd = malloc(sizeof(char *) * cmd_count + 1);
 	while(++i < cmd_count)
@@ -144,21 +143,16 @@ t_lexer	*new_node(char **str)
 		node->cmd[i] = ft_strdup(str[i]);
 		if (node->cmd[i] == NULL)
 			return (NULL);
-		printf("new_node->cmd[%d] %s\n", i, node->cmd[i]);
 	}
 	node->cmd[cmd_count] = NULL;
 	if (str[i] && str[i][0] == '|')
 	{
 		node->token = ft_strdup(str[i]);
-		printf("token added %s\n", node->token);
 		if (node->token == NULL)
 			return(NULL);
 	}
 	else
-	{
 		node->token = NULL;
-		printf("token added (null)\n");
-	}
 	node->next = NULL;
 	return (node);
 }
@@ -188,7 +182,6 @@ t_lexer	*lexer_init_list(char **str)
 void	lexer(t_lexer *input)
 {
 	int i;
-	int j;
 	char **split_str;
 
 	i = 0;
@@ -196,17 +189,4 @@ void	lexer(t_lexer *input)
 	input->original = whitespaces_replace(input->original);
 	split_str = ft_split(input->original, 26);
 	input = lexer_init_list(split_str);
-	j = 0;
-	while (input)
-	{
-		i = 0;
-		while (input->cmd[i])
-		{
-			printf("cmd[%d] of %d note is : %s\n", i, j, input->cmd[i]);
-			i++;
-		}
-		printf("token of %d note is : %s\n", j ,  input->token);
-		j++;
-		input = input->next;
-	}
 }
