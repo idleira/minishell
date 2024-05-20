@@ -10,20 +10,39 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "../../inc/minishell.h"
 
-static void	parse_command(char *input)
+//takes a string and removes any quotation marks, then saves the modified string
+void	quotes_strip(t_parser *parser, char *s)
 {
-    // implement command parsing
+	int		i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '\"' || s[i] == '\'')
+		{
+			parser->quote = s[i];
+			++i;
+			while (s[i] != parser->quote && s[i])
+			{
+				parser->line = ft_strjoin(parser->line, ft_substr(s, i, 1));
+				++i;
+			}
+		}
+		else
+			parser->line = ft_strjoin(parser->line, ft_substr(s, i, 1));
+		++i;
+	}
+	parser->line = ft_strjoin(parser->line, ft_strdup("\n"));
 }
 
-static void	parse_arguments(char *input)
+//takes an array of strings, removes quotes from each, and splits them into separate strings
+void	quotes_process(t_parser *parser)
 {
-    // implement argument parsing
-}
-
-void		parse_input(char *input)
-{
-    parse_command(input);
-    parse_arguments(input);
+	parser->line = NULL;
+	parser->i = -1;
+	while (parser->tokens[++parser->i])
+		quotes_strip(parser, parser->tokens[parser->i]);
+	parser->tokens2 = ft_split(parser->line, '\n');
 }

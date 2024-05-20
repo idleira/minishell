@@ -1,34 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*   var_expander_util.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/15 17:29:05 by ibeliaie          #+#    #+#             */
-/*   Updated: 2024/04/17 16:59:00 by ibeliaie         ###   ########.fr       */
+/*   Created: 2024/05/20 16:10:10 by ibeliaie          #+#    #+#             */
+/*   Updated: 2024/05/20 16:10:10 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//print tokens for a test
-void	tokens_print(char **tokenise)
+int	get_index(char *token)
 {
 	int	i;
 
-	i = -1;
-	while (tokenise[++i])
-		printf(" [.] %s\n", tokenise[i]);
+	i = 0;
+	while (token[i] && !ft_strchr("$\'", token[i]))
+		i++;
+	return (--i);
 }
 
-//free array of strings
-void	array_free(char **arr)
+int	is_valid(char c)
+{
+	return (ft_isalpha(c) || ft_isdigit(c) || c == '_');
+}
+
+int	quotes_skip(char *string)
 {
 	int	i;
 
-	i = -1;
-	while (arr[++i])
-		free(arr[i]);
-	free(arr);
+	i = 0;
+	if (string[i] == '\'')
+	{
+		i++;
+		while (string[i] && string[i] != '\'')
+			i++;
+	}
+	return (i - 1);
 }
