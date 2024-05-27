@@ -12,7 +12,8 @@
 
 #include "../../inc/minishell.h"
 
-static int	find_equal_index(char *string)
+// gets the index of the first '=' in a string
+static int	get_v(char *string)
 {
 	int	i;
 
@@ -22,7 +23,8 @@ static int	find_equal_index(char *string)
 	return (i);
 }
 
-t_env	*env_list_create(t_env	*env, char **envp)
+// initializes environment variables by adding to a pre-existing list
+t_env	*env_init(t_env	*env, char **envp)
 {
 	int		i;
 	t_env	*traveser;
@@ -32,9 +34,9 @@ t_env	*env_list_create(t_env	*env, char **envp)
 	traveser = env;
 	while (envp[i])
 	{
-		traveser->key = ft_substr(envp[i], 0, find_equal_index(envp[i]));
+		traveser->key = ft_substr(envp[i], 0, get_v(envp[i]));
 		traveser->value = ft_substr(envp[i],
-				find_equal_index(envp[i]) + 1, ft_strlen(envp[i]));
+				get_v(envp[i]) + 1, ft_strlen(envp[i]));
 		if (envp[i + 1])
 			ft_lstadd_back(&env, ft_lstnew());
 		traveser = traveser->next;
@@ -43,7 +45,8 @@ t_env	*env_list_create(t_env	*env, char **envp)
 	return (env);
 }
 
-// t_env	*env_list_create(t_env	*env, char **envp)
+// initializes environment variables by creating a new list
+// t_env	*env_init(t_env	*env, char **envp)
 // {
 // 	int		i;
 // 	t_env	*head;
@@ -54,9 +57,9 @@ t_env	*env_list_create(t_env	*env, char **envp)
 // 	while (envp[i])
 // 	{
 // 		node = ft_lstnew();
-// 		node->key = ft_substr(envp[i], 0, find_equal_index(envp[i]));
+// 		node->key = ft_substr(envp[i], 0, get_v(envp[i]));
 // 		node->value = ft_substr(envp[i],
-// 				find_equal_index(envp[i]) + 1, ft_strlen(envp[i]));
+// 				get_v(envp[i]) + 1, ft_strlen(envp[i]));
 // 		ft_lstadd_back(&head, node);
 // 		i++;
 // 	}

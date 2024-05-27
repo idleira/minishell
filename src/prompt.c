@@ -12,6 +12,7 @@
 
 #include "../inc/minishell.h"
 
+// builds the prompt line
 void	prompt_build(t_prompt *prompt)
 {
 	char	*user;
@@ -28,6 +29,7 @@ void	prompt_build(t_prompt *prompt)
 	free(cwd);
 }
 
+// gets the input from the user
 char	*input_get(t_prompt *prompt)
 {
 	if (getenv("USER"))
