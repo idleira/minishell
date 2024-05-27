@@ -22,82 +22,147 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <signal.h>
-//# include <readline/readline.h>
-//# include <readline/history.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <limits.h>
 # include <dirent.h>
 
-// struct used by the lexer
-typedef struct s_lexer
-{
-	int		i;
-	int		j;
-	int		param_exp;
-	char	*line;
-	int		error;
-	char	quote;
-	char	**tokens;
-	char	*cmd;
-}	t_lexer;
-
-// struct used by the prompt string
+// struct for prompt line
 typedef struct s_prompt
 {
 	char	*line;
 }	t_prompt;
 
-// struct used by the parser
-
-typedef struct s_parser
+// lexer error type enum
+typedef enum e_error
 {
-	int		param_exp;
+	no_error,
+	error_of_single_quotes,
+	error_of_double_quotes,
+	error_of_pipeline,
+	error_of_redirection_in,
+	error_of_redirection_out,
+	error_of_redirection_append,
+	error_of_redirection_heredoc
+}	t_error_types;
+
+// struct for error handling
+typedef struct s_error
+{
+	t_error_types	error_type;
+	int				exit_staus;
+}	t_errors;
+
+// struct for scanner
+typedef struct s_scanner
+{
+	char	*command;
+	char	*line;
 	char	**tokens;
-	char	**req;
-	char	*p_match;
-	char	*matched;
-	int		first;
-	int		last;
-	int		wc_present;
 	int		i;
 	int		j;
-	char	*line;
-	char	**tokens2;
-	char	quote;
-}	t_parser;
+	char	t_quote;
+}	t_scanner;
 
+// types of tokens
 typedef enum e_types
 {
-	__RED_IN,
-	__RED_OUT,
+	__WORD = 0,
+	__RED_IN = '<',
+	__RED_OUT = '>',
 	__RED_APP,
 	__HEREDOC,
-	__PIPE,
-	__COMMAND,
-	__OR,
-	__AND,
-	__SUBSHELL,
-	__NONE
+	__PIPE = '|'
 }	t_types;
 
-typedef struct s_info
+// state of quotes for scanner in lexer 
+typedef enum e_state
 {
-	char			*full_cmd;
-	t_types			op;
-	struct s_info	*next;
-}	t_info;
+	__d_quotes = '\"',
+	__s_quotes = '\'',
+	__without_quotes = 0
+}	t_state;
 
-//lexer functions
-int		quotes_check(t_lexer *lexer, char *s);
-int		operators_separate(t_lexer *lexer, char *s);
-int		input_process(char *s, t_lexer *lexer);
-char	**tokenise(t_lexer *lexer);
+// struct of files for parser
+typedef struct s_files
+{
+	char	*name;
+	t_types	type;
+}	t_files;
 
-//lexer utility
-void	tokens_print(char **tokenise);
-void	array_free(char **arr);
+// struct for parser
+typedef struct s_parser
+{
+	char			**args;
+	t_files			*file;
+	struct s_parser	*next;
+	struct s_parser	*prev;
+}	t_parser;
 
-//parser functions
-void	quotes_strip(t_parser *parser, char *s);
-void	quotes_process(t_parser *parser);
+// struct for doubly linked list for lexer and parser
+typedef struct s_dlist
+{
+	char			*value;
+	t_types			type;
+	t_state			state;
+	struct s_dlist	*next;
+	struct s_dlist	*prev;
+}	t_dlist;
+
+// prompt functions
+void	prompt_build(t_prompt *prompt);
+char	*input_get(t_prompt *prompt);
+
+// doubly linked list functions
+t_dlist	*node_create_lexer(void);
+t_dlist	*node_last_lexer(t_dlist *head);
+void	node_append_lexer(t_dlist **head, t_dlist *new);
+void	print_dlist(t_dlist *head);
+void	node_free(t_dlist *head, int boolean);
+
+// scanner functions
+void	scanner(t_scanner *scanner);
+void	handle_quotes(t_scanner *scanner);
+void	handle_operators(t_scanner *scanner);
+void	cmds_split(t_scanner *scanner);
+void	scan_free(char **tokens);
+
+// lexer functions
+void	lexer(t_dlist **head, t_scanner *scanner);
+void	tokenizer(t_dlist **head, char *token);
+t_dlist	*node_quotes(char *token, char quote);
+t_dlist	*node_redirection(char *token);
+t_dlist	*node_pipeline(char *token);
+t_dlist	*node_word(char *token);
+void	quotes_strip(t_dlist *head, char quote);
+void	quotes_remove(t_dlist *head);
+
+// error handling functions
+void	error_handle(t_dlist *head, t_errors *error);
+void	error_display(t_errors *error);
+
+// minishell utils functions
+int		check_spaces_tabs(char *s);
+void	pointers_free(t_prompt *prompt, t_scanner *scanner, t_errors *error);
+int		check_cmd_empty(t_scanner *scanner, t_prompt *prompt);
+void	error_parse_handle(t_scanner *scanner, t_dlist *head, t_errors *error,
+			t_prompt *prompt);
+
+// doubly linked list functions for parser
+t_parser	*node_create_parser(void);
+t_parser	*node_last_parser(t_parser *head);
+void	node_append_parser(t_parser **head, t_parser *new);
+
+// parser functions
+void	parser(t_parser *parser, t_dlist *head);
+int		count_file_red(t_dlist	*head);
+int		count_args(t_dlist *head);
+void	assign_file_red(t_dlist *head, t_parser *node, int i);
+void	assign_args(t_dlist *head, t_parser *node, char *args);
+
+// traverse functions
+void	traverse_lexer(t_dlist *head);
+void	traverse_scanner(char **scanner);
+void	traverse_parser(t_parser *head);
 
 #endif
