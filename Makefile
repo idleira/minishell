@@ -9,11 +9,11 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS =  src/lexer/lexer.c					src/parser/parser_cmd_util.c					src/parser/parser_utils.c		\
-		src/lexer/lexer_utils.c				src/parser/parser_cmd.c							src/parser/parser_utils_list.c	\
-		src/lexer/lexer_utils_list.c		src/parser/parser_error.c						src/minishell_utils.c			\
-		src/builtin/env_get.c				src/parser/parser_iterate.c						src/minishel.c 					\
-		src/builtin/env_init.c				src/parser/parser.c								src/prompt.c
+SRCS =  src/lexer/lexer.c					src/parser/parser_cmd_util.c			src/parser/parser_utils.c		\
+		src/lexer/lexer_utils.c				src/parser/parser_cmd.c					src/parser/parser_utils_list.c	\
+		src/lexer/lexer_utils_list.c		src/parser/parser_error.c				src/minishell_utils.c			\
+		src/builtin/env_get.c				src/parser/parser_traverse.c			src/minishel.c 					\
+		src/builtin/env_init.c				src/parser/parser.c						src/prompt.c
 
 LIBFT_DIR = ./libft
 LIBFT = ./libft/libft.a
