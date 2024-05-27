@@ -61,7 +61,7 @@ void	error_parse_handle(t_scanner *scanner, t_dlist *head, t_errors *error,
 	t_parser	*parser;
 
 	parser = NULL;
-	scanner(scanner);
+	scan(scanner);
 	lexer(&head, scanner);
 	error_handle(head, error);
 	if (error->error_type != no_error)
@@ -72,7 +72,7 @@ void	error_parse_handle(t_scanner *scanner, t_dlist *head, t_errors *error,
 	else
 	{
 		quotes_remove(head);
-		parser(parser, head);
+		parse(parser, head);
 		node_free(head, 1);
 	}
 	add_history(scanner->command);

@@ -121,7 +121,7 @@ void	print_dlist(t_dlist *head);
 void	node_free(t_dlist *head, int boolean);
 
 // scanner functions
-void	scanner(t_scanner *scanner);
+void	scan(t_scanner *scanner);
 void	handle_quotes(t_scanner *scanner);
 void	handle_operators(t_scanner *scanner);
 void	cmds_split(t_scanner *scanner);
@@ -154,7 +154,7 @@ t_parser	*node_last_parser(t_parser *head);
 void	node_append_parser(t_parser **head, t_parser *new);
 
 // parser functions
-void	parser(t_parser *parser, t_dlist *head);
+void	parse(t_parser *parser, t_dlist *head);
 int		count_file_red(t_dlist	*head);
 int		count_args(t_dlist *head);
 void	assign_file_red(t_dlist *head, t_parser *node, int i);

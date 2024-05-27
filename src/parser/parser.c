@@ -13,18 +13,18 @@
 #include "../../inc/minishell.h"
 
 // parses the lexer list and creates a parser list
-void	parser(t_parser *parser, t_dlist *head)
+void	parse(t_parser *parser, t_dlist *head)
 {
-	t_parser		*node;
-	char			*args;
-	int				i;
+//	t_parser		*node;
+//	char			*args;
+//	int				i;
 
 	(void)parser;
 	while (head)
 	{
-		i = 0;
-		node = node_create_parser();
-		args = NULL;
+//		i = 0;
+//		node = node_create_parser();
+//		args = NULL;
 		while (head && head->type != __PIPE)
 		{
 			if ((head->type == __WORD && !head->prev)
