@@ -12,6 +12,7 @@
 
 #include "../inc/minishell.h"
 
+// checks if the string is only spaces and tabs
 int	check_spaces_tabs(char *s)
 {
 	while (*s && (*s == '\t' || *s == ' '))
@@ -21,6 +22,7 @@ int	check_spaces_tabs(char *s)
 	return (1);
 }
 
+// frees all pointers
 void	pointers_free(t_prompt *prompt, t_scanner *scanner,
 	t_errors *error)
 {
@@ -32,6 +34,7 @@ void	pointers_free(t_prompt *prompt, t_scanner *scanner,
 	free(error);
 }
 
+// checks if the command is empty
 int	check_cmd_empty(t_scanner *scanner, t_prompt *prompt)
 {
 	if (!scanner->command)
@@ -51,6 +54,7 @@ int	check_cmd_empty(t_scanner *scanner, t_prompt *prompt)
 	return (0);
 }
 
+// handles parsing errors in the command
 void	error_parse_handle(t_scanner *scanner, t_dlist *head, t_errors *error,
 	t_prompt *prompt)
 {
