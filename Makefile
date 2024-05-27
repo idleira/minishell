@@ -9,10 +9,11 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS =	src/lexer/lexer.c			src/parser/quotes.c					src/prompt.c \
-		src/lexer/lexer_utils.c		src/parser/var_expander.c			src/minishell.c \
-		src/builtin/env_get.c		src/parser/var_expander_util.c		src/free_pointers.c \
-		src/builtin/env_init.c
+SRCS =  src/lexer/lexer.c					src/parser/parser_cmd_util.c					src/parser/parser_utils.c		\
+		src/lexer/lexer_utils.c				src/parser/parser_cmd.c							src/parser/parser_utils_list.c	\
+		src/lexer/lexer_utils_list.c		src/parser/parser_error.c						src/minishel_utils.c			\
+		src/builtin/env_get.c				src/parser/parser_iterate.c						src/minishel.c 					\
+		src/builtin/env_init.c				src/parser/parser.c								src/prompt.c
 
 LIBFT_DIR = ./libft
 LIBFT = ./libft/libft.a
@@ -24,7 +25,7 @@ $(LIBFT):
 
 $(NAME): $(SRCS)
 	@$(CC) $(CFLAGS) $(SRCS) $(LIBFT) -lreadline -o $@
-	@echo "$(PINK)✿◕ ‿ ◕✿$(DEF_COLOR) minishell compiled successfully."
+	@echo "$(PINK)꒰ᐢ. .ᐢ꒱$(DEF_COLOR) minishell compiled successfully!"
 
 clean:
 	@$(MAKE) clean -C $(LIBFT_DIR)
@@ -32,8 +33,13 @@ clean:
 fclean: clean
 	@$(MAKE) fclean -C $(LIBFT_DIR)
 	@rm -rf $(NAME)
-	@echo "$(YELLOW)✧･ﾟ:* (っ◕‿◕)っ :ﾟ･✧$(DEF_COLOR) minishell cleaned."
+	@echo "$(YELLOW)✧･ﾟ:* ꒰ᐢ. .ᐢ꒱ :ﾟ･✧$(DEF_COLOR) minishell cleaned!"
 
 re: fclean all
 
+git:
+	@git add .
+	@git commit -m "$m"
+	@git push
+	
 .PHONY: all clean fclean re
