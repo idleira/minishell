@@ -10,41 +10,31 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h "
+#include "../inc/minishell.h"
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_lexer		*lexer;
-	t_parser	*parser;
+	t_scanner	*scanner;
 	t_prompt	*prompt;
-	t_env		*env;
+	t_dlist		*head;
+	t_errors	*error;
+	int			return_value;
 
 	(void)argc;
 	(void)argv;
-	env = NULL;
-	env = env_list_create(env, envp);
+	(void)envp;
 	while (1)
 	{
-		lexer = (t_lexer *)malloc(sizeof(t_lexer));
 		prompt = (t_prompt *)malloc(sizeof(t_prompt));
-		parser = (t_parser *)malloc(sizeof(t_parser));
-		lexer->cmd = get_input(prompt);
-		if (ft_strlen(lexer->cmd))
-		{
-			parser->tokens = tokenise(lexer);
-			if (lexer->error == 1)
-				ft_putendl_fd("[!] syntax error: unclosed quotation mark", 1);
-			else if (lexer->error == 2)
-				ft_putendl_fd("[!] parsing error : unexpected symbol encountered", 1);
-			else
-			{
-                quotes_process(parser);
-				input_process(parser->tokens2);
-				array_free(parser->tokens);
-				array_free(parser->tokens2);
-			}
-		}
-		free_pointers(lexer, prompt, parser);
+		scanner = (t_scanner *)malloc(sizeof(t_scanner));
+		error = (t_errors *)malloc(sizeof(t_errors));
+		scanner->command = input_get(prompt);
+		head = NULL;
+		return_value = check_cmd_empty(scanner, prompt);
+		if (return_value == 1)
+			exit(1);
+		if (!(return_value == 2))
+			error_parse_handle(scanner, head, error, prompt);
 	}
 	return (0);
 }
