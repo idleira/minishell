@@ -4,3 +4,4 @@ minishell
 a.out
 libft/*.o
 libft/libft.a
+settings.json
