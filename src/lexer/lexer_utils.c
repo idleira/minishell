@@ -12,23 +12,77 @@
 
 #include "../../inc/minishell.h"
 
-//print tokens for a test
-void	tokens_print(char **tokenise)
+// creates a lexer node for a quoted token
+t_dlist	*node_quotes(char *token, char quote)
 {
-	int	i;
+	t_dlist	*node;
 
-	i = -1;
-	while (tokenise[++i])
-		printf(" [.] %s\n", tokenise[i]);
+	node = node_create_lexer();
+	if (quote == '\'')
+		node->state = __s_quotes;
+	else
+		node->state = __d_quotes;
+	node->value = token;
+	node->type = __WORD;
+	return (node);
 }
 
-//free array of strings
-void	array_free(char **arr)
+// creates a lexer node for a redirection token
+t_dlist	*node_redirection(char *token)
 {
-	int	i;
+	t_dlist	*node;
 
-	i = -1;
-	while (arr[++i])
-		free(arr[i]);
-	free(arr);
+	node = node_create_lexer();
+	node->value = token;
+	node->state = __without_quotes;
+	if (!ft_strcmp(token, ">"))
+		node->type = __RED_OUT;
+	else if (!ft_strcmp(token, ">>"))
+		node->type = __RED_APP;
+	else if (!ft_strcmp(token, "<"))
+		node->type = __RED_IN;
+	else if (!ft_strcmp(token, "<<"))
+		node->type = __HEREDOC;
+	return (node);
+}
+
+// creates a lexer node for a pipe token
+t_dlist	*node_pipeline(char *token)
+{
+	t_dlist	*node;
+
+	node = node_create_lexer();
+	node->value = token;
+	node->state = __without_quotes;
+	node->type = __PIPE;
+	return (node);
+}
+
+// creates a lexer node for a word token
+t_dlist	*node_word(char *token)
+{
+	t_dlist	*node;
+
+	node = node_create_lexer();
+	node->value = token;
+	node->state = __without_quotes;
+	node->type = __WORD;
+	return (node);
+}
+
+// strips quotes from token
+void	quotes_strip(t_dlist *head, char quote)
+{
+	int		i;
+	char	*temp;
+
+	i = 0;
+	temp = NULL;
+	while (head->value[i])
+	{
+		if (!(head->value[i] == quote))
+			temp = ft_strjoin(temp, ft_substr(head->value, i, 1));
+		++i;
+	}
+	head->value = temp;
 }
