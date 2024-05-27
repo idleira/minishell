@@ -35,13 +35,13 @@ t_dlist	*node_redirection(char *token)
 	node = node_create_lexer();
 	node->value = token;
 	node->state = __without_quotes;
-	if (!ft_strcmp(token, ">"))
+	if (!strcmp(token, ">"))
 		node->type = __RED_OUT;
-	else if (!ft_strcmp(token, ">>"))
+	else if (!strcmp(token, ">>"))
 		node->type = __RED_APP;
-	else if (!ft_strcmp(token, "<"))
+	else if (!strcmp(token, "<"))
 		node->type = __RED_IN;
-	else if (!ft_strcmp(token, "<<"))
+	else if (!strcmp(token, "<<"))
 		node->type = __HEREDOC;
 	return (node);
 }
