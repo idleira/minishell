@@ -12,84 +12,50 @@
 
 #include "../../inc/minishell.h"
 
-//handles parts of the input string that are enclosed in quotes
-int	quotes_check(t_lexer *lexer, char *s)
+// tokenizes the input string and creates nodes for the lexer list
+void	tokenizer(t_dlist **head, char *token)
 {
-    lexer->j = lexer->i++;
-    while (s[lexer->i] != lexer->quote && s[lexer->i])
-        lexer->i++;
-    if (s[lexer->i])
-        lexer->line = ft_strjoin(lexer->line, ft_substr(s, lexer->j,
-                                                         lexer->i - lexer->j + 1));
-    else
-        return (1);
-    return (0);
+	if (token[0] == '\'' || token[0] == '\"')
+	{
+		if (token[0] == '\'')
+			node_append_lexer(head, node_quotes(token, '\''));
+		else
+			node_append_lexer(head, node_quotes(token, '\"'));
+	}
+	else if (!ft_strcmp(token, ">") || !ft_strcmp(token, "<")
+		|| !ft_strcmp(token, ">>") || !ft_strcmp(token, "<<"))
+		node_append_lexer(head, node_redirection(token));
+	else if (!ft_strcmp(token, "|"))
+		node_append_lexer(head, node_pipeline(token));
+	else
+		node_append_lexer(head, node_word(token));
 }
 
-//formats special operator sequences with new lines for clarity
-int	operators_separate(t_lexer *lexer, char *s)
+// // removes token quotes from lexer
+void	quotes_remove(t_dlist *head)
 {
-    if (!ft_memcmp(s + lexer->i, ">>>", 3)
-        || !ft_memcmp(s + lexer->i, "<<<", 3)
-        || !ft_memcmp(s + lexer->i, "&&&", 3)
-        || !ft_memcmp(s + lexer->i, "|||", 3))
-        return (2);
-    else if (!ft_memcmp(s + lexer->i, ">>", 2)
-             || !ft_memcmp(s + lexer->i, "<<", 2)
-             || !ft_memcmp(s + lexer->i, "||", 2)
-             || !ft_memcmp(s + lexer->i, "&&", 2))
-    {
-        lexer->line = ft_strjoin(lexer->line, ft_strdup("\n"));
-        lexer->line = ft_strjoin(lexer->line, ft_substr(s, lexer->i, 2));
-        lexer->line = ft_strjoin(lexer->line, ft_strdup("\n"));
-        lexer->i++;
-    }
-    else
-    {
-        lexer->line = ft_strjoin(lexer->line, ft_strdup("\n"));
-        lexer->line = ft_strjoin(lexer->line, ft_substr(s, lexer->i, 1));
-        lexer->line = ft_strjoin(lexer->line, ft_strdup("\n"));
-    }
-    return (0);
+	char	*temp;
+	int		i;
+
+	temp = NULL;
+	i = 0;
+	while (head)
+	{
+		if (head->state == __s_quotes)
+			quotes_strip(head, '\'');
+		else if (head->state == __d_quotes)
+			quotes_strip(head, '\"');
+		head = head->next;
+	}
 }
 
-//loops through the string, processing each character and handling it accordingly
-int	input_process(char *s, t_lexer *lexer)
+// processes the input string and tokenizes it
+void	lexer(t_dlist **head, t_scanner *scanner)
 {
-    while (s[lexer->i])
-    {
-        if (s[lexer->i] == '\"' || s[lexer->i] == '\'')
-        {
-            lexer->quote = s[lexer->i];
-            if (quotes_check(lexer, s))
-                return (1);
-        }
-        else if (ft_strchr("<>|&", s[lexer->i]))
-        {
-            if (operators_separate(lexer, s))
-                return (2);
-        }
-        else if (ft_strchr(" \t\n\v\f\r", s[lexer->i]))
-            lexer->line = ft_strjoin(lexer->line, ft_strdup("\n"));
-        else
-            lexer->line = ft_strjoin(lexer->line, ft_substr(s, lexer->i, 1));
-        lexer->i++;
-    }
-    return (0);
-}
-
-//tokenizes the input string and returns an array of tokens
-char	**tokenise(t_lexer *lexer)
-{
-    lexer->i = 0;
-    lexer->line = NULL;
-    lexer->error = input_process(lexer->cmd, lexer);
-    if (lexer->error)
-        return (free(lexer->line), (void *)0);
-    else
-    {
-        lexer->tokens = ft_split(lexer->line, '\n');
-        free(lexer->line);
-    }
-    return (lexer->tokens);
+	scanner->i = 0;
+	while (scanner->tokens[scanner->i])
+	{
+		tokenizer(head, scanner->tokens[scanner->i]);
+		++scanner->i;
+	}
 }
