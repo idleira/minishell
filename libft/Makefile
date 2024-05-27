@@ -80,10 +80,10 @@ bonus: $(OBJ) $(BONUS_OBJ)
 	@ar -rsc $(NAME) $(OBJ) $(BONUS_OBJ)
 
 clean:
-	$(RM) $(OBJ) $(BONUS_OBJ)
+	@$(RM) $(OBJ) $(BONUS_OBJ)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 

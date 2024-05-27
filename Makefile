@@ -21,17 +21,17 @@ LIBFT = ./libft/libft.a
 all: $(LIBFT) $(NAME)
 
 $(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) -sC $(LIBFT_DIR)
 
 $(NAME): $(SRCS)
 	@$(CC) $(CFLAGS) $(SRCS) $(LIBFT) -lreadline -o $@
 	@echo "$(PINK)꒰ᐢ. .ᐢ꒱$(DEF_COLOR) minishell compiled successfully!"
 
 clean:
-	@$(MAKE) clean -C $(LIBFT_DIR)
+	@$(MAKE) clean -sC $(LIBFT_DIR)
 
 fclean: clean
-	@$(MAKE) fclean -C $(LIBFT_DIR)
+	@$(MAKE) fclean -sC $(LIBFT_DIR)
 	@rm -rf $(NAME)
 	@echo "$(YELLOW)✧･ﾟ:* ꒰ᐢ. .ᐢ꒱ :ﾟ･✧$(DEF_COLOR) minishell cleaned!"
 
