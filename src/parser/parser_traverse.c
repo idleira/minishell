@@ -13,7 +13,7 @@
 #include "../../inc/minishell.h"
 
 //prints details of a single t_dlist node
-static void	traverse_print_dlist(t_dlist *head)
+static void	traverse_helper(t_dlist *head)
 {
 	t_dlist	*temp;
 
@@ -40,7 +40,7 @@ void	traverse_lexer(t_dlist *head)
 	while (temp)
 	{
 		printf("---------------------------------\n");
-		traverse_print_dlist(temp);
+		traverse_helper(temp);
 		if (temp->type == __RED_APP)
 			printf("[.] type -> REDIRECTION_APPEND\n");
 		else if (temp->type == __HEREDOC)
@@ -69,13 +69,39 @@ void	traverse_parser(t_parser *head)
 {
 	int	i;
 
+	printf("----------------------\n");
 	while (head)
 	{
-		i = -1;
-		printf("----------------------\n");
-		while (++head->args[i])
-			printf("%s ", head->args[i]);
+		printf("[.] arguments : \n\t");
+		if (head->args)
+		{
+			i = -1;
+			while (head->args[++i])
+				printf("%s ", head->args[i]);
+			
+		}
+		else
+			printf("no arguments\n");
 		printf("\n");
+		printf("[.] files :\n");
+		if (head->file)
+		{
+			while (head->file)
+			{
+				printf("\nname : %s\n", head->file->name);
+				if (head->file->type == HEREDOC)
+					printf("\ttype : HEREDOC\n");
+				else if (head->file->type == APPEND)
+					printf("\ttype : RED_APPEND\n");
+				else if (head->file->type == IN)
+					printf("\ttype : RED_IN\n");
+				else if (head->file->type == OUT)
+					printf("\ttype : RED_OUT\n");
+				head->file = head->file->next;
+			}
+		}
+		else
+			printf("\tno files\n");
 		printf("----------------------\n");
 		head = head->next;
 	}
