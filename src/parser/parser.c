@@ -13,7 +13,7 @@
 #include "../../inc/minishell.h"
 
 // parses the lexer list and creates a parser list
-void	parse(t_parser **parser, t_dlist *head)
+void	parse_cmd_list(t_parser **parser, t_dlist *head)
 {
 	t_parser		*node;
 	t_list			*file;
@@ -21,7 +21,7 @@ void	parse(t_parser **parser, t_dlist *head)
 
 	while (head)
 	{
-		node = node_create_parser();
+		node = node_create_pars();
 		node->file = NULL;
 		file = NULL;
 		args = NULL;
@@ -57,7 +57,7 @@ void	parse(t_parser **parser, t_dlist *head)
 			node->args = ft_split(args, '\n');
 		else
 			node->args = NULL;
-		node_append_parser(parser, node);
+		node_append_pars(parser, node);
 		if (head)
 			head = head->next;
 	}

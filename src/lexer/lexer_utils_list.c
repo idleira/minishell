@@ -13,7 +13,7 @@
 #include "../../inc/minishell.h"
 
 // creates a new node for the lexer list
-t_dlist	*node_create_lexer(void)
+t_dlist	*node_create_lex(void)
 {
 	t_dlist	*new;
 
@@ -26,7 +26,7 @@ t_dlist	*node_create_lexer(void)
 }
 
 // returns the last node of the lexer list
-t_dlist	*node_last_lexer(t_dlist *head)
+t_dlist	*node_last_lex(t_dlist *head)
 {
 	t_dlist	*temp;
 
@@ -39,11 +39,11 @@ t_dlist	*node_last_lexer(t_dlist *head)
 }
 
 // appends a new node to the lexer list
-void	node_append_lexer(t_dlist **head, t_dlist *new)
+void	node_append_lex(t_dlist **head, t_dlist *new)
 {
 	t_dlist	*temp;
 
-	temp = node_last_lexer(*head);
+	temp = node_last_lex(*head);
 	if (temp)
 	{
 		temp->next = new;
@@ -54,7 +54,7 @@ void	node_append_lexer(t_dlist **head, t_dlist *new)
 }
 
 // prints the doubly linked lexer list
-void	print_dlist(t_dlist *head)
+void	traverse_list(t_dlist *head)
 {
 	t_dlist	*temp;
 

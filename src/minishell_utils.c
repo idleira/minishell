@@ -13,7 +13,7 @@
 #include "../inc/minishell.h"
 
 // checks if the string is only spaces and tabs
-int	check_spaces_tabs(char *s)
+int	check_spaces(char *s)
 {
 	while (*s && (*s == '\t' || *s == ' '))
 		++s;
@@ -23,48 +23,50 @@ int	check_spaces_tabs(char *s)
 }
 
 // frees all pointers
-void	pointers_free(t_prompt *prompt, t_scanner *scanner,
+void	ptrs_free(t_prompt *prompt, t_scanner *scanner,
 	t_errors *error)
 {
 	free(prompt->line);
 	free(prompt);
 	free(scanner->command);
-	scan_free(scanner->tokens);
+	scanner_free(scanner->tokens);
 	free(scanner);
 	free(error);
 }
 
 // checks if the command is empty
-int	check_cmd_empty(t_scanner *scanner, t_prompt *prompt)
+int	ft_check(t_scanner *scanner, t_prompt *prompt, t_errors *error)
 {
+	// (void)error;
 	if (!scanner->command)
 	{
 		free(prompt);
 		free(scanner);
 		return (1);
 	}
-	if (check_spaces_tabs(scanner->command))
+	if (check_spaces(scanner->command))
 	{
 		free(prompt->line);
 		free(prompt);
 		free(scanner->command);
 		free(scanner);
+		free(error);
 		return (2);
 	}
 	return (0);
 }
 
-// handles parsing errors in the command
-void	error_parse_handle(t_scanner *scanner, t_dlist *head, t_errors *error,
+//handles parsing errors in the command
+void	input_process(t_scanner *scanner, t_dlist *head, t_errors *error,
 	t_prompt *prompt)
 {
 	t_parser	*parser;
 
 	parser = NULL;
 	(void)prompt;
-	scan(scanner);
-	lexer(&head, scanner);
-	error_handle(head, error);
+	ft_scanner(scanner);
+	ft_lexer(&head, scanner);
+	ft_error(head, error);
 	if (error->error_type != no_error)
 	{
 		error_display(error);
@@ -73,10 +75,10 @@ void	error_parse_handle(t_scanner *scanner, t_dlist *head, t_errors *error,
 	else
 	{
 		quotes_remove(head);
-		parse(&parser, head);
+		parse_cmd_list(&parser, head);
 		traverse_parser(parser);
-		// free_nodes(head, 1);
+		// node_free(head, 1);
 	}
 	add_history(scanner->command);
-	// free_pointers(prompt, scanner, error);
+	// ptrs_free(prompt, scanner, error);
 }

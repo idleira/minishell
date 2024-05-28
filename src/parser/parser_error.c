@@ -77,7 +77,7 @@ int	check_errors(t_dlist *temp, t_errors *error)
 }
 
 // handles the errors in the lexer list
-void	error_handle(t_dlist	*head, t_errors *error)
+void	ft_error(t_dlist	*head, t_errors *error)
 {
 	t_dlist	*temp;
 

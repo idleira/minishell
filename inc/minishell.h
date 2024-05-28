@@ -28,12 +28,12 @@
 # include <dirent.h>
 
 // struct for prompt string
-
 typedef struct s_prompt
 {
 	char	*line;
 }	t_prompt;
 
+// enum for error handling
 typedef enum e_error
 {
 	no_error,
@@ -46,13 +46,14 @@ typedef enum e_error
 	error_of_redirection_heredoc
 }	t_error_types;
 
+// struct for error handling
 typedef struct s_error
 {
 	t_error_types	error_type;
 	int				exit_staus;
 }	t_errors;
-// struct that goes for the scanner
 
+// struct for the scanner
 typedef struct s_scanner
 {
 	char	*command;
@@ -63,8 +64,7 @@ typedef struct s_scanner
 	char	t_quote;
 }	t_scanner;
 
-// the token types
-
+// token types
 typedef enum e_types
 {
 	__WORD = 0,
@@ -75,8 +75,7 @@ typedef enum e_types
 	__PIPE = '|'
 }	t_types;
 
-// the token state to check the type of quotes
-
+// token state to check the type of quotes
 typedef enum e_state
 {
 	__d_quotes = '\"',
@@ -84,8 +83,7 @@ typedef enum e_state
 	__without_quotes = 0
 }	t_state;
 
-// struct of the parser
-
+// struct for the parser
 typedef struct s_parser
 {
 	char			**args;
@@ -95,7 +93,6 @@ typedef struct s_parser
 }	t_parser;
 
 // the struct of doubly linked-list in which we'll store our splitted tokens
-
 typedef struct s_dlist
 {
 	char			*value;
@@ -109,22 +106,15 @@ typedef struct s_dlist
 void	prompt_build(t_prompt *prompt);
 char	*input_get(t_prompt *prompt);
 
-// doubly linked list functions
-t_dlist	*node_create_lexer(void);
-t_dlist	*node_last_lexer(t_dlist *head);
-void	node_append_lexer(t_dlist **head, t_dlist *new);
-void	print_dlist(t_dlist *head);
-void	node_free(t_dlist *head, int boolean);
-
 // scanner functions
-void	scan(t_scanner *scanner);
+void	ft_scanner(t_scanner *scanner);
 void	handle_quotes(t_scanner *scanner);
 void	handle_operators(t_scanner *scanner);
 void	cmds_split(t_scanner *scanner);
-void	scan_free(char **tokens);
+void	scanner_free(char **tokens);
 
 // lexer functions
-void	lexer(t_dlist **head, t_scanner *scanner);
+void	ft_lexer(t_dlist **head, t_scanner *scanner);
 void	tokenizer(t_dlist **head, char *token);
 t_dlist	*node_quotes(char *token, char quote);
 t_dlist	*node_redirection(char *token);
@@ -133,28 +123,35 @@ t_dlist	*node_word(char *token);
 void	quotes_strip(t_dlist *head, char quote);
 void	quotes_remove(t_dlist *head);
 
-// error handling functions
-void	error_handle(t_dlist *head, t_errors *error);
+// doubly linked list functions for lexer
+t_dlist	*node_create_lex(void);
+t_dlist	*node_last_lex(t_dlist *head);
+void	node_append_lex(t_dlist **head, t_dlist *new);
+void	traverse_list(t_dlist *head);
+void	node_free(t_dlist *head, int boolean);
+
+// error fucntions
+void	ft_error(t_dlist *head, t_errors *error);
 void	error_display(t_errors *error);
 
-// minishell utils functions
-int		check_spaces_tabs(char *s);
-void	pointers_free(t_prompt *prompt, t_scanner *scanner, t_errors *error);
-int		check_cmd_empty(t_scanner *scanner, t_prompt *prompt);
-void	error_parse_handle(t_scanner *scanner, t_dlist *head, t_errors *error,
+// minishell functions
+int		check_spaces(char *s);
+void	ptrs_free(t_prompt *prompt, t_scanner *scanner, t_errors *error);
+int		ft_check(t_scanner *scanner, t_prompt *prompt, t_errors *error);
+void	input_process(t_scanner *scanner, t_dlist *head, t_errors *error,
 			t_prompt *prompt);
 
-// doubly linked list functions for parser
-t_parser	*node_create_parser(void);
-t_parser	*node_last_parser(t_parser *head);
-void		node_append_parser(t_parser **head, t_parser *new);
-
-// parser functions
-void	parse(t_parser **parser, t_dlist *head);
-int		count_file_red(t_dlist	*head);
+// parser function
+void	parse_cmd_list(t_parser **parser, t_dlist *head);
+// int		count_files(t_dlist	*head);
 int		count_args(t_dlist *head);
-void	assign_file_red(t_dlist *head, t_parser *node, int i);
+// void	assign_file(t_dlist *head, t_parser *node, int i);
 void	assign_args(t_dlist *head, t_parser *node, char *args);
+
+// doubly linked list functions for parser
+t_parser	*node_create_pars(void);
+t_parser	*node_last_pars(t_parser *head);
+void	node_append_pars(t_parser **head, t_parser *new);
 
 // traverse functions
 void	traverse_lexer(t_dlist *head);

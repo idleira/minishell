@@ -20,7 +20,7 @@ char	*ft_getenv(char *string, t_env *env)
 	traverser = env;
 	while (traverser)
 	{
-		if (!ft_strcmp(string, traverser->key))
+		if (!strcmp(string, traverser->key))
 			return (traverser->value);
 		traverser = traverser->next;
 	}

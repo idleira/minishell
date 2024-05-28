@@ -73,7 +73,7 @@ void	cmds_split(t_scanner *scanner)
 }
 
 // initializes the scanner struct, splits and tokenizes input commands
-void	scan(t_scanner *scanner)
+void	ft_scanner(t_scanner *scanner)
 {
 	scanner->i = 0;
 	scanner->line = NULL;

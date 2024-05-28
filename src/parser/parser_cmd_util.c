@@ -13,7 +13,7 @@
 #include "../../inc/minishell.h"
 
 // frees scanner resources
-void	scan_free(char **tokens)
+void	scanner_free(char **tokens)
 {
 	int	i;
 

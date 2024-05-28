@@ -18,17 +18,17 @@ void	tokenizer(t_dlist **head, char *token)
 	if (token[0] == '\'' || token[0] == '\"')
 	{
 		if (token[0] == '\'')
-			node_append_lexer(head, node_quotes(token, '\''));
+			node_append_lex(head, node_quotes(token, '\''));
 		else
-			node_append_lexer(head, node_quotes(token, '\"'));
+			node_append_lex(head, node_quotes(token, '\"'));
 	}
 	else if (!strcmp(token, ">") || !strcmp(token, "<")
 		|| !strcmp(token, ">>") || !strcmp(token, "<<"))
-		node_append_lexer(head, node_redirection(token));
+		node_append_lex(head, node_redirection(token));
 	else if (!strcmp(token, "|"))
-		node_append_lexer(head, node_pipeline(token));
+		node_append_lex(head, node_pipeline(token));
 	else
-		node_append_lexer(head, node_word(token));
+		node_append_lex(head, node_word(token));
 }
 
 // // removes token quotes from lexer
@@ -45,7 +45,7 @@ void	quotes_remove(t_dlist *head)
 }
 
 // processes the input string and tokenizes it
-void	lexer(t_dlist **head, t_scanner *scanner)
+void	ft_lexer(t_dlist **head, t_scanner *scanner)
 {
 	scanner->i = 0;
 	while (scanner->tokens[scanner->i])

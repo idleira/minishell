@@ -13,7 +13,7 @@
 #include "../../inc/minishell.h"
 
 // creates a new node for the parser list
-t_parser	*node_create_parser(void)
+t_parser	*node_create_pars(void)
 {
 	t_parser	*new;
 
@@ -26,7 +26,7 @@ t_parser	*node_create_parser(void)
 }
 
 // returns the last node of the parser list
-t_parser	*node_last_parser(t_parser *head)
+t_parser	*node_last_pars(t_parser *head)
 {
 	t_parser	*temp;
 
@@ -39,11 +39,11 @@ t_parser	*node_last_parser(t_parser *head)
 }
 
 // appends a new node to the parser list
-void	node_append_parser(t_parser **head, t_parser *new)
+void	node_append_pars(t_parser **head, t_parser *new)
 {
 	t_parser	*temp;
 
-	temp = node_last_parser(*head);
+	temp = node_last_pars(*head);
 	if (temp)
 	{
 		temp->next = new;
