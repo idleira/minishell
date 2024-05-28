@@ -13,17 +13,17 @@
 #include "libft.h"
 
 /* delete and free given node and every successor */
-void	ft_lstclear(t_list **lst, void (*del)(void *))
-{
-	t_list	*ptr;
-	t_list	*temp;
+// void	ft_lstclear(t_list **lst, void (*del)(void *))
+// {
+// 	t_list	*ptr;
+// 	t_list	*temp;
 
-	ptr = *lst;
-	while (ptr)
-	{
-		temp = ptr->next;
-		ft_lstdelone(ptr, del);
-		ptr = temp;
-	}
-	*lst = NULL;
-}
+// 	ptr = *lst;
+// 	while (ptr)
+// 	{
+// 		temp = ptr->next;
+// 		ft_lstdelone(ptr, del);
+// 		ptr = temp;
+// 	}
+// 	*lst = NULL;
+// }

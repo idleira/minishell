@@ -13,10 +13,10 @@
 #include "libft.h"
 
 /* free memory of content and free node, preserving 'next' ptr */
-void	ft_lstdelone(t_list *lst, void (*del)(void*))
-{
-	if (!lst || !del)
-		return ;
-	del(lst->content);
-	free(lst);
-}
+// void	ft_lstdelone(t_list *lst, void (*del)(void*))
+// {
+// 	if (!lst || !del)
+// 		return ;
+// 	del(lst->content);
+// 	free(lst);
+// }
