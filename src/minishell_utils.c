@@ -61,6 +61,7 @@ void	error_parse_handle(t_scanner *scanner, t_dlist *head, t_errors *error,
 	t_parser	*parser;
 
 	parser = NULL;
+	(void)prompt;
 	scan(scanner);
 	lexer(&head, scanner);
 	error_handle(head, error);
@@ -72,10 +73,10 @@ void	error_parse_handle(t_scanner *scanner, t_dlist *head, t_errors *error,
 	else
 	{
 		quotes_remove(head);
-		parse(parser, head);
-		node_free(head, 1);
+		parse(&parser, head);
+		traverse_parser(parser);
+		// free_nodes(head, 1);
 	}
 	add_history(scanner->command);
-	pointers_free(prompt, scanner, error);
+	// free_pointers(prompt, scanner, error);
 }
-

@@ -21,7 +21,7 @@ LIBFT = ./libft/libft.a
 all: $(LIBFT) $(NAME)
 
 $(LIBFT):
-	@$(MAKE) -sC $(LIBFT_DIR)
+	@$(MAKE) bonus -sC $(LIBFT_DIR)
 
 $(NAME): $(SRCS)
 	@$(CC) $(CFLAGS) $(SRCS) $(LIBFT) -lreadline -o $@

@@ -22,7 +22,7 @@ void	prompt_build(t_prompt *prompt)
 	cwd = getcwd(NULL, PATH_MAX);
 	prompt->line = ft_strjoin(ft_strdup("[\033[0;32m"), ft_strdup(user));
 	prompt->line = ft_strjoin(prompt->line,
-			ft_strdup("\033[0m\033[1;37m@1337\033[0m\033[0;36m "));
+			ft_strdup("\033[0m\033[1;37m |\033[0m\033[0;36m "));
 	prompt->line = ft_strjoin(prompt->line,
 			ft_strdup(ft_strrchr(cwd, '/') + 1));
 	prompt->line = ft_strjoin(prompt->line, ft_strdup("\033[0m]$ "));

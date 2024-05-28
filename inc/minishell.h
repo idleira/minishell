@@ -27,13 +27,13 @@
 # include <limits.h>
 # include <dirent.h>
 
-// struct for prompt line
+// struct for prompt string
+
 typedef struct s_prompt
 {
 	char	*line;
 }	t_prompt;
 
-// lexer error type enum
 typedef enum e_error
 {
 	no_error,
@@ -46,14 +46,13 @@ typedef enum e_error
 	error_of_redirection_heredoc
 }	t_error_types;
 
-// struct for error handling
 typedef struct s_error
 {
 	t_error_types	error_type;
 	int				exit_staus;
 }	t_errors;
+// struct that goes for the scanner
 
-// struct for scanner
 typedef struct s_scanner
 {
 	char	*command;
@@ -64,7 +63,8 @@ typedef struct s_scanner
 	char	t_quote;
 }	t_scanner;
 
-// types of tokens
+// the token types
+
 typedef enum e_types
 {
 	__WORD = 0,
@@ -75,7 +75,8 @@ typedef enum e_types
 	__PIPE = '|'
 }	t_types;
 
-// state of quotes for scanner in lexer 
+// the token state to check the type of quotes
+
 typedef enum e_state
 {
 	__d_quotes = '\"',
@@ -83,23 +84,18 @@ typedef enum e_state
 	__without_quotes = 0
 }	t_state;
 
-// struct of files for parser
-typedef struct s_files
-{
-	char	*name;
-	t_types	type;
-}	t_files;
+// struct of the parser
 
-// struct for parser
 typedef struct s_parser
 {
 	char			**args;
-	t_files			*file;
+	t_list			*file;
 	struct s_parser	*next;
 	struct s_parser	*prev;
 }	t_parser;
 
-// struct for doubly linked list for lexer and parser
+// the struct of doubly linked-list in which we'll store our splitted tokens
+
 typedef struct s_dlist
 {
 	char			*value;
@@ -151,10 +147,10 @@ void	error_parse_handle(t_scanner *scanner, t_dlist *head, t_errors *error,
 // doubly linked list functions for parser
 t_parser	*node_create_parser(void);
 t_parser	*node_last_parser(t_parser *head);
-void	node_append_parser(t_parser **head, t_parser *new);
+void		node_append_parser(t_parser **head, t_parser *new);
 
 // parser functions
-void	parse(t_parser *parser, t_dlist *head);
+void	parse(t_parser **parser, t_dlist *head);
 int		count_file_red(t_dlist	*head);
 int		count_args(t_dlist *head);
 void	assign_file_red(t_dlist *head, t_parser *node, int i);
