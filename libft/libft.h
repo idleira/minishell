@@ -19,11 +19,21 @@
 # include <stddef.h>
 # include <unistd.h>
 
+typedef enum e_file_type
+{
+	NONE,
+	HEREDOC,
+	APPEND,
+	OUT,
+	IN
+}	t_file_type;
+
 typedef struct s_list
 {
-	void			*content;
+	char			*name;
+	t_file_type		type;
 	struct s_list	*next;
-}					t_list;
+}	t_list;
 
 //part 1
 int		ft_isalpha(int c); 
@@ -60,7 +70,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 //part 2
 char	*ft_itoa(int n);
 char	**ft_split(char const *s, char c);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_substr(char const *s, unsigned int start, size_t len);
@@ -76,7 +86,7 @@ int		ft_lstsize(t_list *lst);
 
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstnew(void);
-//t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 void	ft_lstadd_back(t_list **lst, t_list *new);
 void	ft_lstadd_front(t_list **lst, t_list *new);
