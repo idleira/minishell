@@ -1,0 +1,24 @@
+TODO:
+1. Extract info from t_parser/use t_parser as data src 
+2. Create execute_command(t_parser *cmd)
+	- fork to get the child proccess
+	- inside child:
+		- if cmd->file contains a file of type RED_IN -> handle input with dup2
+		- if cmd->file contains a file of type RED_OUT -> handle output with dup2
+		- execvp(execv?)
+	- inside parent:
+		- waitpid to wait for the child process to complete.
+	* executes a single cmd 
+	* handes input and output redirection
+3. Create execute_pipeline(t_parser *head)
+	- initialize an array to store pipe file descriptors
+	- loop through the t_parser list, creating a pipe for each pair of commands.
+	- For each command, fork a new process
+	- redirect the output of the current process to the input of the next process using dup2.
+	- close unnecessary file descriptors.
+	- execvp(execv?) to execute each command.
+	- use wait
+4. Create handle_redirection(t_parser *cmd):
+	- checks t_parser head->file and handles inputs and outputs
+5. Create chose_execution(t_parser *head):
+	- choses if to execute a single command or a pipeline
