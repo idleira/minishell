@@ -26,6 +26,8 @@
 # include <readline/history.h>
 # include <limits.h>
 # include <dirent.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 // struct for prompt string
 typedef struct s_prompt
@@ -70,7 +72,7 @@ typedef enum e_types
 	__WORD = 0,
 	__RED_IN = '<',
 	__RED_OUT = '>',
-	__RED_APP,
+	__RED_APP = 256,
 	__HEREDOC,
 	__PIPE = '|'
 }	t_types;
@@ -138,7 +140,7 @@ void	error_display(t_errors *error);
 int		check_spaces(char *s);
 void	ptrs_free(t_prompt *prompt, t_scanner *scanner, t_errors *error);
 int		ft_check(t_scanner *scanner, t_prompt *prompt, t_errors *error);
-void	input_process(t_scanner *scanner, t_dlist *head, t_errors *error,
+t_parser	*input_process(t_scanner *scanner, t_dlist *head, t_errors *error,
 			t_prompt *prompt);
 
 // parser function
@@ -157,5 +159,13 @@ void	node_append_pars(t_parser **head, t_parser *new);
 void	traverse_lexer(t_dlist *head);
 void	traverse_scanner(char **scanner);
 void	traverse_parser(t_parser *head);
+
+//EXECUTION:
+//Executor:
+void	execute_command(t_parser *cmd);
+void	handle_redirection(t_parser *cmd);
+void	execute_pipeline(t_parser *head);
+void	chose_execution(t_parser *head);
+void	free_parser(t_parser *head);
 
 #endif

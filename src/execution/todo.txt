@@ -22,3 +22,6 @@ TODO:
 	- checks t_parser head->file and handles inputs and outputs
 5. Create chose_execution(t_parser *head):
 	- choses if to execute a single command or a pipeline
+6. Create handling for built-in shell commands (e.g., cd, exit).
+7. Handle errors:
+

@@ -57,7 +57,7 @@ int	ft_check(t_scanner *scanner, t_prompt *prompt, t_errors *error)
 }
 
 //handles parsing errors in the command
-void	input_process(t_scanner *scanner, t_dlist *head, t_errors *error,
+t_parser	*input_process(t_scanner *scanner, t_dlist *head, t_errors *error,
 	t_prompt *prompt)
 {
 	t_parser	*parser;
@@ -81,4 +81,5 @@ void	input_process(t_scanner *scanner, t_dlist *head, t_errors *error,
 	}
 	add_history(scanner->command);
 	// ptrs_free(prompt, scanner, error);
+	return (parser);
 }

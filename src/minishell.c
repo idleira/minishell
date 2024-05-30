@@ -19,6 +19,8 @@ int	main(int argc, char **argv, char **envp)
 	t_dlist		*head;
 	t_errors	*error;
 	int			return_value;
+	t_parser	*parsed_commands;
+	
 
 	(void)argc;
 	(void)argv;
@@ -33,8 +35,16 @@ int	main(int argc, char **argv, char **envp)
 		return_value = ft_check(scanner, prompt, error);
 		if (return_value == 1)
 			exit(1);
-		if (!(return_value == 2))
-			input_process(scanner, head, error, prompt);
+		if (return_value != 2)
+		{
+			parsed_commands = input_process(scanner, head, error, prompt);
+			if (parsed_commands)
+				chose_execution(parsed_commands);
+			free_parser(parsed_commands);
+		}
+		free(prompt);
+		free(scanner);
+		free(error);
 	}
 	return (0);
 }

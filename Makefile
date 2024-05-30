@@ -13,7 +13,8 @@ SRCS =  src/lexer/lexer.c					src/parser/parser_cmd_util.c			src/parser/parser_u
 		src/lexer/lexer_utils.c				src/parser/parser_cmd.c					src/parser/parser_utils_list.c	\
 		src/lexer/lexer_utils_list.c		src/parser/parser_error.c				src/minishell_utils.c			\
 											src/parser/parser_traverse.c			src/minishell.c 					\
-											src/parser/parser.c						src/prompt.c
+											src/parser/parser.c						src/prompt.c						\
+											src/execution/executor.c
 
 LIBFT_DIR = ./libft
 LIBFT = ./libft/libft.a
