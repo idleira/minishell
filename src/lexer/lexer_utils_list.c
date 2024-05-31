@@ -78,12 +78,12 @@ void	node_free(t_dlist *head, int boolean)
 	while (head)
 	{
 		temp = head;
+		head = head->next;
 		if (boolean)
 		{
 			if (temp->state == __s_quotes || temp->state == __d_quotes)
 				free(temp->value);
 		}
-		free(temp);
-		head = head->next;
+		free(temp);	
 	}
 }

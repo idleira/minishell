@@ -25,3 +25,4 @@ TODO:
 6. Create handling for built-in shell commands (e.g., cd, exit).
 7. Handle errors:
 
+__________________________

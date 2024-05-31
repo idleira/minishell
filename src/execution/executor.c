@@ -6,7 +6,7 @@
 /*   By: mariannazhukova <mariannazhukova@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/05/30 15:24:16 by mariannazhu      ###   ########.fr       */
+/*   Updated: 2024/05/30 16:22:30 by mariannazhu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,23 +68,10 @@ void	handle_redirection(t_parser *cmd)
 
 void	chose_execution(t_parser *head)
 {
-	t_parser	*current;
-
-	current = head;
-	while (current)
-	{
-		if (current->next)
-		{
-			execute_pipeline(current);
-			return ;
-		}
-		else
-		{
-			execute_command(current);
-			return ;
-		}
-		current = current->next;
-	}
+	if (head && head->next)
+		execute_pipeline(head);
+	else if (head)
+		execute_command(head);
 }
 
 void	execute_pipeline(t_parser *head)
