@@ -30,7 +30,7 @@ int	main(int argc, char **argv, char **envp)
 		prompt = (t_prompt *)malloc(sizeof(t_prompt));
 		scanner = (t_scanner *)malloc(sizeof(t_scanner));
 		error = (t_errors *)malloc(sizeof(t_errors));
-		scanner->command = input_get(prompt);
+		scanner->command = input_get(prompt);									// get user's input command and store it in scanner->command
 		if (ft_strncmp(scanner->command, "exit", 5) == 0)
 		{
 			free(prompt);
@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **envp)
 			exit(1);
 		if (return_value != 2)
 		{
-			parsed_commands = input_process(scanner, head, error, prompt);
+			parsed_commands = input_process(scanner, head, error, prompt);		// parse the command and store it in t_parser struct
 			if (parsed_commands)
 				chose_execution(parsed_commands);
 			free_parser(parsed_commands);

@@ -64,22 +64,22 @@ t_parser	*input_process(t_scanner *scanner, t_dlist *head, t_errors *error,
 
 	parser = NULL;
 	(void)prompt;
-	ft_scanner(scanner);
-	ft_lexer(&head, scanner);
-	ft_error(head, error);
+	ft_scanner(scanner);						// scan user's input command and store it in scanner->tokens
+	ft_lexer(&head, scanner);					// convert the scanned input into a doubly linked list of tokens
+	ft_error(head, error);						// check for errors in the tokenized input
 	if (error->error_type != no_error)
 	{
 		error_display(error);
 		node_free(head, 0);
 	}
-	else
+	else										// if no errors, parse the command										
 	{
-		quotes_remove(head);
-		parse_cmd_list(&parser, head);
-		traverse_parser(parser);
+		quotes_remove(head);					// remove quotes from the tokens
+		parse_cmd_list(&parser, head);			// parse the tokens and create a parser node for each cmd separated by a pipe
+		traverse_parser(parser);				// prints out arguments and files associated with each parser node
 		// node_free(head, 1);
 	}
-	add_history(scanner->command);
+	add_history(scanner->command);				// add the command to the history
 	// ptrs_free(prompt, scanner, error);
 	return (parser);
 }
