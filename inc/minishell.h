@@ -32,7 +32,7 @@
 // struct for prompt string
 typedef struct s_prompt
 {
-	char	*line;
+	char	*line;		// the line that the user inputs
 }	t_prompt;
 
 // enum for error handling
@@ -58,12 +58,12 @@ typedef struct s_error
 // struct for the scanner
 typedef struct s_scanner
 {
-	char	*command;
-	char	*line;
-	char	**tokens;
-	int		i;
-	int		j;
-	char	t_quote;
+	char	*command;		// raw input from user (echo Hello, World! >> output.txt)
+	char	*line;			// processed version, where tokens have been identified and separated (echo\nHello,\nWorld!\n>>\noutput.txt\n)
+	char	**tokens;		// array of strings, where each string is a token (echo, Hello,, World!, >>, output.txt)
+	int		i;				// index of the current character in the command
+	int		j;				// index of the current character in the line
+	char	t_quote;		// the type of quote (single or double)
 }	t_scanner;
 
 // token types
@@ -88,18 +88,18 @@ typedef enum e_state
 // struct for the parser
 typedef struct s_parser
 {
-	char			**args;
-	t_list			*file;
+	char			**args;		// in parse_cmd_list, words that are not redirections or pipes are stored here (so technically not just arg, but cmds for now as well)
+	t_list			*file;		// the files assosiated with the command (redirections for now)
 	struct s_parser	*next;
-	struct s_parser	*prev;
+	struct s_parser	*prev;		
 }	t_parser;
 
 // the struct of doubly linked-list in which we'll store our splitted tokens
 typedef struct s_dlist
 {
-	char			*value;
-	t_types			type;
-	t_state			state;
+	char			*value;		// the token itself
+	t_types			type;		// the type of the token
+	t_state			state;		// the state of the token (single/double/ no quotes)
 	struct s_dlist	*next;
 	struct s_dlist	*prev;
 }	t_dlist;
