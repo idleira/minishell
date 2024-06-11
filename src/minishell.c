@@ -31,6 +31,13 @@ int	main(int argc, char **argv, char **envp)
 		scanner = (t_scanner *)malloc(sizeof(t_scanner));
 		error = (t_errors *)malloc(sizeof(t_errors));
 		scanner->command = input_get(prompt);
+		if (ft_strncmp(scanner->command, "exit", 5) == 0)
+		{
+			free(prompt);
+			free(scanner);
+			free(error);
+			exit(0);
+		}
 		head = NULL;
 		return_value = ft_check(scanner, prompt, error);
 		if (return_value == 1)
