@@ -44,11 +44,11 @@ void	handle_redirection(t_parser *cmd)
 	file = cmd->file;
 	while (file)
 	{
-		if (file->type == __RED_IN)
+		if (file->type == '|')
 			fd = open(file->name, O_RDONLY);
-		else if (file->type == __RED_OUT)
+		else if (file->type == '>')
 			fd = open(file->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else if (file->type == __RED_APP)
+		else if (file->type == 256)
 			fd = open(file->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		else
 			fd = -1;
@@ -57,7 +57,7 @@ void	handle_redirection(t_parser *cmd)
 			perror("open file");
 			exit(EXIT_FAILURE);
 		}
-		if (file->type == __RED_IN)
+		if (file->type == '<')
 			dup2(fd, STDIN_FILENO);
 		else
 			dup2(fd, STDOUT_FILENO);
