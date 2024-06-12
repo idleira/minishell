@@ -6,38 +6,34 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/06/12 16:43:13 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:25:01 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char *get_path(char *cmd, char **envp)
+char *get_path(char *cmd, t_env *env)
 {
-	char	**paths;
 	char	*temp_path;
 	char	*cmd_path;
 	int		i;
 	
-	while (ft_strncmp("PATH", *envp, 4))
-		envp++;
-	paths = ft_split(*envp + 5, ':');
 	i = 0;
-	while (paths[i])
+	while (env->paths[i])
 	{
-		temp_path = my_strjoin(paths[i], "/");
+		temp_path = my_strjoin(env->paths[i], "/");
 		cmd_path = my_strjoin(temp_path, cmd);
+		
 		free(temp_path);
 		if (access(cmd_path, X_OK) == 0)
 			return (cmd_path);
 		free(cmd_path);
 		i++;
 	}
-	free_split(paths);
 	return (NULL);
 }
 
-void	execute_command(t_parser *cmd, char **envp)
+void	execute_command(t_parser *cmd, t_env *env)
 {
 	pid_t	pid;
 	int		status;
@@ -52,8 +48,8 @@ void	execute_command(t_parser *cmd, char **envp)
 	else if (pid == 0)
 	{
 		handle_redirection(cmd);
-		cmd_w_path = get_path(cmd->args[0], envp);
-		if (execve(cmd_w_path, cmd->args, envp) == -1)
+		cmd_w_path = get_path(cmd->args[0], env);
+		if (execve(cmd_w_path, cmd->args, env->all_vars) == -1)
 		{
 			perror("execve");
 			exit(EXIT_FAILURE);
@@ -62,6 +58,7 @@ void	execute_command(t_parser *cmd, char **envp)
 	else
 		waitpid(pid, &status, 0);
 }
+
 
 void	handle_redirection(t_parser *cmd)
 {
@@ -96,15 +93,15 @@ void	handle_redirection(t_parser *cmd)
 	}
 }
 
-void	chose_execution(t_parser *head, char **envp)
+void	chose_execution(t_parser *head, t_env *env)
 {
 	if (head && head->next)
-		execute_pipeline(head, envp);
+		execute_pipeline(head, env);
 	else if (head)
-		execute_command(head, envp);
+		execute_command(head, env);
 }
 
-void	execute_pipeline(t_parser *head, char **envp)
+void	execute_pipeline(t_parser *head, t_env *env)
 {
 	int			pipefd[2];
 	int			prev_fd;
@@ -144,8 +141,8 @@ void	execute_pipeline(t_parser *head, char **envp)
 				close(pipefd[1]);
 			}
 			handle_redirection(current);
-			cmd_w_path = get_path(current->args[0], envp);
-			if (execve(cmd_w_path, current->args, envp) == -1)
+			cmd_w_path = get_path(current->args[0], env);
+			if (execve(cmd_w_path, current->args, env->all_vars) == -1)
 			{
 				perror("execve");
 				exit(EXIT_FAILURE);

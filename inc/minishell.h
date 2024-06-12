@@ -171,10 +171,11 @@ void	traverse_parser(t_parser *head);
 
 //EXECUTION:
 //Executor:
-void	execute_command(t_parser *cmd, char **envp);
+char	*get_path(char *cmd, t_env *env);
+void	execute_command(t_parser *cmd, t_env *env);
 void	handle_redirection(t_parser *cmd);
-void	execute_pipeline(t_parser *head, char **envp);
-void	chose_execution(t_parser *head, char **envp);
+void	execute_pipeline(t_parser *head, t_env *env);
+void	chose_execution(t_parser *head, t_env *env);
 void	free_parser(t_parser *head);
 void	free_split(char **split);
 char	*my_strjoin(char const *s1, char const *s2);
