@@ -183,4 +183,7 @@ char	*my_strjoin(char const *s1, char const *s2);
 //Environment
 void copy_environment(t_env *env, char **envp);
 
+//cd
+void change_directory(char *cmd, t_env *env);
+
 # endif

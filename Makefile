@@ -24,6 +24,7 @@ SRCS = src/lexer/lexer.c \
        src/prompt.c \
 	   src/execution/executor.c \
        src/execution/set_env.c \
+	   src/execution/cd.c \
        
 
 LIBFT_DIR = ./libft
