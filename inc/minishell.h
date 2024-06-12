@@ -162,10 +162,12 @@ void	traverse_parser(t_parser *head);
 
 //EXECUTION:
 //Executor:
-void	execute_command(t_parser *cmd);
+void	execute_command(t_parser *cmd, char **envp);
 void	handle_redirection(t_parser *cmd);
-void	execute_pipeline(t_parser *head);
-void	chose_execution(t_parser *head);
+void	execute_pipeline(t_parser *head, char **envp);
+void	chose_execution(t_parser *head, char **envp);
 void	free_parser(t_parser *head);
+void	free_split(char **split);
+char	*my_strjoin(char const *s1, char const *s2);
 
 #endif

@@ -24,7 +24,6 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	(void)envp;
 	while (1)
 	{
 		prompt = (t_prompt *)malloc(sizeof(t_prompt));
@@ -46,7 +45,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			parsed_commands = input_process(scanner, head, error, prompt);		// parse the command and store it in t_parser struct
 			if (parsed_commands)
-				chose_execution(parsed_commands);
+				chose_execution(parsed_commands, envp);
 			free_parser(parsed_commands);
 		}
 		free(prompt);
