@@ -104,6 +104,15 @@ typedef struct s_dlist
 	struct s_dlist	*prev;
 }	t_dlist;
 
+typedef struct s_env
+{
+	char *pwd;
+	char *old_pwd;
+	char *home;
+	char **paths;
+	char **all_vars;
+}	t_env;
+
 // prompt functions
 void	prompt_build(t_prompt *prompt);
 char	*input_get(t_prompt *prompt);
@@ -170,4 +179,7 @@ void	free_parser(t_parser *head);
 void	free_split(char **split);
 char	*my_strjoin(char const *s1, char const *s2);
 
-#endif
+//Environment
+void copy_environment(t_env *env, char **envp);
+
+# endif

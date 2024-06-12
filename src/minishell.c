@@ -20,10 +20,13 @@ int	main(int argc, char **argv, char **envp)
 	t_errors	*error;
 	int			return_value;
 	t_parser	*parsed_commands;
+	t_env		*env;
 	
 
 	(void)argc;
 	(void)argv;
+	env = (t_env *)malloc(sizeof(t_env));
+	copy_environment(env, envp);
 	while (1)
 	{
 		prompt = (t_prompt *)malloc(sizeof(t_prompt));
