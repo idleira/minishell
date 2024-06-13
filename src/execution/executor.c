@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/06/12 19:25:01 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:43:32 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,17 @@ void	handle_redirection(t_parser *cmd)
 	int		fd;
 
 	file = cmd->file;
+	printf("Check\n");
 	while (file)
 	{
 		if (file->type == '|')
 			fd = open(file->name, O_RDONLY);
-		else if (file->type == __RED_OUT)
+		else if (file->type == OUT)
 		{
 			printf("Creating file\n");
 			fd = open(file->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		}
-		else if (file->type == 256)
+		else if (file->type == APPEND)
 			fd = open(file->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		else
 			fd = -1;
