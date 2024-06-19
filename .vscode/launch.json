@@ -3,22 +3,11 @@
   "configurations": [
     {
       "name": "C/C++ Runner: Debug Session",
-      "type": "cppdbg",
+      "type": "lldb",
       "request": "launch",
       "args": [],
-      "stopAtEntry": false,
-      "externalConsole": false,
-      "cwd": "/home/mzhukova/Desktop/minishell",
-      "program": "/home/mzhukova/Desktop/minishell/build/Debug/outDebug",
-      "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
-      "setupCommands": [
-        {
-          "description": "Enable pretty-printing for gdb",
-          "text": "-enable-pretty-printing",
-          "ignoreFailures": true
-        }
-      ]
+      "cwd": "/Users/mariannazhukova/Desktop/minishell/src/execution",
+      "program": "/Users/mariannazhukova/Desktop/minishell/src/execution/build/Debug/outDebug"
     }
   ]
 }

@@ -72,7 +72,7 @@ typedef enum e_types
 	__WORD = 0,
 	__RED_IN = '<',
 	__RED_OUT = '>',
-	__RED_APP = 256,
+	__RED_APP = 15934,
 	__HEREDOC,
 	__PIPE = '|'
 }	t_types;

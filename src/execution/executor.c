@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mariannazhukova <mariannazhukova@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/06/13 15:43:32 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/06/19 20:15:29 by mariannazhu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,12 @@ void	handle_redirection(t_parser *cmd)
 	int		fd;
 
 	file = cmd->file;
-	printf("Check\n");
 	while (file)
 	{
 		if (file->type == '|')
 			fd = open(file->name, O_RDONLY);
 		else if (file->type == OUT)
 		{
-			printf("Creating file\n");
 			fd = open(file->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		}
 		else if (file->type == APPEND)
