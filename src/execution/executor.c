@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariannazhukova <mariannazhukova@studen    +#+  +:+       +#+        */
+/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/06/19 20:15:29 by mariannazhu      ###   ########.fr       */
+/*   Updated: 2024/06/20 14:39:30 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	execute_command(t_parser *cmd, t_env *env)
 	}
 	else if (pid == 0)
 	{
+		check_builtins(cmd, env);
 		handle_redirection(cmd);
 		cmd_w_path = get_path(cmd->args[0], env);
 		if (execve(cmd_w_path, cmd->args, env->all_vars) == -1)

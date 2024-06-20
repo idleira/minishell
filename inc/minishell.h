@@ -181,9 +181,10 @@ void	free_split(char **split);
 char	*my_strjoin(char const *s1, char const *s2);
 
 //Environment
-void copy_environment(t_env *env, char **envp);
+void	copy_environment(t_env *env, char **envp);
+void	check_builtins(t_parser *cmd, t_env *env);
 
 //cd
-void change_directory(char *cmd, t_env *env);
+void	change_directory(t_parser *cmd, t_env *env);
 
 # endif
