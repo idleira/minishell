@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:27:54 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/06/21 12:51:18 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/06/21 13:49:06 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,16 @@ void change_directory(t_parser *cmd, t_env *env)
 	{
 		//printf("cd path before iterating: %s\n", cd_path); 
 		if (ft_strnstr(cmd->args[i], "cd", 2) == 0)
+		{
+			printf("the minus here: %s\n", cmd->args[1]);
+			if (ft_strnstr(cmd->args[1], "-", 1) != 0)
+			{
+				printf("%s\n", env->old_pwd);
+				chdir(env->old_pwd);
+				env->pwd = env->old_pwd;
+			}
 			cd_path = my_strjoin(cd_path, cmd->args[i]);
+		}
 		i++;
 	}
 	env->old_pwd = env->pwd;
@@ -48,7 +57,7 @@ void change_directory(t_parser *cmd, t_env *env)
 	if (cd_path[ft_strlen(cd_path)] != '/')
 		cd_path = my_strjoin(cd_path, "/");
 	cd_path = my_strjoin(env->pwd, cd_path);
-	printf("current_path: %s\n", cd_path);
+	//printf("current_path: %s\n", cd_path);
 	if (chdir(cd_path) == 0)
 		env->pwd = cd_path;
 }
