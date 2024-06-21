@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:27:54 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/06/21 12:02:55 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/06/21 12:51:18 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,24 @@ int check_builtins(t_parser *cmd, t_env *env)
 
 void change_directory(t_parser *cmd, t_env *env)
 {
-	char *cd_path = "";
+	char *cd_path;
 
 	int i = 0;
+	cd_path = "";
 	
 	while (cmd->args[i])
 	{
-		printf("cd path: %s\n", cd_path); 
+		//printf("cd path before iterating: %s\n", cd_path); 
 		if (ft_strnstr(cmd->args[i], "cd", 2) == 0)
 			cd_path = my_strjoin(cd_path, cmd->args[i]);
 		i++;
 	}
 	env->old_pwd = env->pwd;
 	//maybe change later to strtrim and add manually?
-	if (ft_strchr(cd_path, '/') == 0)
+	if (cd_path[0] != '/')
 		cd_path = my_strjoin("/", cd_path);
+	if (cd_path[ft_strlen(cd_path)] != '/')
+		cd_path = my_strjoin(cd_path, "/");
 	cd_path = my_strjoin(env->pwd, cd_path);
 	printf("current_path: %s\n", cd_path);
 	if (chdir(cd_path) == 0)
