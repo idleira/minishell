@@ -182,7 +182,7 @@ char	*my_strjoin(char const *s1, char const *s2);
 
 //Environment
 void	copy_environment(t_env *env, char **envp);
-void	check_builtins(t_parser *cmd, t_env *env);
+int	check_builtins(t_parser *cmd, t_env *env);
 
 //cd
 void	change_directory(t_parser *cmd, t_env *env);
