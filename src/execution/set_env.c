@@ -6,9 +6,10 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:09:03 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/06/12 19:24:23 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:07:08 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../inc/minishell.h"
 
@@ -35,4 +36,36 @@ void copy_environment(t_env *env, char **envp)
 		i++;
 	}
 	env->all_vars[i] = NULL;
+}
+
+void change_variable(t_env *env, char *key, char *new_value)
+{
+
+	int	i;
+	
+	i = 0;
+	while (env->all_vars[i] != NULL)
+	{
+		if (ft_strncmp(env->all_vars[i], key, ft_strlen(key)) == 0)
+		{
+			free(env->all_vars[i]);
+			env->all_vars[i] = ft_strdup(key);
+			env->all_vars[i] = my_strjoin(env->all_vars[i], new_value);
+		}
+		i++;
+	}
+
+}
+
+void print_env(t_env *env)
+{
+	int	i;
+
+	i = 0;
+	while (env->all_vars[i] != NULL)
+	{
+		printf("%s\n", env->all_vars[i]);
+		i++;
+	}
+	
 }

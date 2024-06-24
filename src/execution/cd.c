@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:27:54 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/06/24 16:52:58 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:14:09 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@ int check_builtins(t_parser *cmd, t_env *env)
 		change_directory(cmd, env);
 		return (1);
 	}
+	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "env", 3) == 0)
+	{
+		print_env(env);
+		return(1);
+	}
+	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "pwd", 3) == 0)
+	{
+		printf("%s\n",env->pwd);
+		return (1);
+	}
 	return (0);
 }
 
@@ -35,8 +45,12 @@ void change_directory(t_parser *cmd, t_env *env)
 	if (!cmd->args[1] || (cmd->args[1][0] == '~' && !cmd->args[1][1]))
 	{
 		env->old_pwd = env->pwd;
+		change_variable(env, "OLDPWD=", env->old_pwd);
 		if (chdir(env->home) == 0)
+		{
 			env->pwd = ft_strdup(env->home);
+			change_variable(env, "PWD=", env->pwd);
+		}
 		else
 			perror("chdir");
 		return;
@@ -50,7 +64,9 @@ void change_directory(t_parser *cmd, t_env *env)
 		{
 			char *temp = env->pwd;
 			env->pwd = env->old_pwd;
+			change_variable(env, "PWD=", env->old_pwd);
 			env->old_pwd = temp;
+			change_variable(env, "OLDPWD=", temp);
 		}
 		else
 			perror("chdir");
@@ -65,6 +81,8 @@ void change_directory(t_parser *cmd, t_env *env)
 		{
 			env->old_pwd = env->pwd;
 			env->pwd = ft_strdup(buffer); // Remember to free old env->pwd later
+			change_variable(env, "PWD=", env->pwd);
+			change_variable(env, "OLDPWD=", env->old_pwd);
 		}
 		else
 			perror("getcwd");
