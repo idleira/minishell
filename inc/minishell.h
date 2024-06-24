@@ -189,4 +189,8 @@ void	print_env(t_env *env);
 //cd
 void	change_directory(t_parser *cmd, t_env *env);
 
+//BUILTINS
+//export
+void print_export(t_env *env);
+
 # endif
