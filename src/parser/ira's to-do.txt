@@ -1,0 +1,22 @@
+chatgpt's suggestions of what to do next:
+
+1. lexer and parser enhancement:
+   - improve/extend the ft_lexer(src/lexer/lexer.c) function to handle more complex scenarios or additional syntax that might not be covered yet.
+   - enhance the parser's ability to handle different command structures or add support for more complex syntax by working on parser utils
+
+2. error handling:
+   - develop a more comprehensive error handling mechanism. This could involve enhancing the error reporting in the lexer, parser, or during the initial command reading phase. You can start by improving error messages or handling specific error cases more gracefully.
+
+3. environment management:
+   - work on the environment management functions such as copy_environment (could involve implementing features to set/unset/ist environment variables, which are essential for many shell operations but separate from the command execution logic)
+
+4. built-in commands:
+   - implement/enhance built-in shell commands that don't involve the execution pipeline, such as setenv, unsetenv, etc. The change_directory`function is a starting point, but there could be more to add or improve.
+
+5. input and command processing:
+   - work on the initial command processing steps, such as reading input from the user and preprocessing it before it gets to the lexer or parser. this could involve handling line continuations, expanding environment variables in the input, or implementing history features.
+
+
+resources:
+- https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html
+- https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf
