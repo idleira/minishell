@@ -11,13 +11,9 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-//prints details of a single t_dlist node
-static void	traverse_helper(t_dlist *head)
+// prints details of a single t_dlist node
+static void traverse_helper(const t_dlist *temp)
 {
-	t_dlist	*temp;
-
-	temp = head;
 	printf("[.] value -> %s\n", temp->value);
 	if (temp->state == __s_quotes)
 		printf("[.] state -> IN_SINGLE_QUOTES\n");
@@ -31,12 +27,10 @@ static void	traverse_helper(t_dlist *head)
 		printf("[.] type -> REDIRECTION_OUT\n");
 }
 
-//processes a t_dlist structure
-void	traverse_lexer(t_dlist *head)
+// processes a t_dlist structure
+void traverse_lexer(const t_dlist *head)
 {
-	t_dlist	*temp;
-
-	temp = head;
+	const t_dlist *temp = head;
 	while (temp)
 	{
 		printf("---------------------------------\n");
@@ -54,55 +48,53 @@ void	traverse_lexer(t_dlist *head)
 	}
 }
 
-//processes an array of strings
-void	traverse_scanner(char **scanner)
+// processes an array of strings
+void traverse_scanner(char **scanner)
 {
-	int	i;
-
-	i = -1;
+	int i = -1;
 	while (scanner[++i])
 		printf(" [.] %s\n", scanner[i]);
 }
 
-//processes a linked list of t_parser nodes
-void	traverse_parser(t_parser *head)
+// processes a linked list of t_parser nodes
+void traverse_parser(const t_parser *head)
 {
-	int	i;
-
 	printf("----------------------\n");
-	while (head)
+	const t_parser *current = head;
+	while (current)
 	{
 		printf("[.] arguments : \n\t");
-		if (head->args)
+		if (current->args)
 		{
-			i = -1;
-			while (head->args[++i])
-				printf("%s ", head->args[i]);
-			
+			int i = -1;
+			while (current->args[++i])
+				printf("%s ", current->args[i]);
 		}
 		else
 			printf("no arguments\n");
 		printf("\n");
+
 		printf("[.] files :\n");
-		if (head->file)
+		const t_list *file = current->file;
+		if (file)
 		{
-			while (head->file)
+			while (file)
 			{
-				printf("\nname : %s\n", head->file->name);
-				if (head->file->type == HEREDOC)
+				printf("\nname : %s\n", file->name);
+				if (file->type == HEREDOC)
 					printf("\ttype : HEREDOC\n");
-				else if (head->file->type == APPEND)
+				else if (file->type == APPEND)
 					printf("\ttype : RED_APPEND\n");
-				else if (head->file->type == IN)
+				else if (file->type == IN)
 					printf("\ttype : RED_IN\n");
-				else if (head->file->type == OUT)
+				else if (file->type == OUT)
 					printf("\ttype : RED_OUT\n");
-				head->file = head->file->next;
+				file = file->next;
 			}
 		}
 		else
 			printf("\tno files\n");
 		printf("----------------------\n");
-		head = head->next;
+		current = current->next;
 	}
 }

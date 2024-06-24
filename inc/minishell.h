@@ -72,7 +72,7 @@ typedef enum e_types
 	__WORD = 0,
 	__RED_IN = '<',
 	__RED_OUT = '>',
-	__RED_APP = 256,
+	__RED_APP = 15934,
 	__HEREDOC,
 	__PIPE = '|'
 }	t_types;
@@ -103,6 +103,15 @@ typedef struct s_dlist
 	struct s_dlist	*next;
 	struct s_dlist	*prev;
 }	t_dlist;
+
+typedef struct s_env
+{
+	char *pwd;
+	char *old_pwd;
+	char *home;
+	char **paths;
+	char **all_vars;
+}	t_env;
 
 // prompt functions
 void	prompt_build(t_prompt *prompt);
@@ -156,16 +165,26 @@ t_parser	*node_last_pars(t_parser *head);
 void	node_append_pars(t_parser **head, t_parser *new);
 
 // traverse functions
-void	traverse_lexer(t_dlist *head);
+void	traverse_lexer(const t_dlist *head);
 void	traverse_scanner(char **scanner);
-void	traverse_parser(t_parser *head);
+void	traverse_parser(const t_parser *head);
 
 //EXECUTION:
 //Executor:
-void	execute_command(t_parser *cmd);
+char	*get_path(char *cmd, t_env *env);
+void	execute_command(t_parser *cmd, t_env *env);
 void	handle_redirection(t_parser *cmd);
-void	execute_pipeline(t_parser *head);
-void	chose_execution(t_parser *head);
+void	execute_pipeline(t_parser *head, t_env *env);
+void	chose_execution(t_parser *head, t_env *env);
 void	free_parser(t_parser *head);
+void	free_split(char **split);
+char	*my_strjoin(char const *s1, char const *s2);
 
-#endif
+//Environment
+void	copy_environment(t_env *env, char **envp);
+int	check_builtins(t_parser *cmd, t_env *env);
+
+//cd
+void	change_directory(t_parser *cmd, t_env *env);
+
+# endif
