@@ -32,11 +32,20 @@ void	prompt_build(t_prompt *prompt)
 // gets the input from the user
 char	*input_get(t_prompt *prompt)
 {
-	if (getenv("USER"))
-	{
-		prompt_build(prompt);
-		return (readline(prompt->line));
-	}
-	else
-		return (readline("\033[0;36mminishell\033[0m]$ "));
+    char *input;
+
+    if (getenv("USER"))
+    {
+        prompt_build(prompt);
+        input = readline(prompt->line);
+    }
+    else
+        input = readline("\033[0;36mminishell\033[0m]$ ");
+    if (input == NULL)	// if the user presses ctrl+d (readline encountered EOF - end-of-file condition)
+    {
+		printf("ctrl pressed\n");
+        write(1, "exit\n", 5);
+        exit(EXIT_SUCCESS);
+    }
+    return (input);
 }

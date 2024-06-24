@@ -9,22 +9,23 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
-SRCS = src/lexer/lexer.c \
-       src/parser/parser_cmd_util.c \
-       src/parser/parser_utils.c \
-       src/lexer/lexer_utils.c \
-       src/parser/parser_cmd.c \
-       src/parser/parser_utils_list.c \
-       src/lexer/lexer_utils_list.c \
-       src/parser/parser_error.c \
-       src/minishell_utils.c \
-       src/parser/parser_traverse.c \
-       src/minishell.c \
-       src/parser/parser.c \
-       src/prompt.c \
-	   src/execution/executor.c \
-       src/execution/set_env.c \
-	   src/execution/cd.c \
+SRCS = src/lexer/lexer.c                   \
+       src/parser/parser_cmd_util.c        \
+       src/parser/parser_utils.c           \
+       src/lexer/lexer_utils.c             \
+       src/parser/parser_cmd.c             \
+       src/parser/parser_utils_list.c      \
+       src/lexer/lexer_utils_list.c        \
+       src/parser/parser_error.c           \
+       src/minishell_utils.c               \
+       src/parser/parser_traverse.c        \
+       src/minishell.c                     \
+       src/parser/parser.c                 \
+       src/prompt.c                        \
+       src/signals/signals.c               \
+	   src/execution/executor.c         \
+       src/execution/set_env.c             \
+	   src/execution/cd.c               \
        
 
 LIBFT_DIR = ./libft

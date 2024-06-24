@@ -117,6 +117,10 @@ typedef struct s_env
 void	prompt_build(t_prompt *prompt);
 char	*input_get(t_prompt *prompt);
 
+//signals
+void	signal_handlers_setup(void);
+void	signal_handler(int signum);
+
 // scanner functions
 void	ft_scanner(t_scanner *scanner);
 void	handle_quotes(t_scanner *scanner);
