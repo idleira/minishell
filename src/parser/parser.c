@@ -31,25 +31,6 @@ void	handle_file_redirection(t_dlist **head)
 		file->type = NONE;
 }
 
-//handles file redirection
-void	handle_file_redirection(t_dlist **head)
-{
-	t_list	*file;
-
-	file = ft_lstnew();
-	file->name = (*head)->next->value;
-	if ((*head)->type == __RED_IN)
-		file->type = IN;
-	else if ((*head)->type == __RED_OUT)
-		file->type = OUT;
-	else if ((*head)->type == __RED_APP)
-		file->type = APPEND;
-	else if ((*head)->type == __HEREDOC)
-		file->type = HEREDOC;
-	else
-		file->type = NONE;
-}
-
 void	process_word_tokens(t_dlist **head, char **args)
 {
 	while (*head && (*head)->type != __PIPE)
