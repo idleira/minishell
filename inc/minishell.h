@@ -191,6 +191,12 @@ void	change_directory(t_parser *cmd, t_env *env);
 
 //BUILTINS
 //export
-void print_export(t_env *env);
+void	print_export(t_env *env);
+void	add_to_env(t_env *env, char *new_val);
+int		check_export(t_parser *cmd, t_env *env);
+int		is_valid_argument(char *arg);
+int		exists_in_env(t_env *env, char *var);
+char	*get_var_name(char *var);
+void	update_env(t_env *env, char *var);
 
 # endif

@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/mariannazhukova/Desktop/minishell/src/execution",
-      "program": "/Users/mariannazhukova/Desktop/minishell/src/execution/build/Debug/outDebug"
+      "cwd": "/Users/mariannazhukova/Desktop/minishell/src/builtin",
+      "program": "/Users/mariannazhukova/Desktop/minishell/src/builtin/build/Debug/outDebug"
     }
   ]
 }

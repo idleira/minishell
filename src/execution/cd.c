@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mariannazhukova <mariannazhukova@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:27:54 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/06/24 18:35:23 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:03:36 by mariannazhu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ int check_builtins(t_parser *cmd, t_env *env)
 	}
 	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "export", 6) == 0)
 	{
-		print_export(env);
-		return (1);
+		return check_export(cmd, env);
 	}
 	return (0);
 }
