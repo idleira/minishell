@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mariannazhukova <mariannazhukova@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/06/21 12:02:05 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/06/26 19:51:37 by mariannazhu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,16 +103,14 @@ void	chose_execution(t_parser *head, t_env *env)
 		execute_command(head, env);
 }
 
-void	execute_pipeline(t_parser *head, t_env *env)
+void execute_pipeline(t_parser *head, t_env *env)
 {
-	int			pipefd[2];
-	int			prev_fd;
-	pid_t		pid;
-	t_parser	*current;
-	char		*cmd_w_path;
+	int pipefd[2];
+	int prev_fd = -1;
+	pid_t pid;
+	t_parser *current = head;
+	char *cmd_w_path;
 
-	prev_fd = -1;
-	current = head;
 	while (current)
 	{
 		if (current->next)
@@ -143,12 +141,23 @@ void	execute_pipeline(t_parser *head, t_env *env)
 				close(pipefd[1]);
 			}
 			handle_redirection(current);
-			cmd_w_path = get_path(current->args[0], env);
-			if (execve(cmd_w_path, current->args, env->all_vars) == -1)
+			if (!check_builtins(current, env))
 			{
-				perror("execve");
-				exit(EXIT_FAILURE);
+				cmd_w_path = get_path(current->args[0], env);
+				if (cmd_w_path == NULL)
+				{
+					printf("Command not found: \n");
+					exit(EXIT_FAILURE);
+				}
+				if (execve(cmd_w_path, current->args, env->all_vars) == -1)
+				{
+					perror("execve");
+					free(cmd_w_path);
+					exit(EXIT_FAILURE);
+				}
 			}
+			else
+				exit(EXIT_SUCCESS);
 		}
 		else
 		{
@@ -164,6 +173,7 @@ void	execute_pipeline(t_parser *head, t_env *env)
 		current = current->next;
 	}
 }
+
 
 void free_parser(t_parser *head)
 {
