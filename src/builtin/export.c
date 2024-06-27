@@ -6,7 +6,7 @@
 /*   By: mariannazhukova <mariannazhukova@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:26:25 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/06/25 16:31:48 by mariannazhu      ###   ########.fr       */
+/*   Updated: 2024/06/27 15:17:40 by mariannazhu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,4 +135,22 @@ void	update_env(t_env *env, char *var)
 		i++;
 	}
 	free(var_name);
+}
+
+char *get_var_value(t_env *env, char *var_name)
+{
+	int	i;
+
+	i = 0;
+	size_t var_name_len = ft_strlen(var_name);
+
+	while (env->all_vars[i] != NULL)
+	{
+		if (ft_strncmp(env->all_vars[i], var_name, var_name_len) == 0 && env->all_vars[i][var_name_len] == '=')
+		{
+			return env->all_vars[i] + var_name_len + 1;
+		}
+		i++;
+	}
+	return (NULL);
 }

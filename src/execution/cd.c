@@ -6,15 +6,12 @@
 /*   By: mariannazhukova <mariannazhukova@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:27:54 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/06/25 16:03:36 by mariannazhu      ###   ########.fr       */
+/*   Updated: 2024/06/27 14:48:35 by mariannazhu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//TODO:
-//1. function check_builtins() that is called inside execute_command()
-// Before execution check_builtins() checks the keyword and then calls the needed builtin function
 int check_builtins(t_parser *cmd, t_env *env)
 {
 	if (cmd->args[0] && ft_strncmp(cmd->args[0], "cd", 2) == 0)
@@ -35,6 +32,10 @@ int check_builtins(t_parser *cmd, t_env *env)
 	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "export", 6) == 0)
 	{
 		return check_export(cmd, env);
+	}
+	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "echo", 4) == 0)
+	{
+		return check_echo(cmd, env);
 	}
 	return (0);
 }

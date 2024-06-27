@@ -198,5 +198,9 @@ int		is_valid_argument(char *arg);
 int		exists_in_env(t_env *env, char *var);
 char	*get_var_name(char *var);
 void	update_env(t_env *env, char *var);
+char	*get_var_value(t_env *env, char *var_name);
+
+//echo
+int		check_echo(t_parser *cmd, t_env *env);
 
 # endif
