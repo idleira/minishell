@@ -6,7 +6,7 @@
 /*   By: mariannazhukova <mariannazhukova@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:26:25 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/06/27 15:17:40 by mariannazhu      ###   ########.fr       */
+/*   Updated: 2024/07/01 17:39:58 by mariannazhu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,48 @@
 
 void print_export(t_env *env)
 {
-	int	i;
+	int		i;
+	char	*equals_sign;
 
 	i = 0;
 	while (env->all_vars[i] != NULL)
 	{
-		//printf("declare -x ");
-		printf("%s\n", env->all_vars[i]);
+		equals_sign = ft_strchr(env->all_vars[i], '=');
+		if (equals_sign != NULL)
+			printf("declare -x %s\n", env->all_vars[i]);
+		else
+			printf("declare -x %s=''\n", env->all_vars[i]);
 		i++;
 	}
-	//maybe add check for "="
-	// if no "=", just print without declare
 }
 
-void	add_to_env(t_env *env, char *new_val)
+void add_to_env(t_env *env, char *new_val)
 {
-	int len;
-	
+	int		len;
+	char	*new_var;
+
 	len = 0;
 	while (env->all_vars[len] != NULL)
 		len++;
+	if (ft_strchr(new_val, '=') == NULL)
+	{
+		new_var = my_strjoin(new_val, "=''");
+		if (new_var == NULL)
+			return;
+	}
+	else
+	{
+		new_var = ft_strdup(new_val);
+		if (new_var == NULL)
+			return;
+	}
 	env->all_vars = realloc(env->all_vars, sizeof(char *) * (len + 2));
-	env->all_vars[len] = ft_strdup(new_val);
+	if (env->all_vars == NULL)
+	{
+		free(new_var);
+		return;
+	}
+	env->all_vars[len] = new_var;
 	env->all_vars[len + 1] = NULL;
 }
 
@@ -82,8 +102,6 @@ int is_valid_argument(char *arg)
 			return 0;
 		i++;
 	}
-	if (arg[i] != '=')
-		return 0;
 	return 1;
 }
 
