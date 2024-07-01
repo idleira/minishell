@@ -206,5 +206,7 @@ int		check_echo(t_parser *cmd, t_env *env);
 
 //unset
 void	unset_var(t_parser *cmd, t_env *env);
+int		find_var_index(char *var, char **all_vars);
+char	**copy_new_export(char **all_vars, int exclude_index, int len);
 
 # endif
