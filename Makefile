@@ -27,6 +27,7 @@ SRCS = src/lexer/lexer.c \
 	   src/execution/cd.c \
 	   src/builtin/export.c \
 	   src/builtin/echo.c \
+	   src/builtin/unset.c \
        
 
 LIBFT_DIR = ./libft

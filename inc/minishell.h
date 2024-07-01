@@ -204,4 +204,7 @@ char	*get_var_value(t_env *env, char *var_name);
 //echo
 int		check_echo(t_parser *cmd, t_env *env);
 
+//unset
+void	unset_var(t_parser *cmd, t_env *env);
+
 # endif
