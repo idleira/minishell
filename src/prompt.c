@@ -15,18 +15,18 @@
 // builds the prompt line
 void	prompt_build(t_prompt *prompt)
 {
-	char	*user;
-	char	*cwd;
+    char	*user;
+    char	*cwd;
 
-	user = getenv("USER");
-	cwd = getcwd(NULL, PATH_MAX);
-	prompt->line = ft_strjoin(ft_strdup("[\033[0;32m"), ft_strdup(user));
-	prompt->line = ft_strjoin(prompt->line,
-			ft_strdup("\033[0m\033[1;37m | \033[0m\033[0;36m "));
-	prompt->line = ft_strjoin(prompt->line,
-			ft_strdup(ft_strrchr(cwd, '/') + 1));
-	prompt->line = ft_strjoin(prompt->line, ft_strdup("\033[0m]$ "));
-	free(cwd);
+    user = getenv("USER");
+    cwd = getcwd(NULL, PATH_MAX);
+    prompt->line = ft_strjoin(ft_strdup("\001\033[0;32m\002"), ft_strdup(user));
+    prompt->line = ft_strjoin(prompt->line,
+            ft_strdup("\001\033[0m\002\001\033[1;37m\002 | \001\033[0m\002\001\033[0;36m\002"));
+    prompt->line = ft_strjoin(prompt->line,
+            ft_strdup(ft_strrchr(cwd, '/') + 1));
+    prompt->line = ft_strjoin(prompt->line, ft_strdup("\001\033[0m\002$ "));
+    free(cwd);
 }
 
 // gets the input from the user
@@ -43,7 +43,6 @@ char	*input_get(t_prompt *prompt)
         input = readline("\033[0;36mminishell\033[0m]$ ");
     if (input == NULL)	// if the user presses ctrl+d (readline encountered EOF - end-of-file condition)
     {
-		printf("ctrl pressed\n");
         write(1, "exit\n", 5);
         exit(EXIT_SUCCESS);
     }
