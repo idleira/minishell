@@ -25,6 +25,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	ft_alloc_init();
 	signal_handlers_setup();
 	env = (t_env *)malloc(sizeof(t_env));
 	copy_environment(env, envp);
@@ -39,6 +40,7 @@ int	main(int argc, char **argv, char **envp)
 			free(prompt);
 			free(scanner);
 			free(error);
+			ft_destructor();
 			exit(0);
 		}
 		head = NULL;
@@ -56,5 +58,6 @@ int	main(int argc, char **argv, char **envp)
 		free(scanner);
 		free(error);
 	}
+	ft_destructor();
 	return (0);
 }

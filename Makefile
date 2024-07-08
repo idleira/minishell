@@ -32,14 +32,18 @@ SRCS = src/lexer/lexer.c \
 
 LIBFT_DIR = ./libft
 LIBFT = ./libft/libft.a
+DESTRUCTOR_DIR = ./destructor
+FT_ALLOC = ./destructor/ft_alloc.a
 
-all: $(LIBFT) $(NAME)
+all: $(LIBFT) $(FT_ALLOC) $(NAME)
 
 $(LIBFT):
 	@$(MAKE) bonus -sC $(LIBFT_DIR)
+$(FT_ALLOC):
+	@$(MAKE) -sC $(DESTRUCTOR_DIR)
 
 $(NAME): $(SRCS)
-	@$(CC) $(CFLAGS) $(SRCS) $(LIBFT) -lreadline -o $@
+	@$(CC) $(CFLAGS) $(SRCS) $(LIBFT) $(FT_ALLOC) -lreadline -o $@
 	@echo "$(PINK)꒰ᐢ. .ᐢ꒱$(DEF_COLOR) minishell compiled successfully!"
 
 clean:
@@ -47,6 +51,7 @@ clean:
 
 fclean: clean
 	@$(MAKE) fclean -sC $(LIBFT_DIR)
+	@$(MAKE) fclean -sC $(DESTRUCTOR_DIR)
 	@rm -rf $(NAME)
 	@echo "$(YELLOW)✧･ﾟ:* ꒰ᐢ. .ᐢ꒱ :ﾟ･✧$(DEF_COLOR) minishell cleaned!"
 

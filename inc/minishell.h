@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include "../destructor/ft_alloc.h"
 # include <stdio.h>
 # include <stdbool.h>
 # include <stdlib.h>
