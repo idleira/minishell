@@ -37,10 +37,11 @@ FT_ALLOC = ./destructor/ft_alloc.a
 
 all: $(LIBFT) $(FT_ALLOC) $(NAME)
 
-$(LIBFT):
-	@$(MAKE) bonus -sC $(LIBFT_DIR)
 $(FT_ALLOC):
 	@$(MAKE) -sC $(DESTRUCTOR_DIR)
+
+$(LIBFT):
+	@$(MAKE) bonus -sC $(LIBFT_DIR)
 
 $(NAME): $(SRCS)
 	@$(CC) $(CFLAGS) $(SRCS) $(LIBFT) $(FT_ALLOC) -lreadline -o $@

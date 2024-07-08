@@ -45,7 +45,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	while (ft_strchr(set, s1[len]))
 		len--;
 	len = len - start + 1;
-	str = malloc(sizeof(char) * (len + 1));
+	str = ft_malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
 	return (copy(s1, str, len, start));

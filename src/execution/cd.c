@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariannazhukova <mariannazhukova@studen    +#+  +:+       +#+        */
+/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:27:54 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/01 11:43:01 by mariannazhu      ###   ########.fr       */
+/*   Updated: 2024/07/08 14:52:48 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void change_directory(t_parser *cmd, t_env *env)
 		if (getcwd(buffer, sizeof(buffer)) != NULL)
 		{
 			env->old_pwd = env->pwd;
-			env->pwd = ft_strdup(buffer); // Remember to free old env->pwd later
+			env->pwd = ft_strdup(buffer); // Remember to ft_free old env->pwd later
 			change_variable(env, "PWD=", env->pwd);
 			change_variable(env, "OLDPWD=", env->old_pwd);
 		}

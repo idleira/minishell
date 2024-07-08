@@ -52,7 +52,7 @@ char	*ft_itoa(int n)
 
 	len = 0;
 	len = count(n);
-	ptr = (char *) malloc (len + 1);
+	ptr = (char *) ft_malloc (len + 1);
 	if (!ptr)
 		return (NULL);
 	position = 0;

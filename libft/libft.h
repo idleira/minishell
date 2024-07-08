@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <stddef.h>
 # include <unistd.h>
+# include "../destructor/ft_alloc.h"
 
 typedef enum e_file_type
 {

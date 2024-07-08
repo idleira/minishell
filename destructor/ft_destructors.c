@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 14:38:08 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/08 14:38:12 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/08 15:03:34 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_destructor(void)
 		if (temp->ptr != NULL)
 		{
 			if (DEBUG)
-				printf("Freeing using destructor %p\n", temp->ptr);
+				printf("ft_freeing using destructor %p\n", temp->ptr);
 			free(temp->ptr);
 			temp->ptr = NULL;
 		}

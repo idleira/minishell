@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariannazhukova <mariannazhukova@studen    +#+  +:+       +#+        */
+/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 12:07:37 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/01 16:54:30 by mariannazhu      ###   ########.fr       */
+/*   Updated: 2024/07/08 14:52:48 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	unset_var(t_parser *cmd, t_env *env)
 	new_all_vars = copy_new_export(env->all_vars, index, len);
 	if (new_all_vars == NULL)
 		return ;
-	free(env->all_vars[index]);
-	free(env->all_vars);
+	ft_free(env->all_vars[index]);
+	ft_free(env->all_vars);
 	env->all_vars = new_all_vars;
 }
 
@@ -52,7 +52,7 @@ char **copy_new_export(char **all_vars, int exclude_index, int len)
 	int		i;
 	int		j;
 
-	new_all_vars = (char **)malloc(sizeof(char *) * len);
+	new_all_vars = (char **)ft_malloc(sizeof(char *) * len);
 	if (new_all_vars == NULL)
 		return (NULL);
 	i = 0;

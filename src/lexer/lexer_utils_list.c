@@ -17,7 +17,7 @@ t_dlist	*node_create_lex(void)
 {
 	t_dlist	*new;
 
-	new = (t_dlist *)malloc(sizeof(t_dlist));
+	new = (t_dlist *)ft_malloc(sizeof(t_dlist));
 	if (!new)
 		return (NULL);
 	new->next = NULL;
@@ -70,8 +70,8 @@ void	traverse_list(t_dlist *head)
 	}
 }
 
-// frees the doubly linked lexer list
-void	node_free(t_dlist *head, int boolean)
+// ft_frees the doubly linked lexer list
+void	node_ft_free(t_dlist *head, int boolean)
 {
 	t_dlist	*temp;
 
@@ -82,8 +82,8 @@ void	node_free(t_dlist *head, int boolean)
 		if (boolean)
 		{
 			if (temp->state == __s_quotes || temp->state == __d_quotes)
-				free(temp->value);
+				ft_free(temp->value);
 		}
-		free(temp);
+		ft_free(temp);
 	}
 }

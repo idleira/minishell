@@ -128,7 +128,7 @@ void	ft_scanner(t_scanner *scanner);
 void	handle_quotes(t_scanner *scanner);
 void	handle_operators(t_scanner *scanner);
 void	cmds_split(t_scanner *scanner);
-void	scanner_free(char **tokens);
+void	scanner_ft_free(char **tokens);
 
 // lexer functions
 void	ft_lexer(t_dlist **head, t_scanner *scanner);
@@ -145,7 +145,7 @@ t_dlist	*node_create_lex(void);
 t_dlist	*node_last_lex(t_dlist *head);
 void	node_append_lex(t_dlist **head, t_dlist *new);
 void	traverse_list(t_dlist *head);
-void	node_free(t_dlist *head, int boolean);
+void	node_ft_free(t_dlist *head, int boolean);
 
 // error fucntions
 void	ft_error(t_dlist *head, t_errors *error);
@@ -153,7 +153,7 @@ void	error_display(t_errors *error);
 
 // minishell functions
 int		check_spaces(char *s);
-void	ptrs_free(t_prompt *prompt, t_scanner *scanner, t_errors *error);
+void	ptrs_ft_free(t_prompt *prompt, t_scanner *scanner, t_errors *error);
 int		ft_check(t_scanner *scanner, t_prompt *prompt, t_errors *error);
 t_parser	*input_process(t_scanner *scanner, t_dlist *head, t_errors *error,
 			t_prompt *prompt);
@@ -184,8 +184,8 @@ void	execute_command(t_parser *cmd, t_env *env);
 void	handle_redirection(t_parser *cmd);
 void	execute_pipeline(t_parser *head, t_env *env);
 void	chose_execution(t_parser *head, t_env *env);
-void	free_parser(t_parser *head);
-void	free_split(char **split);
+void	ft_free_parser(t_parser *head);
+void	ft_free_split(char **split);
 char	*my_strjoin(char const *s1, char const *s2);
 
 //Environment

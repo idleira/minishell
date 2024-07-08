@@ -27,19 +27,19 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	ft_alloc_init();
 	signal_handlers_setup();
-	env = (t_env *)malloc(sizeof(t_env));
+	env = (t_env *)ft_malloc(sizeof(t_env));
 	copy_environment(env, envp);
 	while (1)
 	{
-		prompt = (t_prompt *)malloc(sizeof(t_prompt));
-		scanner = (t_scanner *)malloc(sizeof(t_scanner));
-		error = (t_errors *)malloc(sizeof(t_errors));
+		prompt = (t_prompt *)ft_malloc(sizeof(t_prompt));
+		scanner = (t_scanner *)ft_malloc(sizeof(t_scanner));
+		error = (t_errors *)ft_malloc(sizeof(t_errors));
 		scanner->command = input_get(prompt);									// get user's input command and store it in scanner->command
 		if (ft_strncmp(scanner->command, "exit", 5) == 0)
 		{
-			free(prompt);
-			free(scanner);
-			free(error);
+			ft_free(prompt);
+			ft_free(scanner);
+			ft_free(error);
 			ft_destructor();
 			exit(0);
 		}
@@ -52,11 +52,11 @@ int	main(int argc, char **argv, char **envp)
 			parsed_commands = input_process(scanner, head, error, prompt);		// parse the command and store it in t_parser struct
 			if (parsed_commands)
 				chose_execution(parsed_commands, env);
-			free_parser(parsed_commands);
+			ft_free_parser(parsed_commands);
 		}
-		free(prompt);
-		free(scanner);
-		free(error);
+		ft_free(prompt);
+		ft_free(scanner);
+		ft_free(error);
 	}
 	ft_destructor();
 	return (0);

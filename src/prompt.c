@@ -26,7 +26,7 @@ void	prompt_build(t_prompt *prompt)
 	prompt->line = ft_strjoin(prompt->line,
 			ft_strdup(ft_strrchr(cwd, '/') + 1));
 	prompt->line = ft_strjoin(prompt->line, ft_strdup("\033[0m]$ "));
-	free(cwd);
+	ft_free(cwd);
 }
 
 // gets the input from the user

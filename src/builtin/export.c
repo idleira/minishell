@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariannazhukova <mariannazhukova@studen    +#+  +:+       +#+        */
+/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:26:25 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/01 17:39:58 by mariannazhu      ###   ########.fr       */
+/*   Updated: 2024/07/08 14:52:48 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void add_to_env(t_env *env, char *new_val)
 	env->all_vars = realloc(env->all_vars, sizeof(char *) * (len + 2));
 	if (env->all_vars == NULL)
 	{
-		free(new_var);
+		ft_free(new_var);
 		return;
 	}
 	env->all_vars[len] = new_var;
@@ -115,10 +115,10 @@ int	exists_in_env(t_env *env, char *var)
 		char *var_name = get_var_name(env->all_vars[i]);
 		if (ft_strncmp(var_name, var, i) == 0)
 		{
-			free(var_name);
+			ft_free(var_name);
 			return 1;
 		}
-		free(var_name);
+		ft_free(var_name);
 		i++;
 	}
 	return 0;
@@ -128,7 +128,7 @@ char	*get_var_name(char *var)
 	int i = 0;
 	while (var[i] != '=' && var[i] != '\0')
 		i++;
-	char *name = malloc(sizeof(char) * (i + 1));
+	char *name = ft_malloc(sizeof(char) * (i + 1));
 	if (name == NULL)
 		return NULL;
 	ft_strlcpy(name, var, i + 1);
@@ -144,15 +144,15 @@ void	update_env(t_env *env, char *var)
 		char *current_name = get_var_name(env->all_vars[i]);
 	if (ft_strncmp(current_name, var_name, i) == 0)
 		{
-			free(env->all_vars[i]);
+			ft_free(env->all_vars[i]);
 			env->all_vars[i] = ft_strdup(var);
-			free(current_name);
+			ft_free(current_name);
 			break;
 		}
-		free(current_name);
+		ft_free(current_name);
 		i++;
 	}
-	free(var_name);
+	ft_free(var_name);
 }
 
 char *get_var_value(t_env *env, char *var_name)

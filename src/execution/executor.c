@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariannazhukova <mariannazhukova@studen    +#+  +:+       +#+        */
+/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/06/26 19:51:37 by mariannazhu      ###   ########.fr       */
+/*   Updated: 2024/07/08 14:52:48 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ char *get_path(char *cmd, t_env *env)
 		temp_path = my_strjoin(env->paths[i], "/");
 		cmd_path = my_strjoin(temp_path, cmd);
 		
-		free(temp_path);
+		ft_free(temp_path);
 		if (access(cmd_path, X_OK) == 0)
 			return (cmd_path);
-		free(cmd_path);
+		ft_free(cmd_path);
 		i++;
 	}
 	return (NULL);
@@ -152,7 +152,7 @@ void execute_pipeline(t_parser *head, t_env *env)
 				if (execve(cmd_w_path, current->args, env->all_vars) == -1)
 				{
 					perror("execve");
-					free(cmd_w_path);
+					ft_free(cmd_w_path);
 					exit(EXIT_FAILURE);
 				}
 			}
@@ -175,7 +175,7 @@ void execute_pipeline(t_parser *head, t_env *env)
 }
 
 
-void free_parser(t_parser *head)
+void ft_free_parser(t_parser *head)
 {
 	t_parser *tmp;
 
@@ -183,12 +183,12 @@ void free_parser(t_parser *head)
 	{
 		tmp = head;
 		head = head->next;
-		free(tmp->args);
-		free(tmp);
+		ft_free(tmp->args);
+		ft_free(tmp);
 	}
 }
 
-void	free_split(char **split)
+void	ft_free_split(char **split)
 {
 	int	i;
 
@@ -197,10 +197,10 @@ void	free_split(char **split)
 	i = 0;
 	while (split[i])
 	{
-		free(split[i]);
+		ft_free(split[i]);
 		i++;
 	}
-	free(split);
+	ft_free(split);
 }
 
 char	*my_strjoin(char const *s1, char const *s2)
@@ -209,7 +209,7 @@ char	*my_strjoin(char const *s1, char const *s2)
 	int		i;
 
 	i = 0;
-	result = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	result = ft_malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!result)
 		return (NULL);
 	while (*s1)

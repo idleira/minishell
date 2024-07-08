@@ -1,7 +1,7 @@
 
 # FT_DESTRUCTOR
 
-A lightweight C library that automates memory cleanup. It ensures all allocated memory is properly freed in case of allocation fail or at program exit.
+A lightweight C library that automates memory cleanup. It ensures all allocated memory is properly ft_freed in case of allocation fail or at program exit.
 In short it's simplifying memory management and minimizing memory leaks.
 
 
@@ -30,12 +30,12 @@ t_allocs *ft_allocs(t_allocs *lst);
 ````
 - Allocations
 ```c
-void *ft_malloc(size_t size);
+void *ft_ft_malloc(size_t size);
 void *ft_calloc(size_t count, size_t size)
 ```
 - Destructors
 ```c
-void ft_free(void *ptr);
+void ft_ft_free(void *ptr);
 void ft_destructor(void);
 ```
 
@@ -48,30 +48,30 @@ int	main(void)
 	// init list for allocations
 	ft_alloc_init();
 
-	// allocations with ft_malloc
-	char *str = ft_malloc(455 * sizeof(char));
-	char *str2 = ft_malloc(455 * sizeof(char));
-	char *str3 = ft_malloc(455 * sizeof(char));
+	// allocations with ft_ft_malloc
+	char *str = ft_ft_malloc(455 * sizeof(char));
+	char *str2 = ft_ft_malloc(455 * sizeof(char));
+	char *str3 = ft_ft_malloc(455 * sizeof(char));
 
-	// manual free
-	ft_free(str);  
-	ft_free(str2);
-	ft_free(str3);
+	// manual ft_free
+	ft_ft_free(str);  
+	ft_ft_free(str2);
+	ft_ft_free(str3);
 
 	int i = 0;
 	while (i < 10)
 	{
-		// allocation without ft_free
-		char *str4 = ft_malloc(455 * sizeof(char));
+		// allocation without ft_ft_free
+		char *str4 = ft_ft_malloc(455 * sizeof(char));
 		(void)str4;
 		i++;
 	}
 
-	// original malloc - won't be freed with destructor
-	char *str5 = malloc(455 * sizeof(char)); 
+	// original ft_malloc - won't be ft_freed with destructor
+	char *str5 = ft_malloc(455 * sizeof(char)); 
 	(void)str5;
 
-	// will free everything that was allocated with ft_malloc or ft_calloc
+	// will ft_free everything that was allocated with ft_ft_malloc or ft_calloc
 	ft_destructor(); 
 	return (0);
 }
