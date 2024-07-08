@@ -15,6 +15,7 @@
 
 # include "../libft/libft.h"
 # include <stdio.h>
+# include <stdbool.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
@@ -188,9 +189,30 @@ char	*my_strjoin(char const *s1, char const *s2);
 
 //Environment
 void	copy_environment(t_env *env, char **envp);
-int	check_builtins(t_parser *cmd, t_env *env);
+int		check_builtins(t_parser *cmd, t_env *env);
+void	change_variable(t_env *env, char *key, char *new_value);
+void	print_env(t_env *env);
 
 //cd
 void	change_directory(t_parser *cmd, t_env *env);
+
+//BUILTINS
+//export
+void	print_export(t_env *env);
+void	add_to_env(t_env *env, char *new_val);
+int		check_export(t_parser *cmd, t_env *env);
+int		is_valid_argument(char *arg);
+int		exists_in_env(t_env *env, char *var);
+char	*get_var_name(char *var);
+void	update_env(t_env *env, char *var);
+char	*get_var_value(t_env *env, char *var_name);
+
+//echo
+int		check_echo(t_parser *cmd, t_env *env);
+
+//unset
+void	unset_var(t_parser *cmd, t_env *env);
+int		find_var_index(char *var, char **all_vars);
+char	**copy_new_export(char **all_vars, int exclude_index, int len);
 
 # endif
