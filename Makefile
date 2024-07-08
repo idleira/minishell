@@ -28,7 +28,7 @@ SRCS = src/lexer/lexer.c \
 	   src/builtin/export.c \
 	   src/builtin/echo.c \
 	   src/builtin/unset.c \
-       
+	   src/signals/signals.c  
 
 LIBFT_DIR = ./libft
 LIBFT = ./libft/libft.a

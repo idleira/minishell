@@ -84,6 +84,6 @@ void	node_free(t_dlist *head, int boolean)
 			if (temp->state == __s_quotes || temp->state == __d_quotes)
 				free(temp->value);
 		}
-		free(temp);	
+		free(temp);
 	}
 }

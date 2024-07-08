@@ -41,6 +41,13 @@ void	handle_operators(t_scanner *scanner)
 		scanner->line = ft_strjoin(scanner->line, ft_strdup("\n"));
 		scanner->i++;
 	}
+	else if (scanner->command[scanner->i] == '|')
+	{
+		scanner->line = ft_strjoin(scanner->line, ft_strdup("\n"));
+		scanner->line = ft_strjoin(scanner->line,
+				ft_substr(scanner->command, scanner->i, 1));
+		scanner->line = ft_strjoin(scanner->line, ft_strdup("\n"));
+	}
 	else
 	{
 		scanner->line = ft_strjoin(scanner->line, ft_strdup("\n"));

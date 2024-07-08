@@ -25,6 +25,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	signal_handlers_setup();
 	env = (t_env *)malloc(sizeof(t_env));
 	copy_environment(env, envp);
 	while (1)

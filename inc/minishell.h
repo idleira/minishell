@@ -118,6 +118,10 @@ typedef struct s_env
 void	prompt_build(t_prompt *prompt);
 char	*input_get(t_prompt *prompt);
 
+//signals
+void	signal_handlers_setup(void);
+void	signal_handler(int signum);
+
 // scanner functions
 void	ft_scanner(t_scanner *scanner);
 void	handle_quotes(t_scanner *scanner);
@@ -155,6 +159,8 @@ t_parser	*input_process(t_scanner *scanner, t_dlist *head, t_errors *error,
 
 // parser function
 void	parse_cmd_list(t_parser **parser, t_dlist *head);
+void	handle_file_redirection(t_dlist **head);
+void	process_word_tokens(t_dlist **head, char **args);
 // int		count_files(t_dlist	*head);
 int		count_args(t_dlist *head);
 // void	assign_file(t_dlist *head, t_parser *node, int i);
