@@ -13,37 +13,37 @@
 #include "../../inc/minishell.h"
 
 // gets the index of the first '=' in a string
-static int	get_v(char *string)
-{
-	int	i;
+// static int	get_v(char *string)
+// {
+// 	int	i;
 
-	i = 0;
-	while (string[i] != '=' && string[i])
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	while (string[i] != '=' && string[i])
+// 		i++;
+// 	return (i);
+// }
 
-// initializes environment variables by adding to a pre-existing list
-t_env	*env_init(t_env	*env, char **envp)
-{
-	int		i;
-	t_env	*traveser;
+// // initializes environment variables by adding to a pre-existing list
+// t_env	*env_init(t_env	*env, char **envp)
+// {
+// 	int		i;
+// 	t_env	*traveser;
 
-	i = 0;
-	env = ft_lstnew();
-	traveser = env;
-	while (envp[i])
-	{
-		traveser->key = ft_substr(envp[i], 0, get_v(envp[i]));
-		traveser->value = ft_substr(envp[i],
-				get_v(envp[i]) + 1, ft_strlen(envp[i]));
-		if (envp[i + 1])
-			ft_lstadd_back(&env, ft_lstnew());
-		traveser = traveser->next;
-		i++;
-	}
-	return (env);
-}
+// 	i = 0;
+// 	env = ft_lstnew();
+// 	traveser = env;
+// 	while (envp[i])
+// 	{
+// 		traveser->key = ft_substr(envp[i], 0, get_v(envp[i]));
+// 		traveser->value = ft_substr(envp[i],
+// 				get_v(envp[i]) + 1, ft_strlen(envp[i]));
+// 		if (envp[i + 1])
+// 			ft_lstadd_back(&env, ft_lstnew());
+// 		traveser = traveser->next;
+// 		i++;
+// 	}
+// 	return (env);
+// }
 
 // initializes environment variables by creating a new list
 // t_env	*env_init(t_env	*env, char **envp)

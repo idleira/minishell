@@ -13,16 +13,16 @@
 #include "../../inc/minishell.h"
 
 // gets the value of an environment variable (using standart one in parser for now)
-char	*ft_getenv(char *string, t_env *env)
-{
-	t_env	*traverser;
+// char	*ft_getenv(char *string, t_env *env)
+// {
+// 	t_env	*traverser;
 
-	traverser = env;
-	while (traverser)
-	{
-		if (!strcmp(string, traverser->key))
-			return (traverser->value);
-		traverser = traverser->next;
-	}
-	return (NULL);
-}
+// 	traverser = env;
+// 	while (traverser)
+// 	{
+// 		if (!strcmp(string, traverser->key))
+// 			return (traverser->value);
+// 		traverser = traverser->next;
+// 	}
+// 	return (NULL);
+// }
