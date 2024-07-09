@@ -19,7 +19,7 @@ void	prompt_build(t_prompt *prompt)
 	char	*cwd;
 
 	user = getenv("USER");
-	cwd = getcwd(NULL, 0);
+	cwd = getcwd(NULL, PATH_MAX);
 	prompt->line = ft_strjoin(ft_strdup("[\033[0;32m"), ft_strdup(user));
 	prompt->line = ft_strjoin(prompt->line,
 			ft_strdup("\033[0m\033[1;37m | \033[0m\033[0;36m "));

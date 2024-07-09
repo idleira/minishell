@@ -11,9 +11,8 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
 // prints details of a single t_dlist node
-static void	traverse_helper(const t_dlist *temp)
+static void traverse_helper(const t_dlist *temp)
 {
 	printf("[.] value -> %s\n", temp->value);
 	if (temp->state == __s_quotes)
@@ -29,7 +28,7 @@ static void	traverse_helper(const t_dlist *temp)
 }
 
 // processes a t_dlist structure
-void	traverse_lexer(const t_dlist *head)
+void traverse_lexer(const t_dlist *head)
 {
 	const t_dlist *temp = head;
 	while (temp)
@@ -50,7 +49,7 @@ void	traverse_lexer(const t_dlist *head)
 }
 
 // processes an array of strings
-void	traverse_scanner(char **scanner)
+void traverse_scanner(char **scanner)
 {
 	int i = -1;
 	while (scanner[++i])
@@ -58,7 +57,7 @@ void	traverse_scanner(char **scanner)
 }
 
 // processes a linked list of t_parser nodes
-void	traverse_parser(const t_parser *head)
+void traverse_parser(const t_parser *head)
 {
 	printf("----------------------\n");
 	const t_parser *current = head;
