@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/08 14:52:48 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/08 15:54:39 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	execute_command(t_parser *cmd, t_env *env)
 				perror("execve");
 				exit(EXIT_FAILURE);
 			}
+			printf("execution just got handled\n");
 		}
 	}
 	else

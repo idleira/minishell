@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 14:37:51 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/08 15:02:43 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/09 12:43:54 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # ifndef DEBUG
 #  define DEBUG 0
 # endif
+
+#define FT_DESTR 1
 
 # include <stdio.h>
 # include <stdlib.h>

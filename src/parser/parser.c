@@ -13,7 +13,7 @@
 #include "../../inc/minishell.h"
 
 //handles file redirection
-void	handle_file_redirection(t_dlist **head)
+t_list	*handle_file_redirection(t_dlist **head)
 {
 	t_list	*file;
 
@@ -29,6 +29,7 @@ void	handle_file_redirection(t_dlist **head)
 		file->type = HEREDOC;
 	else
 		file->type = NONE;
+	return (file);
 }
 
 //handles file redirection
@@ -50,8 +51,9 @@ void	handle_file_redirection(t_dlist **head)
 // 		file->type = NONE;
 // }
 
-void	process_word_tokens(t_dlist **head, char **args)
+void	process_word_tokens(t_dlist **head, t_parser *node,  char **args)
 {
+	t_list	*file;
 	while (*head && (*head)->type != __PIPE)
 	{
 		if (((*head)->type == __WORD && !(*head)->prev)
@@ -64,7 +66,8 @@ void	process_word_tokens(t_dlist **head, char **args)
 		else if (((*head)->type == __RED_APP || (*head)->type == __RED_IN
 				|| (*head)->type == __HEREDOC || (*head)->type == __RED_OUT))
 		{
-			handle_file_redirection(head);
+			file = handle_file_redirection(head);
+			ft_lstadd_back(&node->file, file);
 		}
 		*head = (*head)->next;
 	}
@@ -81,7 +84,7 @@ void	parse_cmd_list(t_parser **parser, t_dlist *head)
 		node = node_create_pars();
 		node->file = NULL;
 		args = NULL;
-		process_word_tokens(&head, &args);
+		process_word_tokens(&head, node, &args);
 		if (args)
 			node->args = ft_split(args, '\n');
 		else

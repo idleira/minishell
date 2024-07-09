@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 14:46:55 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/08 15:03:54 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/09 13:12:00 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_allocsize(void)
 	return (size);
 }
 
-t_allocs	*ft_lstlast(t_allocs *lst)
+t_allocs	*ft_last(t_allocs *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -55,7 +55,7 @@ void	add_allocnode(t_allocs **lst, t_allocs *nnew)
 	if (!lst || !nnew)
 		return ;
 	if (*lst)
-		ft_lstlast(*lst)->next = nnew;
+		ft_last(*lst)->next = nnew;
 	else
 		*lst = nnew;
 }
