@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:26:25 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/10 14:22:45 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:30:55 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,15 @@
 void print_export(t_env *env)
 {
 	int		i;
+	int		size;
 	char	*equals_sign;
 
 	i = 0;
+	size = 0;
+	while (env->all_vars[size])
+		size++;
+	sort_env_vars(env->all_vars, size);
+	printf("SORTED VARS\n\n\n");
 	while (env->all_vars[i] != NULL)
 	{
 		equals_sign = ft_strchr(env->all_vars[i], '=');

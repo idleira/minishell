@@ -209,6 +209,12 @@ char	*get_var_name(char *var);
 void	update_env(t_env *env, char *var);
 char	*get_var_value(t_env *env, char *var_name);
 
+//export sort
+void	swap(char **a, char **b);
+int		partition(char *arr[], int low, int high);
+void	quick_sort(char *arr[], int low, int high);
+void	sort_env_vars(char *env_vars[], int n);
+
 //echo
 int		check_echo(t_parser *cmd, t_env *env);
 
