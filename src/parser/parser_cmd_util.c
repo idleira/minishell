@@ -12,13 +12,13 @@
 
 #include "../../inc/minishell.h"
 
-// frees scanner resources
-void	scanner_free(char **tokens)
+// ft_frees scanner resources
+void	scanner_ft_free(char **tokens)
 {
 	int	i;
 
 	i = -1;
 	while (tokens[++i])
-		free(tokens[i]);
-	free(tokens);
+		ft_free(tokens[i]);
+	ft_free(tokens);
 }

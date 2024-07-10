@@ -12,11 +12,11 @@
 
 #include "libft.h"
 
-/* free memory of content and free node, preserving 'next' ptr */
+/* ft_free memory of content and ft_free node, preserving 'next' ptr */
 // void	ft_lstdelone(t_list *lst, void (*del)(void*))
 // {
 // 	if (!lst || !del)
 // 		return ;
 // 	del(lst->content);
-// 	free(lst);
+// 	ft_free(lst);
 // }

@@ -86,5 +86,5 @@ void	ft_scanner(t_scanner *scanner)
 	scanner->line = NULL;
 	cmds_split(scanner);
 	scanner->tokens = ft_split(scanner->line, '\n');
-	free(scanner->line);
+	ft_free(scanner->line);
 }

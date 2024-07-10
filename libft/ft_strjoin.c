@@ -19,7 +19,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	int		j;
 	char	*p;
 
-	p = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	p = (char *)ft_malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!p)
 		return ((void *)0);
 	i = 0;
@@ -32,7 +32,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[j])
 		p[i++] = s2[j++];
 	p[i] = '\0';
-	free(s1);
-	free(s2);
+	ft_free(s1);
+	ft_free(s2);
 	return (p);
 }

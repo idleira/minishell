@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:09:03 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/06/24 18:07:08 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:27:37 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void copy_environment(t_env *env, char **envp)
 	envp_count = 0;
 	while (envp[envp_count] != NULL)
 		envp_count++;
-	env->all_vars = malloc((envp_count + 1) * sizeof(char *));
+	env->all_vars = ft_malloc((envp_count + 1) * sizeof(char *));
 	// Handle the exit properly later ->
 	if (!env->all_vars)
 		exit(1);
@@ -48,7 +48,7 @@ void change_variable(t_env *env, char *key, char *new_value)
 	{
 		if (ft_strncmp(env->all_vars[i], key, ft_strlen(key)) == 0)
 		{
-			free(env->all_vars[i]);
+			ft_free(env->all_vars[i]);
 			env->all_vars[i] = ft_strdup(key);
 			env->all_vars[i] = my_strjoin(env->all_vars[i], new_value);
 		}
@@ -57,15 +57,18 @@ void change_variable(t_env *env, char *key, char *new_value)
 
 }
 
-void print_env(t_env *env)
+int print_env(t_parser *cmd, t_env *env)
 {
 	int	i;
 
 	i = 0;
+	
+	if (cmd->file)
+		return (0);
 	while (env->all_vars[i] != NULL)
 	{
 		printf("%s\n", env->all_vars[i]);
 		i++;
 	}
-	
+	return (1);
 }

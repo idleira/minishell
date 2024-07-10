@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pointers_free.c                                    :+:      :+:    :+:   */
+/*   pointers_ft_free.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -22,16 +22,16 @@ int	check_spaces(char *s)
 	return (1);
 }
 
-// frees all pointers
-void	ptrs_free(t_prompt *prompt, t_scanner *scanner,
+// ft_frees all pointers
+void	ptrs_ft_free(t_prompt *prompt, t_scanner *scanner,
 	t_errors *error)
 {
-	free(prompt->line);
-	free(prompt);
-	free(scanner->command);
-	scanner_free(scanner->tokens);
-	free(scanner);
-	free(error);
+	ft_free(prompt->line);
+	ft_free(prompt);
+	ft_free(scanner->command);
+	scanner_ft_free(scanner->tokens);
+	ft_free(scanner);
+	ft_free(error);
 }
 
 // checks if the command is empty
@@ -40,17 +40,17 @@ int	ft_check(t_scanner *scanner, t_prompt *prompt, t_errors *error)
 	// (void)error;
 	if (!scanner->command)
 	{
-		free(prompt);
-		free(scanner);
+		ft_free(prompt);
+		ft_free(scanner);
 		return (1);
 	}
 	if (check_spaces(scanner->command))
 	{
-		free(prompt->line);
-		free(prompt);
-		free(scanner->command);
-		free(scanner);
-		free(error);
+		ft_free(prompt->line);
+		ft_free(prompt);
+		ft_free(scanner->command);
+		ft_free(scanner);
+		ft_free(error);
 		return (2);
 	}
 	return (0);
@@ -70,16 +70,16 @@ t_parser	*input_process(t_scanner *scanner, t_dlist *head, t_errors *error,
 	if (error->error_type != no_error)
 	{
 		error_display(error);
-		node_free(head, 0);
+		node_ft_free(head, 0);
 	}
 	else										// if no errors, parse the command										
 	{
 		quotes_remove(head);					// remove quotes from the tokens
 		parse_cmd_list(&parser, head);			// parse the tokens and create a parser node for each cmd separated by a pipe
 		//traverse_parser(parser);				// prints out arguments and files associated with each parser node
-		// node_free(head, 1);
+		// node_ft_free(head, 1);
 	}
 	add_history(scanner->command);				// add the command to the history
-	// ptrs_free(prompt, scanner, error);
+	// ptrs_ft_free(prompt, scanner, error);
 	return (parser);
 }

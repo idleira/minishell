@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include "../destructor/ft_alloc.h"
 # include <stdio.h>
 # include <stdbool.h>
 # include <stdlib.h>
@@ -26,6 +27,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <limits.h>
+#include <linux/limits.h>
 # include <dirent.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -127,7 +129,7 @@ void	ft_scanner(t_scanner *scanner);
 void	handle_quotes(t_scanner *scanner);
 void	handle_operators(t_scanner *scanner);
 void	cmds_split(t_scanner *scanner);
-void	scanner_free(char **tokens);
+void	scanner_ft_free(char **tokens);
 
 // lexer functions
 void	ft_lexer(t_dlist **head, t_scanner *scanner);
@@ -144,7 +146,7 @@ t_dlist	*node_create_lex(void);
 t_dlist	*node_last_lex(t_dlist *head);
 void	node_append_lex(t_dlist **head, t_dlist *new);
 void	traverse_list(t_dlist *head);
-void	node_free(t_dlist *head, int boolean);
+void	node_ft_free(t_dlist *head, int boolean);
 
 // error fucntions
 void	ft_error(t_dlist *head, t_errors *error);
@@ -152,15 +154,15 @@ void	error_display(t_errors *error);
 
 // minishell functions
 int		check_spaces(char *s);
-void	ptrs_free(t_prompt *prompt, t_scanner *scanner, t_errors *error);
+void	ptrs_ft_free(t_prompt *prompt, t_scanner *scanner, t_errors *error);
 int		ft_check(t_scanner *scanner, t_prompt *prompt, t_errors *error);
 t_parser	*input_process(t_scanner *scanner, t_dlist *head, t_errors *error,
 			t_prompt *prompt);
 
 // parser function
 void	parse_cmd_list(t_parser **parser, t_dlist *head);
-void	handle_file_redirection(t_dlist **head);
-void	process_word_tokens(t_dlist **head, char **args);
+t_list	*handle_file_redirection(t_dlist **head);
+void	process_word_tokens(t_dlist **head, t_parser *node,  char **args);
 // int		count_files(t_dlist	*head);
 int		count_args(t_dlist *head);
 // void	assign_file(t_dlist *head, t_parser *node, int i);
@@ -183,32 +185,41 @@ void	execute_command(t_parser *cmd, t_env *env);
 void	handle_redirection(t_parser *cmd);
 void	execute_pipeline(t_parser *head, t_env *env);
 void	chose_execution(t_parser *head, t_env *env);
-void	free_parser(t_parser *head);
-void	free_split(char **split);
+void	ft_free_parser(t_parser *head);
+void	ft_free_split(char **split);
 char	*my_strjoin(char const *s1, char const *s2);
 
 //Environment
 void	copy_environment(t_env *env, char **envp);
 int		check_builtins(t_parser *cmd, t_env *env);
 void	change_variable(t_env *env, char *key, char *new_value);
-void	print_env(t_env *env);
+int		print_env(t_parser *cmd, t_env *env);
 
 //cd
 void	change_directory(t_parser *cmd, t_env *env);
 
 //BUILTINS
 //export
-void	print_export(t_env *env);
-void	add_to_env(t_env *env, char *new_val);
+int		print_export(t_env *env);
 int		check_export(t_parser *cmd, t_env *env);
 int		is_valid_argument(char *arg);
 int		exists_in_env(t_env *env, char *var);
-char	*get_var_name(char *var);
 void	update_env(t_env *env, char *var);
+
+//export_utils
 char	*get_var_value(t_env *env, char *var_name);
+char	*get_var_name(char *var);
+void	add_to_env(t_env *env, char *new_val);
+
+//export sort
+void	swap(char **a, char **b);
+int		partition(char *arr[], int low, int high);
+void	quick_sort(char *arr[], int low, int high);
+void	sort_env_vars(char *env_vars[], int n);
 
 //echo
 int		check_echo(t_parser *cmd, t_env *env);
+void	print_echo(t_parser *cmd, t_env *env, int i);
 
 //unset
 void	unset_var(t_parser *cmd, t_env *env);
