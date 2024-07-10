@@ -6,7 +6,7 @@
 /*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:52:34 by ibeliaie          #+#    #+#             */
-/*   Updated: 2024/07/08 14:57:25 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:59:49 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void signal_handlers_setup(void)
 {
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 }
 
 // handles the signal SIGINT
