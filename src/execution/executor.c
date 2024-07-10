@@ -6,24 +6,31 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/09 18:31:43 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:57:52 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char *get_path(char *cmd, t_env *env)
+void	chose_execution(t_parser *head, t_env *env)
+{
+	if (head && head->next)
+		execute_pipeline(head, env);
+	else if (head)
+		execute_command(head, env);
+}
+
+char	*get_path(char *cmd, t_env *env)
 {
 	char	*temp_path;
 	char	*cmd_path;
 	int		i;
-	
+
 	i = 0;
 	while (env->paths[i])
 	{
 		temp_path = my_strjoin(env->paths[i], "/");
 		cmd_path = my_strjoin(temp_path, cmd);
-		
 		ft_free(temp_path);
 		if (access(cmd_path, X_OK) == 0)
 			return (cmd_path);
@@ -41,78 +48,66 @@ void	execute_command(t_parser *cmd, t_env *env)
 
 	pid = fork();
 	if (pid < 0)
-	{
-		perror("fork");
 		exit(EXIT_FAILURE);
-	}
 	else if (pid == 0)
 	{
 		if (!check_builtins(cmd, env))
 		{
 			handle_redirection(cmd);
 			cmd_w_path = get_path(cmd->args[0], env);
+			if (!cmd_w_path)
+				exit(127);
 			if (execve(cmd_w_path, cmd->args, env->all_vars) == -1)
 			{
-				perror("command not found");
+				printf("command not found: %s\n", cmd_w_path);
 				ft_destructor();
 				exit(EXIT_FAILURE);
 			}
-			printf("execution just got handled\n");
 		}
 	}
 	else
 		waitpid(pid, &status, 0);
 }
 
-
 void	handle_redirection(t_parser *cmd)
 {
 	t_list	*file;
-	int		fd;
 
 	file = cmd->file;
 	while (file)
 	{
 		if (file->type == '|')
-			fd = open(file->name, O_RDONLY);
+			cmd->fd = open(file->name, O_RDONLY);
 		else if (file->type == OUT)
-		{
-			fd = open(file->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		}
+			cmd->fd = open(file->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else if (file->type == APPEND)
-			fd = open(file->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			cmd->fd = open(file->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		else
-			fd = -1;
-		if (fd < 0)
+			cmd->fd = -1;
+		if (cmd->fd < 0)
 		{
 			perror("open file");
 			exit(EXIT_FAILURE);
 		}
 		if (file->type == '<')
-			dup2(fd, STDIN_FILENO);
+			dup2(cmd->fd, STDIN_FILENO);
 		else
-			dup2(fd, STDOUT_FILENO);
-		close(fd);
+			dup2(cmd->fd, STDOUT_FILENO);
+		close(cmd->fd);
 		file = file->next;
 	}
 }
 
-void	chose_execution(t_parser *head, t_env *env)
-{
-	if (head && head->next)
-		execute_pipeline(head, env);
-	else if (head)
-		execute_command(head, env);
-}
-
 void execute_pipeline(t_parser *head, t_env *env)
 {
-	int pipefd[2];
-	int prev_fd = -1;
-	pid_t pid;
-	t_parser *current = head;
-	char *cmd_w_path;
+	int			pipefd[2];
+	int			prev_fd;
+	pid_t		pid;
+	t_parser	*current;
+	char		*cmd_w_path;
 
+	prev_fd = -1;
+	current = head;
 	while (current)
 	{
 		if (current->next)
@@ -177,53 +172,3 @@ void execute_pipeline(t_parser *head, t_env *env)
 }
 
 
-void ft_free_parser(t_parser *head)
-{
-	t_parser *tmp;
-
-	while (head)
-	{
-		tmp = head;
-		head = head->next;
-		ft_free(tmp->args);
-		ft_free(tmp);
-	}
-}
-
-void	ft_free_split(char **split)
-{
-	int	i;
-
-	if (split == NULL)
-		return ;
-	i = 0;
-	while (split[i])
-	{
-		ft_free(split[i]);
-		i++;
-	}
-	ft_free(split);
-}
-
-char	*my_strjoin(char const *s1, char const *s2)
-{
-	char	*result;
-	int		i;
-
-	i = 0;
-	result = ft_malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!result)
-		return (NULL);
-	while (*s1)
-	{
-		result[i++] = *s1;
-		s1++;
-	}
-	while (*s2)
-	{
-		result[i++] = *s2;
-		s2++;
-	}
-	result[i++] = '\0';
-	return (result);
-}

@@ -51,7 +51,8 @@ int	main(int argc, char **argv, char **envp)
 			exit(1);
 		if (return_value != 2)
 		{
-			parsed_commands = input_process(scanner, head, error, prompt);		// parse the command and store it in t_parser struct
+			parsed_commands = input_process(scanner, head, error, prompt);// parse the command and store it in t_parser struct
+			free(scanner->command);
 			if (parsed_commands)
 				chose_execution(parsed_commands, env);
 			ft_free_parser(parsed_commands);

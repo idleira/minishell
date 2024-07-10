@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 12:07:37 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/10 15:58:26 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:16:15 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	find_var_index(char *var, char **all_vars)
 	return (-1);
 }
 
-void	unset_var(t_parser *cmd, t_env *env)
+int	unset_var(t_parser *cmd, t_env *env)
 {
 	int		index;
 	int		len;
@@ -38,13 +38,14 @@ void	unset_var(t_parser *cmd, t_env *env)
 		len++;
 	index = find_var_index(cmd->args[1], env->all_vars);
 	if (index == -1)
-		return ;
+		return (1);
 	new_all_vars = copy_new_export(env->all_vars, index, len);
 	if (new_all_vars == NULL)
-		return ;
+		return (1);
 	ft_free(env->all_vars[index]);
 	ft_free(env->all_vars);
 	env->all_vars = new_all_vars;
+	return (1);
 }
 
 char	**copy_new_export(char **all_vars, int exclude_index, int len)
