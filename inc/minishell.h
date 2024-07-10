@@ -185,18 +185,22 @@ void	execute_command(t_parser *cmd, t_env *env);
 void	handle_redirection(t_parser *cmd);
 void	execute_pipeline(t_parser *head, t_env *env);
 void	chose_execution(t_parser *head, t_env *env);
+
+//Execution_utils
 void	ft_free_parser(t_parser *head);
 void	ft_free_split(char **split);
 char	*my_strjoin(char const *s1, char const *s2);
 
 //Environment
 void	copy_environment(t_env *env, char **envp);
-int		check_builtins(t_parser *cmd, t_env *env);
 void	change_variable(t_env *env, char *key, char *new_value);
 int		print_env(t_parser *cmd, t_env *env);
 
 //cd
+int		check_builtins(t_parser *cmd, t_env *env);
 void	change_directory(t_parser *cmd, t_env *env);
+void	construct_cd_path(t_env *env, t_parser *cmd);
+void	handle_slash_return(t_env *env);
 
 //BUILTINS
 //export
