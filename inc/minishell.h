@@ -27,10 +27,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <limits.h>
-#include <linux/limits.h>
+# include <linux/limits.h>
 # include <dirent.h>
-#include <sys/types.h>
-#include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 // struct for prompt string
 typedef struct s_prompt
@@ -91,6 +91,7 @@ typedef enum e_state
 // struct for the parser
 typedef struct s_parser
 {
+	int				fd;
 	char			**args;		// in parse_cmd_list, words that are not redirections or pipes are stored here (so technically not just arg, but cmds for now as well)
 	t_list			*file;		// the files assosiated with the command (redirections for now)
 	struct s_parser	*next;
@@ -109,11 +110,11 @@ typedef struct s_dlist
 
 typedef struct s_env
 {
-	char *pwd;
-	char *old_pwd;
-	char *home;
-	char **paths;
-	char **all_vars;
+	char	*pwd;
+	char	*old_pwd;
+	char	*home;
+	char	**paths;
+	char	**all_vars;
 }	t_env;
 
 // prompt functions
@@ -226,7 +227,7 @@ int		check_echo(t_parser *cmd, t_env *env);
 void	print_echo(t_parser *cmd, t_env *env, int i);
 
 //unset
-void	unset_var(t_parser *cmd, t_env *env);
+int		unset_var(t_parser *cmd, t_env *env);
 int		find_var_index(char *var, char **all_vars);
 char	**copy_new_export(char **all_vars, int exclude_index, int len);
 

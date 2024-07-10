@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:27:54 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/10 17:08:30 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:16:52 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,9 @@ int	check_builtins(t_parser *cmd, t_env *env)
 	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "echo", 4) == 0)
 		return (check_echo(cmd, env));
 	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "unset", 5) == 0)
-	{
-		(unset_var(cmd, env));
-		return (1);
-	}
+		return (unset_var(cmd, env));
+	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "exit", 4) == 0)
+		exit(1);
 	return (0);
 }
 

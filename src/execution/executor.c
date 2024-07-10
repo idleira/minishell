@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/10 16:53:25 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:37:12 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,32 +69,32 @@ void	execute_command(t_parser *cmd, t_env *env)
 }
 
 
+
 void	handle_redirection(t_parser *cmd)
 {
 	t_list	*file;
-	int		fd;
 
 	file = cmd->file;
 	while (file)
 	{
 		if (file->type == '|')
-			fd = open(file->name, O_RDONLY);
+			cmd->fd = open(file->name, O_RDONLY);
 		else if (file->type == OUT)
-			fd = open(file->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			cmd->fd = open(file->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else if (file->type == APPEND)
-			fd = open(file->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			cmd->fd = open(file->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		else
-			fd = -1;
-		if (fd < 0)
+			cmd->fd = -1;
+		if (cmd->fd < 0)
 		{
 			perror("open file");
 			exit(EXIT_FAILURE);
 		}
 		if (file->type == '<')
-			dup2(fd, STDIN_FILENO);
+			dup2(cmd->fd, STDIN_FILENO);
 		else
-			dup2(fd, STDOUT_FILENO);
-		close(fd);
+			dup2(cmd->fd, STDOUT_FILENO);
+		close(cmd->fd);
 		file = file->next;
 	}
 }
