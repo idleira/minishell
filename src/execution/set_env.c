@@ -6,18 +6,17 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:09:03 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/10 14:27:37 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:02:15 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../inc/minishell.h"
 
-void copy_environment(t_env *env, char **envp)
+void	copy_environment(t_env *env, char **envp)
 {
 	int	i;
 	int	envp_count;
-	
+
 	env->pwd = getenv("PWD");
 	env->old_pwd = getenv("OLDPWD");
 	env->home = getenv("HOME");
@@ -26,7 +25,6 @@ void copy_environment(t_env *env, char **envp)
 	while (envp[envp_count] != NULL)
 		envp_count++;
 	env->all_vars = ft_malloc((envp_count + 1) * sizeof(char *));
-	// Handle the exit properly later ->
 	if (!env->all_vars)
 		exit(1);
 	i = 0;
@@ -38,11 +36,10 @@ void copy_environment(t_env *env, char **envp)
 	env->all_vars[i] = NULL;
 }
 
-void change_variable(t_env *env, char *key, char *new_value)
+void	change_variable(t_env *env, char *key, char *new_value)
 {
-
 	int	i;
-	
+
 	i = 0;
 	while (env->all_vars[i] != NULL)
 	{
@@ -54,15 +51,13 @@ void change_variable(t_env *env, char *key, char *new_value)
 		}
 		i++;
 	}
-
 }
 
-int print_env(t_parser *cmd, t_env *env)
+int	print_env(t_parser *cmd, t_env *env)
 {
 	int	i;
 
 	i = 0;
-	
 	if (cmd->file)
 		return (0);
 	while (env->all_vars[i] != NULL)

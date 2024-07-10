@@ -27,10 +27,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <limits.h>
-#include <linux/limits.h>
+# include <linux/limits.h>
 # include <dirent.h>
-#include <sys/types.h>
-#include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 // struct for prompt string
 typedef struct s_prompt
@@ -92,6 +92,7 @@ typedef enum e_state
 // struct for the parser
 typedef struct s_parser
 {
+	int				fd;
 	char			**args;		// in parse_cmd_list, words that are not redirections or pipes are stored here (so technically not just arg, but cmds for now as well)
 	t_list			*file;		// the files assosiated with the command (redirections for now)
 	struct s_parser	*next;
@@ -110,11 +111,11 @@ typedef struct s_dlist
 
 typedef struct s_env
 {
-	char *pwd;
-	char *old_pwd;
-	char *home;
-	char **paths;
-	char **all_vars;
+	char	*pwd;
+	char	*old_pwd;
+	char	*home;
+	char	**paths;
+	char	**all_vars;
 }	t_env;
 
 // prompt functions
@@ -186,18 +187,22 @@ void	execute_command(t_parser *cmd, t_env *env);
 void	handle_redirection(t_parser *cmd);
 void	execute_pipeline(t_parser *head, t_env *env);
 void	chose_execution(t_parser *head, t_env *env);
+
+//Execution_utils
 void	ft_free_parser(t_parser *head);
 void	ft_free_split(char **split);
 char	*my_strjoin(char const *s1, char const *s2);
 
 //Environment
 void	copy_environment(t_env *env, char **envp);
-int		check_builtins(t_parser *cmd, t_env *env);
 void	change_variable(t_env *env, char *key, char *new_value);
 int		print_env(t_parser *cmd, t_env *env);
 
 //cd
+int		check_builtins(t_parser *cmd, t_env *env);
 void	change_directory(t_parser *cmd, t_env *env);
+void	construct_cd_path(t_env *env, t_parser *cmd);
+void	handle_slash_return(t_env *env);
 
 //BUILTINS
 //export
@@ -223,7 +228,7 @@ int		check_echo(t_parser *cmd, t_env *env);
 void	print_echo(t_parser *cmd, t_env *env, int i);
 
 //unset
-void	unset_var(t_parser *cmd, t_env *env);
+int		unset_var(t_parser *cmd, t_env *env);
 int		find_var_index(char *var, char **all_vars);
 char	**copy_new_export(char **all_vars, int exclude_index, int len);
 
