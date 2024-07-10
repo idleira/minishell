@@ -6,13 +6,13 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:26:25 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/10 15:30:55 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:57:38 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void print_export(t_env *env)
+int	print_export(t_env *env)
 {
 	int		i;
 	int		size;
@@ -33,50 +33,18 @@ void print_export(t_env *env)
 			printf("declare -x %s=''\n", env->all_vars[i]);
 		i++;
 	}
+	return (1);
 }
 
-void add_to_env(t_env *env, char *new_val)
-{
-	int		len;
-	char	*new_var;
-
-	len = 0;
-	while (env->all_vars[len] != NULL)
-		len++;
-	if (ft_strchr(new_val, '=') == NULL)
-	{
-		new_var = my_strjoin(new_val, "=''");
-		if (new_var == NULL)
-			return;
-	}
-	else
-	{
-		new_var = ft_strdup(new_val);
-		if (new_var == NULL)
-			return;
-	}
-	env->all_vars = realloc(env->all_vars, sizeof(char *) * (len + 2));
-	if (env->all_vars == NULL)
-	{
-		ft_free(new_var);
-		return;
-	}
-	env->all_vars[len] = new_var;
-	env->all_vars[len + 1] = NULL;
-}
-
-int check_export(t_parser *cmd, t_env *env)
+int	check_export(t_parser *cmd, t_env *env)
 {
 	int	i;
-	
+
 	i = 1;
 	if (cmd->file)
 		return (0);
 	if (cmd->args[1] == NULL)
-	{
-		print_export(env);
-		return (1);
-	}
+		return (print_export(env));
 	while (cmd->args[i])
 	{
 		if (is_valid_argument(cmd->args[i]))
@@ -96,89 +64,65 @@ int check_export(t_parser *cmd, t_env *env)
 	return (1);
 }
 
-int is_valid_argument(char *arg)
+int	is_valid_argument(char *arg)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (arg == NULL)
-		return 0;
+		return (0);
 	if (!ft_isalpha(arg[i]) && arg[i] != '_')
-		return 0;
+		return (0);
 	i = 1;
 	while (arg[i] != '=' && arg[i] != '\0')
 	{
 		if (!ft_isalnum(arg[i]) && arg[i] != '_')
-			return 0;
+			return (0);
 		i++;
 	}
-	return 1;
+	return (1);
 }
 
 int	exists_in_env(t_env *env, char *var)
 {
-	int	i;
-	
+	int		i;
+	char	*var_name;
+
 	i = 0;
 	while (env->all_vars[i] != NULL)
 	{
-		char *var_name = get_var_name(env->all_vars[i]);
+		var_name = get_var_name(env->all_vars[i]);
 		if (ft_strncmp(var_name, var, i) == 0)
 		{
 			ft_free(var_name);
-			return 1;
+			return (1);
 		}
 		ft_free(var_name);
 		i++;
 	}
-	return 0;
+	return (0);
 }
-char	*get_var_name(char *var)
-{
-	int i = 0;
-	while (var[i] != '=' && var[i] != '\0')
-		i++;
-	char *name = ft_malloc(sizeof(char) * (i + 1));
-	if (name == NULL)
-		return NULL;
-	ft_strlcpy(name, var, i + 1);
-	name[i] = '\0';
-	return (name);
-}
+
 void	update_env(t_env *env, char *var)
 {
-	int i = 0;
-	char *var_name = get_var_name(var);
+	int		i;
+	char	*var_name;
+	char	*current_name;
+
+	var_name = get_var_name(var);
+	i = 0;
 	while (env->all_vars[i] != NULL)
 	{
-		char *current_name = get_var_name(env->all_vars[i]);
-	if (ft_strncmp(current_name, var_name, i) == 0)
+		current_name = get_var_name(env->all_vars[i]);
+		if (ft_strncmp(current_name, var_name, i) == 0)
 		{
 			ft_free(env->all_vars[i]);
 			env->all_vars[i] = ft_strdup(var);
 			ft_free(current_name);
-			break;
+			break ;
 		}
 		ft_free(current_name);
 		i++;
 	}
 	ft_free(var_name);
-}
-
-char *get_var_value(t_env *env, char *var_name)
-{
-	int	i;
-
-	i = 0;
-	size_t var_name_len = ft_strlen(var_name);
-
-	while (env->all_vars[i] != NULL)
-	{
-		if (ft_strncmp(env->all_vars[i], var_name, var_name_len) == 0 && env->all_vars[i][var_name_len] == '=')
-		{
-			return env->all_vars[i] + var_name_len + 1;
-		}
-		i++;
-	}
-	return (NULL);
 }

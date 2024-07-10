@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 12:07:37 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/08 14:52:48 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:58:26 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	find_var_index(char *var, char **all_vars)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (all_vars[i])
@@ -26,10 +26,11 @@ int	find_var_index(char *var, char **all_vars)
 	}
 	return (-1);
 }
+
 void	unset_var(t_parser *cmd, t_env *env)
 {
-	int	 index;
-	int	 len;
+	int		index;
+	int		len;
 	char	**new_all_vars;
 
 	len = 0;
@@ -46,7 +47,7 @@ void	unset_var(t_parser *cmd, t_env *env)
 	env->all_vars = new_all_vars;
 }
 
-char **copy_new_export(char **all_vars, int exclude_index, int len)
+char	**copy_new_export(char **all_vars, int exclude_index, int len)
 {
 	char	**new_all_vars;
 	int		i;

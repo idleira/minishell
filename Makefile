@@ -26,6 +26,7 @@ SRCS = src/lexer/lexer.c \
        src/execution/set_env.c \
 	   src/execution/cd.c \
 	   src/builtin/export.c \
+	   src/builtin/export_utils.c \
 	   src/builtin/echo.c \
 	   src/builtin/unset.c \
 	   src/signals/signals.c \
