@@ -29,9 +29,11 @@ int	main(int argc, char **argv, char **envp)
 	signal_handlers_setup();
 	env = (t_env *)ft_malloc(sizeof(t_env));
 	copy_environment(env, envp);
+	prompt = (t_prompt *)ft_malloc(sizeof(t_prompt));
+	prompt->line = NULL;
+	prompt->rebuild = 1;
 	while (1)
 	{
-		prompt = (t_prompt *)ft_malloc(sizeof(t_prompt));
 		scanner = (t_scanner *)ft_malloc(sizeof(t_scanner));
 		error = (t_errors *)ft_malloc(sizeof(t_errors));
 		scanner->command = input_get(prompt);									// get user's input command and store it in scanner->command
@@ -54,10 +56,10 @@ int	main(int argc, char **argv, char **envp)
 				chose_execution(parsed_commands, env);
 			ft_free_parser(parsed_commands);
 		}
-		ft_free(prompt);
 		ft_free(scanner);
 		ft_free(error);
 	}
+	ft_free(prompt);
 	ft_destructor();
 	return (0);
 }

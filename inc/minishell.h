@@ -36,6 +36,7 @@
 typedef struct s_prompt
 {
 	char	*line;		// the line that the user inputs
+	int		rebuild;	// flag to rebuild the prompt
 }	t_prompt;
 
 // enum for error handling

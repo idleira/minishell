@@ -20,6 +20,10 @@ void	prompt_build(t_prompt *prompt)
 
     user = getenv("USER");
     cwd = getcwd(NULL, PATH_MAX);
+    if (cwd == NULL)
+        return;
+    if (prompt->line != NULL)
+        free(prompt->line);
     prompt->line = ft_strjoin(ft_strdup("\001\033[0;32m\002"), ft_strdup(user));
     prompt->line = ft_strjoin(prompt->line,
             ft_strdup("\001\033[0m\002\001\033[1;37m\002 | \001\033[0m\002\001\033[0;36m\002"));
@@ -36,7 +40,11 @@ char	*input_get(t_prompt *prompt)
 
     if (getenv("USER"))
     {
-        prompt_build(prompt);
+        if (prompt->rebuild)
+        {
+            prompt_build(prompt);
+            prompt->rebuild = 0;
+        }
         input = readline(prompt->line);
     }
     else
