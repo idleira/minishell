@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:27:54 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/08 14:52:48 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:34:47 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,18 @@ int check_builtins(t_parser *cmd, t_env *env)
 		return (1);
 	}
 	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "env", 3) == 0)
-	{
-		print_env(env);
-		return(1);
-	}
+		return (print_env(cmd, env));
 	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "pwd", 3) == 0)
 	{
-		printf("%s\n", env->pwd);
-		return (1);
+		if (cmd->file)
+			return (0);
+		else
+			return (printf("%s\n", env->pwd));
 	}
 	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "export", 6) == 0)
-	{
 		return check_export(cmd, env);
-	}
 	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "echo", 4) == 0)
-	{
-		return check_echo(cmd, env);
-	}
+		return (check_echo(cmd, env));
 	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "unset", 5) == 0)
 	{
 		(unset_var(cmd, env));
@@ -98,5 +93,7 @@ void change_directory(t_parser *cmd, t_env *env)
 			perror("getcwd");
 	}
 	else
+	{
 		printf("No such file or directory\n");
+	}
 }

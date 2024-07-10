@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:09:03 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/08 14:52:48 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:27:37 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,18 @@ void change_variable(t_env *env, char *key, char *new_value)
 
 }
 
-void print_env(t_env *env)
+int print_env(t_parser *cmd, t_env *env)
 {
 	int	i;
 
 	i = 0;
+	
+	if (cmd->file)
+		return (0);
 	while (env->all_vars[i] != NULL)
 	{
 		printf("%s\n", env->all_vars[i]);
 		i++;
 	}
-	
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:26:25 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/08 14:52:48 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:22:45 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,11 @@ void add_to_env(t_env *env, char *new_val)
 
 int check_export(t_parser *cmd, t_env *env)
 {
-	int i = 1;
+	int	i;
+	
+	i = 1;
+	if (cmd->file)
+		return (0);
 	if (cmd->args[1] == NULL)
 	{
 		print_export(env);

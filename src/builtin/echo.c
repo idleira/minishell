@@ -3,24 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariannazhukova <mariannazhukova@studen    +#+  +:+       +#+        */
+/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/06/27 15:52:39 by mariannazhu      ###   ########.fr       */
+/*   Updated: 2024/07/10 14:21:22 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	check_echo(t_parser *cmd, t_env *env)
+int check_echo(t_parser *cmd, t_env *env)
 {
-	char	*var_name;
-	char	*var_value;
-	bool	is_newline;
-	int		i;
+	char *var_name;
+	char *var_value;
+	bool is_newline;
+	int i;
 
 	is_newline = true;
 	i = 1;
+	if (cmd->file)
+		return (0);
 	if (cmd->args[i] && strcmp(cmd->args[i], "-n") == 0)
 	{
 		is_newline = false;
