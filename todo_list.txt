@@ -21,6 +21,11 @@ TODO:
 	8.1 Add boolean "bool was_quoted" to t_parser cmd
 	8.2 Add check to echo that checks the boolean and decides if to find the value or just output the text
 9. Implement heredoc
+10. -n -n -nnnn -nnn -nnsjlkdhfkfjsdh -nnnn
+11. echo "$USER"$USER$USER
+12. echo "'"'"'"'"
+13. add if cat while waiting for another process
+14. if export val doesnt have = sign dont output it in the env!
 
 MORE THINGS TO TEST
 9. Check if commands are working with all different possible paths.
