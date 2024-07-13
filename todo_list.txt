@@ -1,0 +1,38 @@
+TODO:
+
+1. Limited amount of global variables is allowed. Put all the structs in one struct and prepare to explain the use of more variables if used.
+2. Handle empty command, empty spaces and tabs chose_execution
+	2.1. Write function check_empty, that will just return the promt buck to user.
+3. Handle execution of commands with an absolute path like /bin/ls.
+	3.1 Write a function check_cmd_w_path and add before get_path.
+	(Maybe go to get path. try there first execution with given cmd, if doesn't work, try to loop through paths)
+4. Test different cases of echo with different arguments, different variations of "" ' "" 
+5. Check one more time exit and signals. Work on this together. Find if the problem is in execution part and processes.
+6. Implement "echo $?". Should work with correct cmds and incorrect cmd. Gather all of the possible exit codes in bash and change all of them accordingly.
+	6.1 Handle $? + $?
+7. Signals:
+	ctrl-C in an empty prompt should display a new line with a new prompt.
+	ctrl-\ in an empty prompt should not do anything.
+	ctrl-D in an empty prompt should quit minishell --> RELAUNCH!
+	ctrl-C in a prompt after you wrote some stuff should display a new line with a new prompt.
+	The buffer should be clean too. Press "Enter" to make sure nothing from the previous line is executed.
+	ctrl-D in a prompt after you wrote some stuff should not do anything.
+	ctrl-\ in a prompt after you wrote some stuff should not do anything.
+	Try ctrl-C after running a blocking command like cat without arguments or grep “something“.
+	Try ctrl-\ after running a blocking command like cat without arguments or grep “something“.
+	Try ctrl-D after running a blocking command like cat without arguments or grep “something“.
+8. Change echo '$USER' to print '$USER'. Echo with arguments in quotes should print the string
+	8.1 Add boolean "bool was_quoted" to t_parser cmd
+	8.2 Add check to echo that checks the boolean and decides if to find the value or just output the text
+
+MORE THINGS TO TEST
+9. Check if commands are working with all different possible paths.
+10. Test redirections. All possible variations < and/or > and >> and <<
+11. Test with different pipes and redirections
+12. Test history and arrow keys.
+	12.1 Type a command line, then use ctrl-C and press "Enter". The buffer should be clean and there should be nothing left to execute.
+13. cat | cat | ls
+14. Fix "unset"
+
+<3 WE CAN DO IT <3
+
