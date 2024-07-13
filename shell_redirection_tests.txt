@@ -1,0 +1,120 @@
+
+### Input Redirection (<)
+1. **Simple input redirection**: Verify that `cat` reads from a file.
+   ```sh
+   cat < input.txt WORKS
+   ```
+
+2. **Input redirection with `grep`**: Ensure that `grep` reads from a file and searches for a pattern.
+   ```sh
+   grep "pattern" < input.txt WORKS
+   ```
+
+### Output Redirection (>)
+3. **Simple output redirection**: Verify that `echo` writes to a file.
+   ```sh
+   echo "Hello, World!" > output.txt
+   ```
+
+4. **Output redirection with `ls`**: Ensure that `ls` writes directory listing to a file.
+   ```sh
+   ls > directory_listing.txt
+   ```
+
+### Append Output Redirection (>>)
+5. **Simple append redirection**: Verify that `echo` appends to a file.
+   ```sh
+   echo "Appended text" >> output.txt
+   ```
+
+6. **Append redirection with `date`**: Ensure that `date` appends the current date and time to a file.
+   ```sh
+   date >> timestamps.txt
+   ```
+
+### Here Document (<<)
+7. **Simple here document**: Verify that `cat` reads from a here document.
+    ```sh
+    cat << EOF
+    Hello, this is a here document.
+    EOF
+    ```
+
+8. **Here document with `grep`**: Ensure that `grep` reads from a here document and searches for a pattern.
+    ```sh
+    grep "pattern" << EOF
+    This is a test.
+    Another line with pattern.
+    EOF
+    ```
+
+### Combined Redirections
+9. **Input and output redirection**: Verify that `sort` reads from one file and writes to another.
+    ```sh
+    sort < unsorted.txt > sorted.txt
+    ```
+
+10. **Input and append output redirection**: Ensure that `wc` reads from one file and appends the word count to another.
+    ```sh
+    wc < input.txt >> word_count.txt
+    ```
+
+11. **Output redirection with here document**: Test `cat` reading from a here document and writing to a file.
+    ```sh
+    cat << EOF > output.txt
+    This is a test.
+    EOF
+    ```
+
+12. **Append output redirection with here document**: Test `cat` reading from a here document and appending to a file.
+    ```sh
+    cat << EOF >> output.txt
+    Another line.
+    EOF
+    ```
+
+### Error Redirection
+13. **Redirect standard error to a file**: Verify that `ls` writes errors to a file when listing a non-existent directory.
+    ```sh
+    ls non_existent_directory 2> error.txt
+    ```
+
+14. **Redirect standard error and standard output to different files**: Ensure `find` separates output and errors.
+    ```sh
+    find / -name "file.txt" > output.txt 2> error.txt
+    ```
+
+15. **Redirect standard error to standard output**: Test merging of standard error with standard output using `find`.
+    ```sh
+    find / -name "file.txt" 2>&1 > output.txt
+    ```
+
+16. **Append standard error to a file**: Ensure that `ls` appends errors to a file.
+    ```sh
+    ls non_existent_directory 2>> error.txt
+    ```
+
+### Advanced Combinations
+17. **Complex redirection with pipes**: Verify combined use of pipes and redirections with `ps` and `grep`.
+    ```sh
+    ps aux | grep "root" > root_processes.txt
+    ```
+
+18. **Here document with pipes and redirection**: Ensure correct behavior with pipes, here documents, and redirection using `cat` and `grep`.
+    ```sh
+    cat << EOF | grep "pattern" > output.txt
+    This is a test.
+    Another line with pattern.
+    EOF
+    ```
+
+19. **Multiple redirections in a single command**: Test complex redirection scenarios with `sort` and `uniq`.
+    ```sh
+    sort < input.txt | uniq > output.txt 2> error.txt
+    ```
+
+20. **Nested commands with redirections**: Verify nested command redirections using `echo`, `sort`, and `wc`.
+    ```sh
+    (echo "test" | sort > sorted.txt) 2> error.txt
+    wc -l sorted.txt
+    ```

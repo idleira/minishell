@@ -2,9 +2,6 @@ TODO:
 
 1. Limited amount of global variables is allowed. Put all the structs in one struct and prepare to explain the use of more variables if used.
 2. Handle empty command, empty spaces and tabs chose_execution
-3. Handle execution of commands with an absolute path like /bin/ls.
-	3.1 Write a function check_cmd_w_path and add before get_path.
-	(Maybe go to get path. try there first execution with given cmd, if doesn't work, try to loop through paths)
 4. Test different cases of echo with different arguments, different variations of "" ' "" 
 5. Check one more time exit and signals. Work on this together. Find if the problem is in execution part and processes.
 6. Implement "echo $?". Should work with correct cmds and incorrect cmd. Gather all of the possible exit codes in bash and change all of them accordingly.
@@ -23,6 +20,7 @@ TODO:
 8. Change echo '$USER' to print '$USER'. Echo with arguments in quotes should print the string
 	8.1 Add boolean "bool was_quoted" to t_parser cmd
 	8.2 Add check to echo that checks the boolean and decides if to find the value or just output the text
+9. Implement heredoc
 
 MORE THINGS TO TEST
 9. Check if commands are working with all different possible paths.
