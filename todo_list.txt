@@ -2,7 +2,6 @@ TODO:
 
 1. Limited amount of global variables is allowed. Put all the structs in one struct and prepare to explain the use of more variables if used.
 2. Handle empty command, empty spaces and tabs chose_execution
-	2.1. Write function check_empty, that will just return the promt buck to user.
 3. Handle execution of commands with an absolute path like /bin/ls.
 	3.1 Write a function check_cmd_w_path and add before get_path.
 	(Maybe go to get path. try there first execution with given cmd, if doesn't work, try to loop through paths)

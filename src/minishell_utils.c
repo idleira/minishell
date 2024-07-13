@@ -46,11 +46,12 @@ int	ft_check(t_scanner *scanner, t_prompt *prompt, t_errors *error)
 	}
 	if (check_spaces(scanner->command))
 	{
-		ft_free(prompt->line);
-		ft_free(prompt);
-		ft_free(scanner->command);
-		ft_free(scanner);
-		ft_free(error);
+		// ft_free(prompt->line);
+		// ft_free(prompt);
+		// ft_free(scanner->command);
+		// // ft_free(scanner);
+		// // ft_free(error);
+		(void)error;
 		return (2);
 	}
 	return (0);
@@ -76,7 +77,7 @@ t_parser	*input_process(t_scanner *scanner, t_dlist *head, t_errors *error,
 	{
 		quotes_remove(head);					// remove quotes from the tokens
 		parse_cmd_list(&parser, head);			// parse the tokens and create a parser node for each cmd separated by a pipe
-		//traverse_parser(parser);				// prints out arguments and files associated with each parser node
+		traverse_parser(parser);				// prints out arguments and files associated with each parser node
 		// node_ft_free(head, 1);
 	}
 	add_history(scanner->command);				// add the command to the history
