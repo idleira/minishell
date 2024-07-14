@@ -37,14 +37,6 @@ int	main(int argc, char **argv, char **envp)
 		scanner = (t_scanner *)ft_malloc(sizeof(t_scanner));
 		error = (t_errors *)ft_malloc(sizeof(t_errors));
 		scanner->command = input_get(prompt);									// get user's input command and store it in scanner->command
-		if (ft_strncmp(scanner->command, "exit", 5) == 0)
-		{
-			ft_free(prompt);
-			ft_free(scanner);
-			ft_free(error);
-			ft_destructor();
-			exit(0);
-		}
 		head = NULL;
 		return_value = ft_check(scanner, prompt, error);
 		if (return_value == 1)
