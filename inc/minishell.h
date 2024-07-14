@@ -84,15 +84,16 @@ typedef enum e_types
 // token state to check the type of quotes
 typedef enum e_state
 {
-	__d_quotes = '\"',
-	__s_quotes = '\'',
-	__without_quotes = 0
+	q_double = '\"',
+	q_single = '\'',
+	q_without = 0
 }	t_state;
 
 // struct for the parser
 typedef struct s_parser
 {
 	int				fd;
+	bool			q_single;	// flag to check if the token was in single quotes
 	char			**args;		// in parse_cmd_list, words that are not redirections or pipes are stored here (so technically not just arg, but cmds for now as well)
 	t_list			*file;		// the files assosiated with the command (redirections for now)
 	struct s_parser	*next;

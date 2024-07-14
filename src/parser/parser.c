@@ -69,6 +69,10 @@ void	process_word_tokens(t_dlist **head, t_parser *node,  char **args)
 			file = handle_file_redirection(head);
 			ft_lstadd_back(&node->file, file);
 		}
+		if ((*head)->state == q_single)
+			node->q_single = true;
+		else
+			node->q_single = false;
 		*head = (*head)->next;
 	}
 }
