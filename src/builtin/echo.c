@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/10 15:38:43 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/14 20:01:28 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	print_echo(t_parser *cmd, t_env *env, int i)
 
 	while (cmd->args[i])
 	{
-		if (cmd->args[i][0] == '$')
+		if (cmd->args[i][0] == '$' && cmd->q_single == false)
 		{
 			var_name = cmd->args[i] + 1;
 			var_value = get_var_value(env, var_name);
