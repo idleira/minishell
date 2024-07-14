@@ -36,9 +36,9 @@ void	quotes_remove(t_dlist *head)
 {
 	while (head)
 	{
-		if (head->state == __s_quotes)
+		if (head->state == q_single)
 			quotes_strip(head, '\'');
-		else if (head->state == __d_quotes)
+		else if (head->state == q_double)
 			quotes_strip(head, '\"');
 		head = head->next;
 	}

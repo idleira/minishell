@@ -81,7 +81,7 @@ void	node_ft_free(t_dlist *head, int boolean)
 		head = head->next;
 		if (boolean)
 		{
-			if (temp->state == __s_quotes || temp->state == __d_quotes)
+			if (temp->state == q_single || temp->state == q_double)
 				ft_free(temp->value);
 		}
 		ft_free(temp);

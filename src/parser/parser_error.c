@@ -27,7 +27,7 @@ void	assign_error_type(t_dlist *node, t_errors *error)
 		error->error_type = error_of_redirection_append;
 	else
 	{
-		if (node->state == __s_quotes)
+		if (node->state == q_single)
 			error->error_type = error_of_single_quotes;
 		else
 			error->error_type = error_of_double_quotes;
@@ -41,7 +41,7 @@ int	error_for_quotes(t_dlist *node)
 	int		c;
 	char	q;
 
-	if (node->state == __s_quotes)
+	if (node->state == q_single)
 		q = '\'';
 	else
 		q = '\"';

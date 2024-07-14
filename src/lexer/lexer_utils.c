@@ -19,9 +19,9 @@ t_dlist	*node_quotes(char *token, char quote)
 
 	node = node_create_lex();
 	if (quote == '\'')
-		node->state = __s_quotes;
+		node->state = q_single;
 	else
-		node->state = __d_quotes;
+		node->state = q_double;
 	node->value = token;
 	node->type = __WORD;
 	return (node);
@@ -34,7 +34,7 @@ t_dlist	*node_redirection(char *token)
 
 	node = node_create_lex();
 	node->value = token;
-	node->state = __without_quotes;
+	node->state = q_without;
 	if (!strcmp(token, ">"))
 		node->type = __RED_OUT;
 	else if (!strcmp(token, ">>"))
@@ -53,7 +53,7 @@ t_dlist	*node_pipeline(char *token)
 
 	node = node_create_lex();
 	node->value = token;
-	node->state = __without_quotes;
+	node->state = q_without;
 	node->type = __PIPE;
 	return (node);
 }
@@ -65,7 +65,7 @@ t_dlist	*node_word(char *token)
 
 	node = node_create_lex();
 	node->value = token;
-	node->state = __without_quotes;
+	node->state = q_without;
 	node->type = __WORD;
 	return (node);
 }
