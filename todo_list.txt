@@ -2,11 +2,10 @@ TODO:
 
 1. Limited amount of global variables is allowed. Put all the structs in one struct and prepare to explain the use of more variables if used.
 2. Handle empty command, empty spaces and tabs chose_execution
-4. Test different cases of echo with different arguments, different variations of "" ' "" 
-5. Check one more time exit and signals. Work on this together. Find if the problem is in execution part and processes.
-6. Implement "echo $?". Should work with correct cmds and incorrect cmd. Gather all of the possible exit codes in bash and change all of them accordingly.
-	6.1 Handle $? + $?
-7. Signals:
+3. Test different cases of echo with different arguments, different variations of "" ' ""
+4. Implement "echo $?". Should work with correct cmds and incorrect cmd. Gather all of the possible exit codes in bash and change all of them accordingly.
+	4.1 Handle $? + $?
+5. Signals:
 	ctrl-C in an empty prompt should display a new line with a new prompt.
 	ctrl-\ in an empty prompt should not do anything.
 	ctrl-D in an empty prompt should quit minishell --> RELAUNCH!
@@ -17,24 +16,25 @@ TODO:
 	Try ctrl-C after running a blocking command like cat without arguments or grep “something“.
 	Try ctrl-\ after running a blocking command like cat without arguments or grep “something“.
 	Try ctrl-D after running a blocking command like cat without arguments or grep “something“.
-8. Change echo '$USER' to print '$USER'. Echo with arguments in quotes should print the string
-	8.1 Add boolean "bool was_quoted" to t_parser cmd
-	8.2 Add check to echo that checks the boolean and decides if to find the value or just output the text
-9. Implement heredoc
-10. -n -n -nnnn -nnn -nnsjlkdhfkfjsdh -nnnn
-11. echo "$USER"$USER$USER
-12. echo "'"'"'"'"
-13. add if cat while waiting for another process
-14. if export val doesnt have = sign dont output it in the env!
+6. Change echo '$USER' to print '$USER'. Echo with arguments in quotes should print the string
+	6.1 Add boolean "bool was_quoted" to t_parser cmd
+	6.2 Add check to echo that checks the boolean and decides if to find the value or just output the text
+7. Implement heredoc
+8. -n -n -nnnn -nnn -nnsjlkdhfkfjsdh -nnnn
+9. echo "$USER"$USER$USER
+10. echo "'"'"'"'"
+11. add if cat while waiting for another process
+12. if export val doesnt have = sign dont output it in the env!
+13. env - i before running a programm
 
 MORE THINGS TO TEST
-9. Check if commands are working with all different possible paths.
-10. Test redirections. All possible variations < and/or > and >> and <<
-11. Test with different pipes and redirections
-12. Test history and arrow keys.
-	12.1 Type a command line, then use ctrl-C and press "Enter". The buffer should be clean and there should be nothing left to execute.
-13. cat | cat | ls
-14. Fix "unset"
+13. Check if commands are working with all different possible paths.
+14. Test redirections. All possible variations < and/or > and >> and <<
+15. Test with different pipes and redirections
+16. Test history and arrow keys.
+	16.1 Type a command line, then use ctrl-C and press "Enter". The buffer should be clean and there should be nothing left to execute.
+17. cat | cat | ls
+18. Fix "unset"
 
 <3 WE CAN DO IT <3
 

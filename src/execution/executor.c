@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/13 18:02:25 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:13:34 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,39 +39,29 @@ char	*get_path(char *cmd, t_env *env)
 		ft_free(cmd_path);
 		i++;
 	}
-	return (NULL);
+	return (cmd);
 }
 
 void	execute_command(t_parser *cmd, t_env *env)
 {
 	pid_t	pid;
 	int		status;
-	char	*cmd_w_path;
+
 
 	pid = fork();
 	if (pid < 0)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		if (!check_builtins(cmd, env))
-		{
-			handle_redirection(cmd);
-			cmd_w_path = get_path(cmd->args[0], env);
-			if (!cmd_w_path)
-				exit(127);
-			if (execve(cmd_w_path, cmd->args, env->all_vars) == -1)
-			{
-				printf("command not found: %s\n", cmd_w_path);
-				ft_destructor();
-				exit(EXIT_FAILURE);
-			}
-		}
+		check_builtin_and_red(cmd, env);
+		env->exit_status = 0;
+		exit(env->exit_status);
 	}
 	else
 		waitpid(pid, &status, 0);
 }
 
-void	handle_redirection(t_parser *cmd)
+void	handle_redirection(t_parser *cmd, t_env *env)
 {
 	t_list	*file;
 
@@ -89,7 +79,8 @@ void	handle_redirection(t_parser *cmd)
 		if (cmd->fd < 0)
 		{
 			perror("open file");
-			exit(EXIT_FAILURE);
+			env->exit_status = 1;
+			exit(env->exit_status);
 		}
 		if (file->type == IN)
 			dup2(cmd->fd, STDIN_FILENO);
@@ -139,24 +130,29 @@ void execute_pipeline(t_parser *head, t_env *env)
 				dup2(pipefd[1], STDOUT_FILENO);
 				close(pipefd[1]);
 			}
-			handle_redirection(current);
+			handle_redirection(current, env);
 			if (!check_builtins(current, env))
 			{
 				cmd_w_path = get_path(current->args[0], env);
 				if (cmd_w_path == NULL)
 				{
 					printf("Command not found: \n");
-					exit(EXIT_FAILURE);
+					env->exit_status = 127;
+					exit(env->exit_status);
 				}
 				if (execve(cmd_w_path, current->args, env->all_vars) == -1)
 				{
 					perror("execve");
 					ft_free(cmd_w_path);
-					exit(EXIT_FAILURE);
+					env->exit_status = 1;
+					exit(env->exit_status);
 				}
 			}
 			else
-				exit(EXIT_SUCCESS);
+			{
+				env->exit_status = 0;
+				exit(env->exit_status);
+			}
 		}
 		else
 		{

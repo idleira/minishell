@@ -117,6 +117,7 @@ typedef struct s_env
 	char	*home;
 	char	**paths;
 	char	**all_vars;
+	int		exit_status;
 }	t_env;
 
 // prompt functions
@@ -185,7 +186,7 @@ void	traverse_parser(const t_parser *head);
 //Executor:
 char	*get_path(char *cmd, t_env *env);
 void	execute_command(t_parser *cmd, t_env *env);
-void	handle_redirection(t_parser *cmd);
+void	handle_redirection(t_parser *cmd, t_env *env);
 void	execute_pipeline(t_parser *head, t_env *env);
 void	chose_execution(t_parser *head, t_env *env);
 
@@ -193,6 +194,7 @@ void	chose_execution(t_parser *head, t_env *env);
 void	ft_free_parser(t_parser *head);
 void	ft_free_split(char **split);
 char	*my_strjoin(char const *s1, char const *s2);
+void	check_builtin_and_red(t_parser *cmd, t_env *env);
 
 //Environment
 void	copy_environment(t_env *env, char **envp);

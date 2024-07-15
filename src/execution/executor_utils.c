@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:48:35 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/13 17:09:47 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:13:20 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,22 @@ char	*my_strjoin(char const *s1, char const *s2)
 	}
 	result[i++] = '\0';
 	return (result);
+}
+
+void check_builtin_and_red(t_parser *cmd, t_env *env)
+{
+		char	*cmd_w_path;
+		
+		if (!check_builtins(cmd, env))
+		{
+			handle_redirection(cmd, env);
+			cmd_w_path = get_path(cmd->args[0], env);
+			if (!cmd_w_path || (execve(cmd_w_path, cmd->args, env->all_vars) == -1))
+			{
+				printf("command not found: %s\n", cmd_w_path);
+				ft_destructor();
+				env->exit_status = 127;
+				exit(env->exit_status);
+			}
+		}
 }
