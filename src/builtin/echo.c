@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/14 22:59:26 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:19:43 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,23 @@ int	check_echo(t_parser *cmd, t_env *env)
 	i = 1;
 	if (cmd->file)
 		return (0);
-		if (cmd->args[0] && (ft_strncmp(cmd->args[0], "echo", 5) == 0 || ft_strncmp(cmd->args[0], "echo ", 6) == 0))
+	if (cmd->args[0] && (ft_strncmp(cmd->args[0], "echo", 5) == 0 || ft_strncmp(cmd->args[0], "echo ", 6) == 0))
+	{
+		if (cmd->args[i] && ft_strncmp(cmd->args[i], "-n", 2) == 0)
 		{
-			if (cmd->args[i] && ft_strncmp(cmd->args[i], "-n", 2) == 0)
-			{
-				is_newline = false;
-				i++;
-			}
-		print_echo(cmd, env, i);
-		if (is_newline)
-			printf("\n");
-		return (1);
+			is_newline = false;
+			i++;
 		}
-		else
-		{
-			printf("%s: command not found\n", cmd->args[0]);
-			return (0);
-		}
+	print_echo(cmd, env, i);
+	if (is_newline)
+		printf("\n");
+	return (1);
+	}
+	else
+	{
+		printf("%s: command not found\n", cmd->args[0]);
+		return (0);
+	}
 }
 
 void	print_echo(t_parser *cmd, t_env *env, int i)

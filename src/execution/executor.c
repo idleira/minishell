@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/13 18:02:25 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:43:05 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*get_path(char *cmd, t_env *env)
 		ft_free(cmd_path);
 		i++;
 	}
-	return (NULL);
+	return (cmd);
 }
 
 void	execute_command(t_parser *cmd, t_env *env)
@@ -57,15 +57,14 @@ void	execute_command(t_parser *cmd, t_env *env)
 		{
 			handle_redirection(cmd);
 			cmd_w_path = get_path(cmd->args[0], env);
-			if (!cmd_w_path)
-				exit(127);
-			if (execve(cmd_w_path, cmd->args, env->all_vars) == -1)
+			if (!cmd_w_path || (execve(cmd_w_path, cmd->args, env->all_vars) == -1))
 			{
 				printf("command not found: %s\n", cmd_w_path);
 				ft_destructor();
 				exit(EXIT_FAILURE);
 			}
 		}
+		exit(EXIT_SUCCESS);
 	}
 	else
 		waitpid(pid, &status, 0);
