@@ -6,7 +6,7 @@
 /*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/15 15:21:10 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/07/15 21:51:41 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,30 @@ int	check_echo(t_parser *cmd, t_env *env)
 		}
 }
 
-void	print_echo(t_parser *cmd, t_env *env, int i)
+void print_echo(t_parser *cmd, t_env *env, int i)
 {
-	char	*var_name;
-	char	*var_value;
+    char *var_name;
+    char *var_value;
+    int j;
 
-	while (cmd->args[i])
-	{
-		if (cmd->args[i][0] == '$' && cmd->args[i][1] == '\0')
-			printf("$\n");
-		if (cmd->args[i][0] == '$' && cmd->q_single == false)
-		{
-			var_name = cmd->args[i] + 1;
-			var_value = get_var_value(env, var_name);
-			if (var_value)
-				printf("%s", var_value);
-		}
-		else
-			printf("%s", cmd->args[i]);
-		if (cmd->args[i + 1])
-			printf(" ");
-		i++;
-	}
+    while (cmd->args[i])
+    {
+        if (cmd->args[i][0] == '$' && cmd->args[i][1] != '\0' && cmd->q_single == false)
+        {
+            j = 1;
+            while (cmd->args[i][j] && (ft_isalnum(cmd->args[i][j]) || cmd->args[i][j] == '_'))
+                j++;
+            var_name = ft_substr(cmd->args[i], 1, j - 1);
+            var_value = get_var_value(env, var_name);
+            if (var_value)
+                printf("%s", var_value);
+            printf("%s", cmd->args[i] + j);
+            ft_free(var_name);
+        }
+        else
+            printf("%s", cmd->args[i]);
+        if (cmd->args[i + 1])
+            printf(" ");
+        i++;
+    }
 }
