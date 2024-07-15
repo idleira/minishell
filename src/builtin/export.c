@@ -6,13 +6,13 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:26:25 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/10 15:57:38 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:37:12 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	print_export(t_env *env)
+int	print_export()
 {
 	int		i;
 	int		size;
@@ -23,7 +23,6 @@ int	print_export(t_env *env)
 	while (env->all_vars[size])
 		size++;
 	sort_env_vars(env->all_vars, size);
-	printf("SORTED VARS\n\n\n");
 	while (env->all_vars[i] != NULL)
 	{
 		equals_sign = ft_strchr(env->all_vars[i], '=');
@@ -36,7 +35,7 @@ int	print_export(t_env *env)
 	return (1);
 }
 
-int	check_export(t_parser *cmd, t_env *env)
+int	check_export(t_parser *cmd)
 {
 	int	i;
 
@@ -44,15 +43,15 @@ int	check_export(t_parser *cmd, t_env *env)
 	if (cmd->file)
 		return (0);
 	if (cmd->args[1] == NULL)
-		return (print_export(env));
+		return (print_export());
 	while (cmd->args[i])
 	{
 		if (is_valid_argument(cmd->args[i]))
 		{
-			if (exists_in_env(env, cmd->args[i]))
-				update_env(env, cmd->args[i]);
+			if (exists_in_env(cmd->args[i]))
+				update_env(cmd->args[i]);
 			else
-				add_to_env(env, cmd->args[i]);
+				add_to_env(cmd->args[i]);
 		}
 		else
 		{
@@ -83,7 +82,7 @@ int	is_valid_argument(char *arg)
 	return (1);
 }
 
-int	exists_in_env(t_env *env, char *var)
+int	exists_in_env(char *var)
 {
 	int		i;
 	char	*var_name;
@@ -92,7 +91,7 @@ int	exists_in_env(t_env *env, char *var)
 	while (env->all_vars[i] != NULL)
 	{
 		var_name = get_var_name(env->all_vars[i]);
-		if (ft_strncmp(var_name, var, i) == 0)
+		if (ft_strncmp(var_name, var, ft_strlen(var)) == 0)
 		{
 			ft_free(var_name);
 			return (1);
@@ -103,7 +102,7 @@ int	exists_in_env(t_env *env, char *var)
 	return (0);
 }
 
-void	update_env(t_env *env, char *var)
+void	update_env(char *var)
 {
 	int		i;
 	char	*var_name;

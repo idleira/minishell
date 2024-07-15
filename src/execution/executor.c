@@ -6,21 +6,21 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/15 15:33:14 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/15 19:43:38 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	chose_execution(t_parser *head, t_env *env)
+void	chose_execution(t_parser *head)
 {
 	if (head && head->next)
-		execute_pipeline(head, env);
+		execute_pipeline(head);
 	else if (head)
-		execute_command(head, env);
+		execute_command(head);
 }
 
-char	*get_path(char *cmd, t_env *env)
+char	*get_path(char *cmd)
 {
 	char	*temp_path;
 	char	*cmd_path;
@@ -42,7 +42,7 @@ char	*get_path(char *cmd, t_env *env)
 	return (cmd);
 }
 
-void	execute_command(t_parser *cmd, t_env *env)
+void	execute_command(t_parser *cmd)
 {
 	pid_t	pid;
 	int		status;
@@ -53,14 +53,19 @@ void	execute_command(t_parser *cmd, t_env *env)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		check_builtin_and_red(cmd, env);
-		minishell_exit(env, 0);
+		printf("%p\n", env);
+		check_builtin_and_red(cmd);
+		printf("%p\n", env);
+		print_export();
+		minishell_exit(0);
 	}
 	else
 		waitpid(pid, &status, 0);
+	printf("%p\n", env);
+	print_export();
 }
 
-void	handle_redirection(t_parser *cmd, t_env *env)
+void	handle_redirection(t_parser *cmd)
 {
 	t_list	*file;
 
@@ -78,7 +83,7 @@ void	handle_redirection(t_parser *cmd, t_env *env)
 		if (cmd->fd < 0)
 		{
 			perror("open file");
-			minishell_exit(env, 1);
+			minishell_exit(1);
 		}
 		if (file->type == IN)
 			dup2(cmd->fd, STDIN_FILENO);
@@ -89,7 +94,7 @@ void	handle_redirection(t_parser *cmd, t_env *env)
 	}
 }
 
-void execute_pipeline(t_parser *head, t_env *env)
+void execute_pipeline(t_parser *head)
 {
 	int			pipefd[2];
 	int			prev_fd;
@@ -128,14 +133,14 @@ void execute_pipeline(t_parser *head, t_env *env)
 				dup2(pipefd[1], STDOUT_FILENO);
 				close(pipefd[1]);
 			}
-			handle_redirection(current, env);
-			if (!check_builtins(current, env))
+			handle_redirection(current);
+			if (!check_builtins(current))
 			{
-				cmd_w_path = get_path(current->args[0], env);
+				cmd_w_path = get_path(current->args[0]);
 				if (cmd_w_path == NULL)
 				{
 					printf("Command not found: \n");
-					minishell_exit(env, 127);
+					minishell_exit(127);
 				}
 				if (execve(cmd_w_path, current->args, env->all_vars) == -1)
 				{

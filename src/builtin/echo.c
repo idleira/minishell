@@ -6,13 +6,13 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/15 16:40:49 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:36:35 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	check_echo(t_parser *cmd, t_env *env)
+int	check_echo(t_parser *cmd)
 {
 	bool	is_newline;
 	int		i;
@@ -30,7 +30,7 @@ int	check_echo(t_parser *cmd, t_env *env)
 				break ;
 			i++;
 		}
-		print_echo(cmd, env, i);
+		print_echo(cmd, i);
 		if (is_newline)
 			printf("\n");
 		return (1);
@@ -42,7 +42,7 @@ int	check_echo(t_parser *cmd, t_env *env)
 	}
 }
 
-void	print_echo(t_parser *cmd, t_env *env, int i)
+void	print_echo(t_parser *cmd, int i)
 {
 	char	*var_name;
 	char	*var_value;
@@ -54,7 +54,7 @@ void	print_echo(t_parser *cmd, t_env *env, int i)
 		if (cmd->args[i][0] == '$' && cmd->q_single == false)
 		{
 			var_name = cmd->args[i] + 1;
-			var_value = get_var_value(env, var_name);
+			var_value = get_var_value(var_name);
 			if (var_value)
 				printf("%s", var_value);
 		}

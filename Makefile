@@ -6,7 +6,7 @@ DEF_COLOR = \033[0;37m
 
 NAME = minishell
 
-CC = cc
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
 
 SRCS = src/lexer/lexer.c \

@@ -12,6 +12,7 @@
 
 #include "../inc/minishell.h"
 
+t_env *env;
 int	main(int argc, char **argv, char **envp)
 {
 	t_scanner	*scanner;
@@ -20,16 +21,15 @@ int	main(int argc, char **argv, char **envp)
 	t_errors	*error;
 	int			return_value;
 	t_parser	*parsed_commands;
-	t_env		*env;
 	
-
 	(void)argc;
 	(void)argv;
 	ft_alloc_init();
 	signal_handlers_setup();
 	env = (t_env *)ft_malloc(sizeof(t_env));
-	copy_environment(env, envp);
+	copy_environment(envp);
 	prompt = (t_prompt *)ft_malloc(sizeof(t_prompt));
+	printf("%p\n", env);
 	prompt->line = NULL;
 	prompt->rebuild = 1;
 	while (1)
@@ -46,13 +46,13 @@ int	main(int argc, char **argv, char **envp)
 		head = NULL;
 		return_value = ft_check(scanner, prompt, error);
 		if (return_value == 1)
-			minishell_exit(env, 1);
+			minishell_exit(1);
 		if (return_value != 2)
 		{
 			parsed_commands = input_process(scanner, head, error, prompt);// parse the command and store it in t_parser struct
 			free(scanner->command);
 			if (parsed_commands)
-				chose_execution(parsed_commands, env);
+				chose_execution(parsed_commands);
 			ft_free_parser(parsed_commands);
 		}
 		ft_free(scanner);

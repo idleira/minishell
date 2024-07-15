@@ -6,13 +6,13 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:09:03 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/15 15:33:30 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:44:19 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	copy_environment(t_env *env, char **envp)
+void	copy_environment(char **envp)
 {
 	int	i;
 	int	envp_count;
@@ -26,7 +26,7 @@ void	copy_environment(t_env *env, char **envp)
 		envp_count++;
 	env->all_vars = ft_malloc((envp_count + 1) * sizeof(char *));
 	if (!env->all_vars)
-		minishell_exit(env, 1);
+		minishell_exit(1);
 	i = 0;
 	while (envp[i] != NULL)
 	{
@@ -36,7 +36,7 @@ void	copy_environment(t_env *env, char **envp)
 	env->all_vars[i] = NULL;
 }
 
-void	change_variable(t_env *env, char *key, char *new_value)
+void	change_variable(char *key, char *new_value)
 {
 	int	i;
 
@@ -53,7 +53,7 @@ void	change_variable(t_env *env, char *key, char *new_value)
 	}
 }
 
-int	print_env(t_parser *cmd, t_env *env)
+int	print_env(t_parser *cmd)
 {
 	int	i;
 

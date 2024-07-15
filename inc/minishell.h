@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
+# ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include "../libft/libft.h"
@@ -120,6 +120,8 @@ typedef struct s_env
 	int		exit_status;
 }	t_env;
 
+extern t_env		*env;
+
 // prompt functions
 void	prompt_build(t_prompt *prompt);
 char	*input_get(t_prompt *prompt);
@@ -184,42 +186,42 @@ void	traverse_parser(const t_parser *head);
 
 //EXECUTION:
 //Executor:
-char	*get_path(char *cmd, t_env *env);
-void	execute_command(t_parser *cmd, t_env *env);
-void	handle_redirection(t_parser *cmd, t_env *env);
-void	execute_pipeline(t_parser *head, t_env *env);
-void	chose_execution(t_parser *head, t_env *env);
+char	*get_path(char *cmd);
+void	execute_command(t_parser *cmd);
+void	handle_redirection(t_parser *cmd);
+void	execute_pipeline(t_parser *head);
+void	chose_execution(t_parser *head);
 
 //Execution_utils
 void	ft_free_parser(t_parser *head);
 void	ft_free_split(char **split);
 char	*my_strjoin(char const *s1, char const *s2);
-void	check_builtin_and_red(t_parser *cmd, t_env *env);
-void	minishell_exit(t_env * env, int status);
+void	check_builtin_and_red(t_parser *cmd);
+void	minishell_exit(int status);
 
 //Environment
-void	copy_environment(t_env *env, char **envp);
-void	change_variable(t_env *env, char *key, char *new_value);
-int		print_env(t_parser *cmd, t_env *env);
+void	copy_environment(char **envp);
+void	change_variable(char *key, char *new_value);
+int		print_env(t_parser *cmd);
 
 //cd
-int		check_builtins(t_parser *cmd, t_env *env);
-void	change_directory(t_parser *cmd, t_env *env);
-void	construct_cd_path(t_env *env, t_parser *cmd);
-void	handle_slash_return(t_env *env);
+int		check_builtins(t_parser *cmd);
+void	change_directory(t_parser *cmd);
+void	construct_cd_path(t_parser *cmd);
+void	handle_slash_return( );
 
 //BUILTINS
 //export
-int		print_export(t_env *env);
-int		check_export(t_parser *cmd, t_env *env);
+int		print_export( );
+int		check_export(t_parser *cmd);
 int		is_valid_argument(char *arg);
-int		exists_in_env(t_env *env, char *var);
-void	update_env(t_env *env, char *var);
+int		exists_in_env(char *var);
+void	update_env(char *var);
 
 //export_utils
-char	*get_var_value(t_env *env, char *var_name);
+char	*get_var_value(char *var_name);
 char	*get_var_name(char *var);
-void	add_to_env(t_env *env, char *new_val);
+void	add_to_env(char *new_val);
 
 //export sort
 void	swap(char **a, char **b);
@@ -228,12 +230,12 @@ void	quick_sort(char *arr[], int low, int high);
 void	sort_env_vars(char *env_vars[], int n);
 
 //echo
-int		check_echo(t_parser *cmd, t_env *env);
-void	print_echo(t_parser *cmd, t_env *env, int i);
+int		check_echo(t_parser *cmd);
+void	print_echo(t_parser *cmd, int i);
 int		not_only_n(char *str);
 
 //unset
-int		unset_var(t_parser *cmd, t_env *env);
+int		unset_var(t_parser *cmd);
 int		find_var_index(char *var, char **all_vars);
 char	**copy_new_export(char **all_vars, int exclude_index, int len);
 

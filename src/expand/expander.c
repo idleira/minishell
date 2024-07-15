@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:03:16 by ibeliaie          #+#    #+#             */
-/*   Updated: 2024/07/15 15:10:29 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:33:19 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	expander_check(t_parser *cmd, t_env *env)
+void	expander_check(t_parser *cmd,  )
 {
 	
 	if (cmd->args[i][0] == '$' && cmd->args[i][1] == '\0')

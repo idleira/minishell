@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 12:07:37 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/10 17:16:15 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:34:53 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	find_var_index(char *var, char **all_vars)
 	return (-1);
 }
 
-int	unset_var(t_parser *cmd, t_env *env)
+int	unset_var(t_parser *cmd)
 {
 	int		index;
 	int		len;

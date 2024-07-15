@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-char	*get_var_value(t_env *env, char *var_name)
+char	*get_var_value(char *var_name)
 {
 	int		i;
 	size_t	var_name_len;
@@ -47,7 +47,7 @@ char	*get_var_name(char *var)
 	return (name);
 }
 
-void	add_to_env(t_env *env, char *new_val)
+void	add_to_env(char *new_val)
 {
 	int		len;
 	char	*new_var;
