@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:48:35 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/15 15:13:20 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:30:35 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,12 @@ void check_builtin_and_red(t_parser *cmd, t_env *env)
 			{
 				printf("command not found: %s\n", cmd_w_path);
 				ft_destructor();
-				env->exit_status = 127;
-				exit(env->exit_status);
+				minishell_exit(env, 127);
 			}
 		}
+}
+void minishell_exit(t_env * env, int status)
+{
+	env->exit_status = status;
+	exit(status);
 }

@@ -195,6 +195,7 @@ void	ft_free_parser(t_parser *head);
 void	ft_free_split(char **split);
 char	*my_strjoin(char const *s1, char const *s2);
 void	check_builtin_and_red(t_parser *cmd, t_env *env);
+void	minishell_exit(t_env * env, int status);
 
 //Environment
 void	copy_environment(t_env *env, char **envp);

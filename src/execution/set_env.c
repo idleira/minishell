@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:09:03 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/10 16:02:15 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:33:30 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	copy_environment(t_env *env, char **envp)
 		envp_count++;
 	env->all_vars = ft_malloc((envp_count + 1) * sizeof(char *));
 	if (!env->all_vars)
-		exit(1);
+		minishell_exit(env, 1);
 	i = 0;
 	while (envp[i] != NULL)
 	{

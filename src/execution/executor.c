@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/15 15:13:34 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:33:14 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ void	execute_command(t_parser *cmd, t_env *env)
 	else if (pid == 0)
 	{
 		check_builtin_and_red(cmd, env);
-		env->exit_status = 0;
-		exit(env->exit_status);
+		minishell_exit(env, 0);
 	}
 	else
 		waitpid(pid, &status, 0);
@@ -79,8 +78,7 @@ void	handle_redirection(t_parser *cmd, t_env *env)
 		if (cmd->fd < 0)
 		{
 			perror("open file");
-			env->exit_status = 1;
-			exit(env->exit_status);
+			minishell_exit(env, 1);
 		}
 		if (file->type == IN)
 			dup2(cmd->fd, STDIN_FILENO);
@@ -137,8 +135,7 @@ void execute_pipeline(t_parser *head, t_env *env)
 				if (cmd_w_path == NULL)
 				{
 					printf("Command not found: \n");
-					env->exit_status = 127;
-					exit(env->exit_status);
+					minishell_exit(env, 127);
 				}
 				if (execve(cmd_w_path, current->args, env->all_vars) == -1)
 				{
