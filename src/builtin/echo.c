@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/15 15:21:10 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:40:49 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,25 @@ int	check_echo(t_parser *cmd, t_env *env)
 	i = 1;
 	if (cmd->file)
 		return (0);
-		if (cmd->args[0] && (ft_strncmp(cmd->args[0], "echo", 5) == 0 || ft_strncmp(cmd->args[0], "echo ", 6) == 0))
+	if (cmd->args[0] && (ft_strncmp(cmd->args[0], "echo", 5) == 0 || ft_strncmp(cmd->args[0], "echo ", 6) == 0))
+	{
+		while ((cmd->args[i] && ft_strncmp(cmd->args[i], "-n", 2) == 0))
 		{
-			if (cmd->args[i] && ft_strncmp(cmd->args[i], "-n", 2) == 0)
-			{
-				is_newline = false;
-				i++;
-			}
+			is_newline = false;
+			if (not_only_n(cmd->args[i]))
+				break ;
+			i++;
+		}
 		print_echo(cmd, env, i);
 		if (is_newline)
 			printf("\n");
 		return (1);
-		}
-		else
-		{
-			printf("%s: command not found\n", cmd->args[0]);
-			return (0);
-		}
+	}
+	else
+	{
+		printf("%s: command not found\n", cmd->args[0]);
+		return (0);
+	}
 }
 
 void	print_echo(t_parser *cmd, t_env *env, int i)
@@ -62,4 +64,18 @@ void	print_echo(t_parser *cmd, t_env *env, int i)
 			printf(" ");
 		i++;
 	}
+}
+
+int	not_only_n(char *str)
+{
+	int	i;
+
+	i = 2;
+	while (str[i])
+	{
+		if (str[i] != 'n')
+			return (1);
+		i++;
+	}
+	return (0);
 }

@@ -230,6 +230,7 @@ void	sort_env_vars(char *env_vars[], int n);
 //echo
 int		check_echo(t_parser *cmd, t_env *env);
 void	print_echo(t_parser *cmd, t_env *env, int i);
+int		not_only_n(char *str);
 
 //unset
 int		unset_var(t_parser *cmd, t_env *env);
