@@ -6,7 +6,7 @@
 /*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/14 22:59:26 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:17:06 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ void	print_echo(t_parser *cmd, t_env *env, int i)
 
 	while (cmd->args[i])
 	{
-		if (cmd->args[i][0] == '$' && cmd->q_single == false && cmd->args[i][1] != '\0')
+		if (cmd->args[i][0] == '$' && cmd->args[i][1] == '\0')
+			printf("$\n");
+		if (cmd->args[i][0] == '$' && cmd->q_single == false)
 		{
 			var_name = cmd->args[i] + 1;
 			var_value = get_var_value(env, var_name);
