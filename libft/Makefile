@@ -26,6 +26,7 @@ SRC =   ft_atoi.c       \
         ft_strchr.c     \
         ft_strlen.c     \
         ft_substr.c     \
+        ft_strndup.c    \
         ft_isalpha.c    \
         ft_isdigit.c    \
         ft_isalnum.c    \
