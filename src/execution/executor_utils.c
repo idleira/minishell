@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:48:35 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/16 14:32:09 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/16 18:41:28 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,17 @@ char	*my_strjoin(char const *s1, char const *s2)
 
 void check_builtin_and_red(t_parser *cmd)
 {
-		char	*cmd_w_path;
-		
-		if (!check_builtins(cmd))
+	char	*cmd_w_path;
+	pid_t	pid;
+	int		status;
+
+
+	if (!check_builtins(cmd))
+	{
+		pid = fork();
+		if (pid < 0)
+			exit(EXIT_FAILURE);
+		else if (pid == 0)
 		{
 			handle_redirection(cmd);
 			cmd_w_path = get_path(cmd->args[0]);
@@ -77,10 +85,17 @@ void check_builtin_and_red(t_parser *cmd)
 				env->exit_status = 127;
 				return ;
 			}
+			//change to proper exit
+			exit(0);
 		}
+		else
+		waitpid(pid, &status, 0);
+	}
+
 }
+
 void minishell_exit(int status)
 {
 	env->exit_status = status;
-	exit(status);
+	return ;
 }

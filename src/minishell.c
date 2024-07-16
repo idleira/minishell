@@ -29,7 +29,6 @@ int	main(int argc, char **argv, char **envp)
 	env = (t_env *)ft_malloc(sizeof(t_env));
 	copy_environment(envp);
 	prompt = (t_prompt *)ft_malloc(sizeof(t_prompt));
-	printf("%p\n", env);
 	prompt->line = NULL;
 	prompt->rebuild = 1;
 	while (1)
