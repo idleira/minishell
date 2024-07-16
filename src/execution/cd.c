@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:27:54 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/15 18:42:58 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:04:15 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ int	check_builtins(t_parser *cmd)
 		return (check_echo(cmd));
 	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "unset", 5) == 0)
 		return (unset_var(cmd));
-	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "exit", 4) == 0)
-		minishell_exit(0);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/15 19:43:38 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:04:30 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,7 @@ char	*get_path(char *cmd)
 
 void	execute_command(t_parser *cmd)
 {
-	pid_t	pid;
-	int		status;
-
-
-	pid = fork();
-	if (pid < 0)
-		exit(EXIT_FAILURE);
-	else if (pid == 0)
-	{
-		printf("%p\n", env);
 		check_builtin_and_red(cmd);
-		printf("%p\n", env);
-		print_export();
-		minishell_exit(0);
-	}
-	else
-		waitpid(pid, &status, 0);
-	printf("%p\n", env);
-	print_export();
 }
 
 void	handle_redirection(t_parser *cmd)
