@@ -58,6 +58,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len);
 int		ft_memcmp(const void *s1, const void *s2, size_t len);
 
 char	*ft_strdup(const char *str);
+char	*ft_strndup(const char *s, int n);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strrchr(const char *str, int c);
 char	*ft_strnstr(const char *big, const char *smol, size_t len);
