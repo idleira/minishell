@@ -20,7 +20,6 @@ TODO:
 	6.1 Add boolean "bool was_quoted" to t_parser cmd
 	6.2 Add check to echo that checks the boolean and decides if to find the value or just output the text
 7. Implement heredoc
-8. -n -n -nnnn -nnn -nnsjlkdhfkfjsdh -nnnn
 9. echo "$USER"$USER$USER
 10. echo "'"'"'"'"
 11. add if cat while waiting for another process
@@ -33,7 +32,7 @@ MORE THINGS TO TEST
 15. Test with different pipes and redirections
 16. Test history and arrow keys.
 	16.1 Type a command line, then use ctrl-C and press "Enter". The buffer should be clean and there should be nothing left to execute.
-17. cat | cat | ls
+17. cat | cat | l
 18. Fix "unset"
 
 <3 WE CAN DO IT <3

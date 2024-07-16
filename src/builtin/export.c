@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:26:25 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/15 18:37:12 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:30:08 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	exists_in_env(char *var)
 	while (env->all_vars[i] != NULL)
 	{
 		var_name = get_var_name(env->all_vars[i]);
-		if (ft_strncmp(var_name, var, ft_strlen(var)) == 0)
+		if (ft_strncmp(var_name, var, i) == 0)
 		{
 			ft_free(var_name);
 			return (1);
