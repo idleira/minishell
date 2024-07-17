@@ -7,7 +7,7 @@ DEF_COLOR = \033[0;37m
 NAME = minishell
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -fPIC
 
 SRCS = src/lexer/lexer.c \
        src/parser/parser_cmd_util.c \
@@ -23,7 +23,6 @@ SRCS = src/lexer/lexer.c \
        src/parser/parser.c \
        src/prompt.c \
 	   src/execution/executor.c \
-	   src/execution/execute_pipeline.c \
 	   src/execution/executor_utils.c \
        src/execution/set_env.c \
 	   src/execution/cd.c \
@@ -33,13 +32,15 @@ SRCS = src/lexer/lexer.c \
 	   src/builtin/unset.c \
 	   src/signals/signals.c \
 	   src/builtin/export_sort.c \
+	   src/execution/errors.c \
+	   src/execution/execute_pipeline.c \
 
 LIBFT_DIR = ./libft
+FT_ALLOC = ./destructor/ft_alloc.a
 LIBFT = ./libft/libft.a
 DESTRUCTOR_DIR = ./destructor
-FT_ALLOC = ./destructor/ft_alloc.a
 
-all: $(LIBFT) $(FT_ALLOC) $(NAME)
+all: $(FT_ALLOC) $(LIBFT) $(NAME)
 
 $(FT_ALLOC):
 	@$(MAKE) -sC $(DESTRUCTOR_DIR)

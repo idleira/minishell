@@ -64,7 +64,7 @@ BONUS = ft_lstmap.c       \
 BONUS_OBJ =$(BONUS:.c=.o)
 
 CC = @cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fPIC
  
 RM = @rm -rf
 
@@ -79,6 +79,9 @@ $(NAME): $(OBJ)
 
 bonus: $(OBJ) $(BONUS_OBJ)
 	@ar -rsc $(NAME) $(OBJ) $(BONUS_OBJ)
+
+clean:
+	@$(RM) $(OBJ) $(BONUS_OBJ)
 
 fclean: clean
 	@$(RM) $(NAME)

@@ -191,12 +191,14 @@ void	execute_command(t_parser *cmd);
 void	handle_redirection(t_parser *cmd);
 // void	execute_pipeline(t_parser *head);
 void	chose_execution(t_parser *head);
-
+//Errors:
+void	error_fork(void);
 //Execute_pipeline
 void	execute_pipeline(t_parser *head);
 void	pipe_child(int prev_fd, int pipefd[2], t_parser *current);
-void	pipe_parent(int prev_fd, int pipefd[2], t_parser *current);
+void	pipe_parent(int *prev_fd, int pipefd[2], t_parser *current);
 void	check_built_and_exec(t_parser *current);
+void	check_next(int pipefd[2], t_parser *current);
 
 //Execution_utils
 void	ft_free_parser(t_parser *head);

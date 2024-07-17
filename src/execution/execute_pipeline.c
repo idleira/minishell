@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:15:23 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/17 15:16:16 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:56:06 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,43 +24,36 @@ void	execute_pipeline(t_parser *head)
 	prev_fd = -1;
 	while (current)
 	{
-		if (current->next)
-		{
-			if (pipe(pipefd) == -1)
-			{
-				perror("pipe");
-				exit(EXIT_FAILURE);
-			}
-		}
+		check_next(pipefd, current);
 		pid = fork();
 		if (pid == -1)
-		{
-			perror("fork");
-			exit(EXIT_FAILURE);
-		}
+			error_fork();
 		else if (pid == 0)
 			pipe_child(prev_fd, pipefd, current);
 		else
-			pipe_parent(prev_fd, pipefd, current);
+		{
+			pipe_parent(&prev_fd, pipefd, current);
+			current = current->next;
+		}
 	}
-	while (wait(&status) > 0);
+	while (wait(&status) > 0)
+		continue ;
 }
 
-void	pipe_parent(int prev_fd, int pipefd[2], t_parser *current)
+void	pipe_parent(int *prev_fd, int pipefd[2], t_parser *current)
 {
-	if (prev_fd != -1)
-		close(prev_fd);
+	if (*prev_fd != -1)
+		close(*prev_fd);
 	if (current->next)
 	{
 		close(pipefd[1]);
-		prev_fd = pipefd[0];
+		*prev_fd = pipefd[0];
 	}
 	else
 	{
 		close(pipefd[0]);
 		close(pipefd[1]);
 	}
-	current = current->next;
 }
 
 void	pipe_child(int prev_fd, int pipefd[2], t_parser *current)
@@ -104,5 +97,17 @@ void	check_built_and_exec(t_parser *current)
 	{
 		env->exit_status = 0;
 		exit(0);
+	}
+}
+
+void	check_next(int pipefd[2], t_parser *current)
+{
+	if (current->next)
+	{
+		if (pipe(pipefd) == -1)
+		{
+			perror("pipe");
+			exit(EXIT_FAILURE);
+		}
 	}
 }
