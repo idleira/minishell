@@ -16,15 +16,11 @@ TODO:
 	Try ctrl-C after running a blocking command like cat without arguments or grep “something“.
 	Try ctrl-\ after running a blocking command like cat without arguments or grep “something“.
 	Try ctrl-D after running a blocking command like cat without arguments or grep “something“.
-6. Change echo '$USER' to print '$USER'. Echo with arguments in quotes should print the string
-	6.1 Add boolean "bool was_quoted" to t_parser cmd
-	6.2 Add check to echo that checks the boolean and decides if to find the value or just output the text
 7. Implement heredoc
 9. echo "$USER"$USER$USER
 10. echo "'"'"'"'"
 11. add if cat while waiting for another process
-12. if export val doesnt have = sign dont output it in the env!
-13. env - i before running a programm
+13. env - i before running a programm ?
 
 MORE THINGS TO TEST
 13. Check if commands are working with all different possible paths.
@@ -32,7 +28,7 @@ MORE THINGS TO TEST
 15. Test with different pipes and redirections
 16. Test history and arrow keys.
 	16.1 Type a command line, then use ctrl-C and press "Enter". The buffer should be clean and there should be nothing left to execute.
-17. cat | cat | l
+17. cat | cat | ls | ls
 18. Fix "unset"
 
 <3 WE CAN DO IT <3
