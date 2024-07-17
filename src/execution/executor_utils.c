@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:48:35 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/17 15:20:00 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:22:29 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	check_builtin_and_red(t_parser *cmd)
 			{
 				printf("command not found: %s\n", cmd_w_path);
 				env->exit_status = 127;
-				return ;
+				exit(127);
 			}
 			//change to proper exit
 			exit(0);
