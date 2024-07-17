@@ -1,7 +1,6 @@
 TODO:
 
 1. Limited amount of global variables is allowed. Put all the structs in one struct and prepare to explain the use of more variables if used.
-2. Handle empty command, empty spaces and tabs chose_execution
 3. Test different cases of echo with different arguments, different variations of "" ' ""
 4. Implement "echo $?". Should work with correct cmds and incorrect cmd. Gather all of the possible exit codes in bash and change all of them accordingly.
 	4.1 Handle $? + $?
@@ -16,20 +15,20 @@ TODO:
 	Try ctrl-C after running a blocking command like cat without arguments or grep “something“.
 	Try ctrl-\ after running a blocking command like cat without arguments or grep “something“.
 	Try ctrl-D after running a blocking command like cat without arguments or grep “something“.
-7. Implement heredoc
 9. echo "$USER"$USER$USER
 10. echo "'"'"'"'"
-14. add shllvl??
-15, PS1=??????????????? {bash profile}
+11.after cat -> ctrl +c doesn't work (prompt built again)
+12.last env var in env should be the last executed cmd (always env) (optional?)
+13. Fix "unset"
+14. implement heredoc
+15. Tab brings the list of files and directories (it shouldn't)
+16. export shouldn't sort env
+17. echo -nn1 hi (shouldnt see incorrect arg as a flag) - Marianna will fix in echo function
+18. exit 100 (implement exit with args)
+19. echo $?
 
-MORE THINGS TO TEST
-13. Check if commands are working with all different possible paths.
-14. Test redirections. All possible variations < and/or > and >> and <<
-15. Test with different pipes and redirections
-16. Test history and arrow keys.
-	16.1 Type a command line, then use ctrl-C and press "Enter". The buffer should be clean and there should be nothing left to execute.
-17. cat | cat | ls | ls
-18. Fix "unset"
 
 <3 WE CAN DO IT <3
+
+
 

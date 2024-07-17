@@ -38,7 +38,9 @@ int	main(int argc, char **argv, char **envp)
 		scanner->command = input_get(prompt);
 		if (strcmp(scanner->command, "exit") == 0)
 		{
+			printf("exit\n");
 		    ft_free(prompt);
+			free(scanner->command);
     		ft_destructor();
     		exit(EXIT_SUCCESS);
 		}
