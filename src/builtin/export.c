@@ -6,13 +6,13 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:26:25 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/16 14:30:08 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:24:46 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	print_export()
+int	print_export(void)
 {
 	int		i;
 	int		size;

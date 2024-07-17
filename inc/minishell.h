@@ -189,8 +189,14 @@ void	traverse_parser(const t_parser *head);
 char	*get_path(char *cmd);
 void	execute_command(t_parser *cmd);
 void	handle_redirection(t_parser *cmd);
-void	execute_pipeline(t_parser *head);
+// void	execute_pipeline(t_parser *head);
 void	chose_execution(t_parser *head);
+
+//Execute_pipeline
+void	execute_pipeline(t_parser *head);
+void	pipe_child(int prev_fd, int pipefd[2], t_parser *current);
+void	pipe_parent(int prev_fd, int pipefd[2], t_parser *current);
+void	check_built_and_exec(t_parser *current);
 
 //Execution_utils
 void	ft_free_parser(t_parser *head);
@@ -208,11 +214,11 @@ int		print_env(t_parser *cmd);
 int		check_builtins(t_parser *cmd);
 void	change_directory(t_parser *cmd);
 void	construct_cd_path(t_parser *cmd);
-void	handle_slash_return( );
+void	handle_slash_return(void);
 
 //BUILTINS
 //export
-int		print_export( );
+int		print_export(void);
 int		check_export(t_parser *cmd);
 int		is_valid_argument(char *arg);
 int		exists_in_env(char *var);
@@ -239,4 +245,4 @@ int		unset_var(t_parser *cmd);
 int		find_var_index(char *var, char **all_vars);
 char	**copy_new_export(char **all_vars, int exclude_index, int len);
 
-# endif
+#endif

@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:09:03 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/16 14:24:25 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:25:58 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	print_env(t_parser *cmd)
 		return (0);
 	while (env->all_vars[i] != NULL)
 	{
-		//printf("var_name: %s\n\n", env->all_vars[i]);
 		equals_sign = ft_strchr(env->all_vars[i], '=');
 		if (equals_sign)
 			printf("%s\n", env->all_vars[i]);

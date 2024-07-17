@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:27:54 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/16 14:04:15 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:22:53 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	check_builtins(t_parser *cmd)
 	return (0);
 }
 
-
 void	change_directory(t_parser *cmd)
 {
 	if (!cmd->args[1] || (cmd->args[1][0] == '~' && !cmd->args[1][1]))
@@ -54,7 +53,7 @@ void	change_directory(t_parser *cmd)
 		return ;
 	}
 	if (ft_strncmp(cmd->args[1], "-", 1) == 0)
-		return (handle_slash_return(env));
+		return (handle_slash_return());
 	construct_cd_path(cmd);
 }
 
@@ -80,7 +79,7 @@ void	construct_cd_path(t_parser *cmd)
 		printf("No such file or directory\n");
 }
 
-void	handle_slash_return( )
+void	handle_slash_return(void)
 {
 	char	*temp;
 

@@ -19,8 +19,8 @@ TODO:
 7. Implement heredoc
 9. echo "$USER"$USER$USER
 10. echo "'"'"'"'"
-11. add if cat while waiting for another process
-13. env - i before running a programm ?
+14. add shllvl
+15, PS1=??????????????? {bash profile}
 
 MORE THINGS TO TEST
 13. Check if commands are working with all different possible paths.

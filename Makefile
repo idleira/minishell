@@ -23,6 +23,7 @@ SRCS = src/lexer/lexer.c \
        src/parser/parser.c \
        src/prompt.c \
 	   src/execution/executor.c \
+	   src/execution/execute_pipeline.c \
 	   src/execution/executor_utils.c \
        src/execution/set_env.c \
 	   src/execution/cd.c \
