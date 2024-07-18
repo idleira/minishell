@@ -1,28 +1,6 @@
 TODO:
 >>>>>>>>>>>>>>>>>>>IRA
 
-1. Check Signals(examples from eval sheet):
-	ctrl-C in an empty prompt should display a new line with a new prompt.
-	ctrl-\ in an empty prompt should not do anything.
-	ctrl-D in an empty prompt should quit minishell --> RELAUNCH!
-	ctrl-C in a prompt after you wrote some stuff should display a new line with a new prompt.
-	The buffer should be clean too. Press "Enter" to make sure nothing from the previous line is executed.
-	ctrl-D in a prompt after you wrote some stuff should not do anything.
-	ctrl-\ in a prompt after you wrote some stuff should not do anything.
-	Try ctrl-C after running a blocking command like cat without arguments or grep “something“.
-	Try ctrl-\ after running a blocking command like cat without arguments or grep “something“.
-	Try ctrl-D after running a blocking command like cat without arguments or grep “something“.
-
-
-***********Prompt built after incorrect cmd + ctr + c**********
-
-mzhukova | minishell$ grep TEST
-
-
-^C
-mzhukova | minishell$ mzhukova | minishell$ ^C
-mzhukova | minishell$ 
-***************************************************************
 
 *************pipes in parsing**************************
 
@@ -71,3 +49,10 @@ TODO:
 *************Echo with variables*********************************
 1. echo "$USER"$USER$USER
 *****************************************************************
+
+
+write a function check_exit()
+THINGS TO DO IF WE ARE STILL ALIVE
+
+1.env?????????
+2.SHLVL???
