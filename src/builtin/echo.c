@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/16 18:24:28 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/18 09:16:30 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int	check_echo(t_parser *cmd)
 		return (0);
 	if (cmd->args[0] && (ft_strncmp(cmd->args[0], "echo", 5) == 0 || ft_strncmp(cmd->args[0], "echo ", 6) == 0))
 	{
-		while ((cmd->args[i] && ft_strncmp(cmd->args[i], "-n", 2) == 0))
+		while (cmd->args[i] && ft_strncmp(cmd->args[i], "-n", 3) == 0)
 		{
+			if (cmd->args[i][2] != '\0')
+				break;
 			is_newline = false;
-			if (not_only_n(cmd->args[i]))
-				break ;
 			i++;
 		}
 		print_echo(cmd, i);
