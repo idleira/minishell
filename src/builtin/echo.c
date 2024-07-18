@@ -6,7 +6,7 @@
 /*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/18 09:16:30 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/07/18 12:06:03 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int	check_echo(t_parser *cmd)
 		return (0);
 	if (cmd->args[0] && (ft_strncmp(cmd->args[0], "echo", 5) == 0 || ft_strncmp(cmd->args[0], "echo ", 6) == 0))
 	{
-		while (cmd->args[i] && ft_strncmp(cmd->args[i], "-n", 3) == 0)
+		while (cmd->args[i] && ft_strncmp(cmd->args[i], "-n", 2) == 0)
 		{
-			if (cmd->args[i][2] != '\0')
-				break;
+			if (cmd->args[i][2] != '\0' && not_only_n(cmd->args[i]) != 0)
+        		break;
 			is_newline = false;
 			i++;
 		}
