@@ -60,7 +60,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_free(error);
 	}
 	ft_free(prompt);
-	ft_free_split(env->all_vars);
 	ft_destructor();
+	ft_free_split(env->all_vars);
 	return (0);
 }
