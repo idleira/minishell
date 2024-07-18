@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:26:25 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/18 14:39:04 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:43:23 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	print_export(void)
 {
 	int		i;
 	int		size;
-	char	*equals_sign;
 	char	**temp_export;
 
 	i = 0;
@@ -28,11 +27,7 @@ int	print_export(void)
 	sort_env_vars(temp_export, size);
 	while (temp_export[i] != NULL)
 	{
-		equals_sign = ft_strchr(temp_export[i], '=');
-		if (equals_sign != NULL)
-			printf("declare -x %s\n", temp_export[i]);
-		else
-			printf("declare -x %s=''\n", temp_export[i]);
+		printf("declare -x %s\n", temp_export[i]);
 		i++;
 	}
 	ft_free_split(temp_export);

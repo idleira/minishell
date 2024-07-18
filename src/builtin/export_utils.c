@@ -94,3 +94,8 @@ char	**copy_env_to_export(char **temp_export)
 	temp_export[len] = NULL;
 	return (temp_export);
 }
+		// if (ft_strnstr(env->all_vars[len], "=", 1))
+		// 	temp_export[len] = ft_strdup(get_var_name(env->all_vars[len]));
+		// else
+		// 	temp_export[len] = ft_strdup(env->all_vars[len]);
+		// len++;
