@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:26:25 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/18 14:23:58 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:39:04 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	print_export(void)
 	temp_export = NULL;
 	while (env->all_vars[size])
 		size++;
-	temp_export =  copy_env_to_export(temp_export);
+	temp_export = copy_env_to_export(temp_export);
 	sort_env_vars(temp_export, size);
 	while (temp_export[i] != NULL)
 	{

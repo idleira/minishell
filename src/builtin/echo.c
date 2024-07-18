@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/17 18:58:45 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:37:49 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	check_echo(t_parser *cmd)
 	if (cmd->args[0] && (ft_strncmp(cmd->args[0], "echo", 5) == 0 ||
 			ft_strncmp(cmd->args[0], "echo ", 6) == 0))
 	{
-		while ((cmd->args[i] && ft_strncmp(cmd->args[i], "-n", 2) == 0))
+		while (cmd->args[i] && ft_strncmp(cmd->args[i], "-n", 2) == 0)
 		{
-			is_newline = false;
-			if (not_only_n(cmd->args[i]))
+			if (cmd->args[i][2] != '\0' && not_only_n(cmd->args[i]) != 0)
 				break ;
+			is_newline = false;
 			i++;
 		}
 		print_echo(cmd, i);
