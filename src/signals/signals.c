@@ -6,7 +6,7 @@
 /*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:52:34 by ibeliaie          #+#    #+#             */
-/*   Updated: 2024/07/17 20:36:31 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:47:12 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ void	signal_handler(int signum)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+		env->exit_status = 130;
 	}
 }
