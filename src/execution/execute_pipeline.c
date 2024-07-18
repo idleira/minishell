@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:15:23 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/17 16:24:24 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/17 18:32:19 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,9 @@ void	check_built_and_exec(t_parser *current)
 		if (execve(cmd_w_path, current->args, env->all_vars) == -1)
 		{
 			printf("command not found: %s\n", current->args[0]);
+			env->exit_status = 127;
 			free(cmd_w_path);
-			exit(EXIT_FAILURE);
+			exit(127);
 		}
 	}
 	else

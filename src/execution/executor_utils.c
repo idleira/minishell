@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:48:35 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/17 16:22:29 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:00:32 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,12 @@ char	*my_strjoin(char const *s1, char const *s2)
 	return (result);
 }
 
-void	check_builtin_and_red(t_parser *cmd)
+void check_builtin_and_red(t_parser *cmd)
 {
 	char	*cmd_w_path;
 	pid_t	pid;
 	int		status;
+
 
 	if (!check_builtins(cmd))
 	{
@@ -78,22 +79,22 @@ void	check_builtin_and_red(t_parser *cmd)
 		{
 			handle_redirection(cmd);
 			cmd_w_path = get_path(cmd->args[0]);
-			if (!cmd_w_path || (execve(cmd_w_path,
-						cmd->args, env->all_vars) == -1))
+			if (!cmd_w_path || (execve(cmd_w_path, cmd->args, env->all_vars) == -1))
 			{
 				printf("command not found: %s\n", cmd_w_path);
 				env->exit_status = 127;
-				exit(127);
+				return ;
 			}
 			//change to proper exit
 			exit(0);
 		}
 		else
-			waitpid(pid, &status, 0);
+		waitpid(pid, &status, 0);
 	}
+
 }
 
-void	minishell_exit(int status)
+void minishell_exit(int status)
 {
 	env->exit_status = status;
 	return ;

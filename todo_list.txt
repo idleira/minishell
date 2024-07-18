@@ -21,11 +21,11 @@ TODO:
 12.last env var in env should be the last executed cmd (always env) (optional?)
 13. Fix "unset"
 14. implement heredoc
-15. Tab brings the list of files and directories (it shouldn't)
 16. export shouldn't sort env
 17. echo -nn1 hi (shouldnt see incorrect arg as a flag) - Marianna will fix in echo function
 18. exit 100 (implement exit with args)
 19. echo $?
+20. ls -la | < file1 cat > file3
 
 
 <3 WE CAN DO IT <3

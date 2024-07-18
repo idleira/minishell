@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/16 18:24:28 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/17 18:58:45 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	check_echo(t_parser *cmd)
 	i = 1;
 	if (cmd->file)
 		return (0);
-	if (cmd->args[0] && (ft_strncmp(cmd->args[0], "echo", 5) == 0 || ft_strncmp(cmd->args[0], "echo ", 6) == 0))
+	if (cmd->args[0] && (ft_strncmp(cmd->args[0], "echo", 5) == 0 ||
+			ft_strncmp(cmd->args[0], "echo ", 6) == 0))
 	{
 		while ((cmd->args[i] && ft_strncmp(cmd->args[i], "-n", 2) == 0))
 		{
@@ -42,32 +43,39 @@ int	check_echo(t_parser *cmd)
 	}
 }
 
-void print_echo(t_parser *cmd, int i)
+void	print_echo(t_parser *cmd, int i)
 {
-    char *var_name;
-    char *var_value;
-    int j;
+	char	*var_name;
+	char	*var_value;
+	int		j;
 
-    while (cmd->args[i])
-    {
-        if (cmd->args[i][0] == '$' && cmd->args[i][1] != '\0' && cmd->q_single == false)
-        {
-            j = 1;
-            while (cmd->args[i][j] && (ft_isalnum(cmd->args[i][j]) || cmd->args[i][j] == '_'))
-                j++;
-            var_name = ft_substr(cmd->args[i], 1, j - 1);
-            var_value = get_var_value(var_name);
-            if (var_value)
-                printf("%s", var_value);
-            printf("%s", cmd->args[i] + j);
-            ft_free(var_name);
-        }
-        else
-            printf("%s", cmd->args[i]);
-        if (cmd->args[i + 1])
-            printf(" ");
-        i++;
-    }
+	while (cmd->args[i])
+	{
+		if (cmd->args[i][0] == '$' && cmd->args[i][1] != '\0' &&
+			cmd->q_single == false)
+		{
+			j = 1;
+			if (cmd->args[i][1] == '?')
+			{
+				printf("%d", env->exit_status);
+				return ;
+			}
+			while (cmd->args[i][j] && (ft_isalnum(cmd->args[i][j]) ||
+				cmd->args[i][j] == '_'))
+				j++;
+			var_name = ft_substr(cmd->args[i], 1, j - 1);
+			var_value = get_var_value(var_name);
+			if (var_value)
+				printf("%s", var_value);
+			printf("%s", cmd->args[i] + j);
+			ft_free(var_name);
+		}
+		else
+			printf("%s", cmd->args[i]);
+		if (cmd->args[i + 1])
+			printf(" ");
+		i++;
+	}
 }
 
 int	not_only_n(char *str)
