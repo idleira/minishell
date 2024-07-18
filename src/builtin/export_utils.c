@@ -21,8 +21,8 @@ char	*get_var_value(char *var_name)
 	var_name_len = ft_strlen(var_name);
 	while (env->all_vars[i] != NULL)
 	{
-		if (ft_strncmp(env->all_vars[i], var_name, var_name_len) == 0 &&
-			env->all_vars[i][var_name_len] == '=')
+		if ((ft_strncmp(env->all_vars[i], var_name, var_name_len) == 0)
+			&& env->all_vars[i][var_name_len] == '=')
 		{
 			return (env->all_vars[i] + var_name_len + 1);
 		}
@@ -94,8 +94,3 @@ char	**copy_env_to_export(char **temp_export)
 	temp_export[len] = NULL;
 	return (temp_export);
 }
-		// if (ft_strnstr(env->all_vars[len], "=", 1))
-		// 	temp_export[len] = ft_strdup(get_var_name(env->all_vars[len]));
-		// else
-		// 	temp_export[len] = ft_strdup(env->all_vars[len]);
-		// len++;

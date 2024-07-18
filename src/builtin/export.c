@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:26:25 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/18 15:43:23 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/18 21:14:13 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ int	print_export(void)
 	sort_env_vars(temp_export, size);
 	while (temp_export[i] != NULL)
 	{
-		printf("declare -x %s\n", temp_export[i]);
+		if (ft_strnstr(temp_export[i], "=''", ft_strlen(temp_export[i])))
+			printf("declare -x %s\n", get_var_name(temp_export[i]));
+		else
+			printf("declare -x %s\n", temp_export[i]);
 		i++;
 	}
 	ft_free_split(temp_export);
@@ -81,16 +84,21 @@ int	is_valid_argument(char *arg)
 	return (1);
 }
 
-int	exists_in_env(char *var)
+int	
+
+exists_in_env(char *var)
 {
 	int		i;
 	char	*var_name;
+	char	*new_var_name;
 
 	i = 0;
+	new_var_name = get_var_name(var);
 	while (env->all_vars[i] != NULL)
 	{
 		var_name = get_var_name(env->all_vars[i]);
-		if (ft_strncmp(var_name, var, i) == 0)
+		if ((ft_strncmp(var_name, new_var_name, ft_strlen(var_name)) == 0)
+			&& (ft_strlen(var_name) == ft_strlen(new_var_name)))
 		{
 			ft_free(var_name);
 			return (1);
@@ -112,15 +120,35 @@ void	update_env(char *var)
 	while (env->all_vars[i] != NULL)
 	{
 		current_name = get_var_name(env->all_vars[i]);
-		if (ft_strncmp(current_name, var_name, i) == 0)
+		if (ft_strncmp(current_name, var_name, ft_strlen(current_name)) == 0)
 		{
-			ft_free(env->all_vars[i]);
-			env->all_vars[i] = ft_strdup(var);
-			ft_free(current_name);
-			break ;
+			if (ft_strchr(var, '=') != NULL)
+			{
+				ft_free(env->all_vars[i]);
+				env->all_vars[i] = ft_strdup(var);
+			}
+			//ft_free(current_name);
+			break;
 		}
 		ft_free(current_name);
 		i++;
 	}
 	ft_free(var_name);
+}
+
+char	*my_strnstr(const char *haystack, const char *needle, size_t len)
+{
+	size_t	nl;
+
+	nl = ft_strlen(needle);
+	if (!nl)
+		return ((char *) haystack);
+	while (*haystack && len >= nl)
+	{
+		if (*haystack == *needle && !ft_strncmp(haystack, needle, nl))
+			return ((char *)haystack);
+		haystack++;
+		len--;
+	}
+	return (NULL);
 }

@@ -6,8 +6,8 @@ DEF_COLOR = \033[0;37m
 
 NAME = minishell
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -fPIC
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -g
 
 SRCS = src/lexer/lexer.c \
        src/parser/parser_cmd_util.c \

@@ -225,6 +225,7 @@ int		check_export(t_parser *cmd);
 int		is_valid_argument(char *arg);
 int		exists_in_env(char *var);
 void	update_env(char *var);
+char	*my_strnstr(const char *haystack, const char *needle, size_t len);
 
 //export_utils
 char	*get_var_value(char *var_name);
