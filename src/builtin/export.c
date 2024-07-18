@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:26:25 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/17 15:24:46 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:23:58 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,25 @@ int	print_export(void)
 	int		i;
 	int		size;
 	char	*equals_sign;
+	char	**temp_export;
 
 	i = 0;
 	size = 0;
+	temp_export = NULL;
 	while (env->all_vars[size])
 		size++;
-	sort_env_vars(env->all_vars, size);
-	while (env->all_vars[i] != NULL)
+	temp_export =  copy_env_to_export(temp_export);
+	sort_env_vars(temp_export, size);
+	while (temp_export[i] != NULL)
 	{
-		equals_sign = ft_strchr(env->all_vars[i], '=');
+		equals_sign = ft_strchr(temp_export[i], '=');
 		if (equals_sign != NULL)
-			printf("declare -x %s\n", env->all_vars[i]);
+			printf("declare -x %s\n", temp_export[i]);
 		else
-			printf("declare -x %s=''\n", env->all_vars[i]);
+			printf("declare -x %s=''\n", temp_export[i]);
 		i++;
 	}
+	ft_free_split(temp_export);
 	return (1);
 }
 

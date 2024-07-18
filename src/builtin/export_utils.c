@@ -73,3 +73,24 @@ void	add_to_env(char *new_val)
 	env->all_vars[len] = new_var;
 	env->all_vars[len + 1] = NULL;
 }
+
+char	**copy_env_to_export(char **temp_export)
+{
+	int	len;
+
+	len = 0;
+
+	while (env->all_vars[len] != NULL)
+		len++;
+	temp_export = ft_malloc((len + 1) * sizeof(char *));
+	if (!temp_export)
+		minishell_exit(1);
+	len = 0;
+	while (env->all_vars[len] != NULL)
+	{
+		temp_export[len] = ft_strdup(env->all_vars[len]);
+		len++;
+	}
+	temp_export[len] = NULL;
+	return (temp_export);
+}
