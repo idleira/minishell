@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/19 17:33:55 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/19 18:35:19 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	handle_redirection(t_parser *cmd)
 		if ((file->type == '|') || (file->type == IN))
 			cmd->fd = open(file->name, O_RDONLY);
 		else if (file->type == HEREDOC)
-			handle_heredoc(cmd, &cmd->args[1][0]);
+			handle_heredoc(cmd, cmd->file->name);
 		else if (file->type == OUT)
 			cmd->fd = open(file->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else if (file->type == APPEND)

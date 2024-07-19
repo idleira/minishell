@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 15:46:44 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/19 17:44:34 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/19 18:36:36 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,15 @@ void	get_lines(t_parser *cmd, char *end)
 
 	while (1)
 	{
-		line = NULL;
-		len = 0;
-		printf("> ");
-		if (getline(&line, &len, stdin) == -1)
+		line = readline("> ");
+		len = ft_strlen(line);
+		if ((ft_strncmp(line, end, len) == 0) || !line)
 		{
 			free(line);
 			break ;
 		}
-		if ((ft_strncmp(line, end, ft_strlen(end)) == 0)
-			&& line[ft_strlen(end)] == '\n')
-		{
-			printf("newline entered\n");
-			free(line);
-			break ;
-		}
-		write(cmd->fd, line, ft_strlen(line));
+		write(cmd->fd, line, len);
+		write(cmd->fd, "\n", 1);
 		free(line);
 	}
 }
