@@ -249,4 +249,8 @@ int		unset_var(t_parser *cmd);
 int		find_var_index(char *var, char **all_vars);
 char	**copy_new_export(char **all_vars, int exclude_index, int len);
 
+//heredoc
+void	handle_heredoc(t_parser *cmd, char *delimiter);
+void	get_lines(t_parser *cmd, char *end);
+
 #endif

@@ -29,6 +29,7 @@ SRCS = src/lexer/lexer.c \
 	   src/builtin/export.c \
 	   src/builtin/export_utils.c \
 	   src/builtin/echo.c \
+	   src/builtin/heredoc.c \
 	   src/builtin/unset.c \
 	   src/signals/signals.c \
 	   src/builtin/export_sort.c \
