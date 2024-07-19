@@ -40,8 +40,7 @@ TODO:
 **************Execution + environment ***************************
 
 1.last env var in env should be the last executed cmd (always env)
-2. Fix "unset"
-3. Implement heredoc
+2. Fix "unset" finished?
 
 *****************************************************************
 
@@ -56,3 +55,5 @@ THINGS TO DO IF WE ARE STILL ALIVE
 
 1.env?????????
 2.SHLVL???
+3. tee 
+4. list of arguments after export

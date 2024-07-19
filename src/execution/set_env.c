@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:09:03 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/18 21:32:42 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/19 18:38:48 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	copy_environment(char **envp)
 		i++;
 	}
 	env->all_vars[i] = NULL;
+	env->all_vars[i - 1] = ft_strdup("_=/usr/bin/env");
 }
 
 void	change_variable(char *key, char *new_value)
