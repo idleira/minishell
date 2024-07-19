@@ -41,6 +41,7 @@ int	main(int argc, char **argv, char **envp)
 			printf("exit\n");
 		    ft_free(prompt);
 			free(scanner->command);
+			ft_free_env();
     		ft_destructor();
     		exit(EXIT_SUCCESS);
 		}

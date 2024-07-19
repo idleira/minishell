@@ -211,6 +211,7 @@ void	check_builtin_and_red(t_parser *cmd);
 void	copy_environment(char **envp);
 void	change_variable(char *key, char *new_value);
 int		print_env(t_parser *cmd);
+void	ft_free_env(void);
 
 //cd
 int		check_builtins(t_parser *cmd);
