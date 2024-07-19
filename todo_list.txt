@@ -24,6 +24,10 @@ bash: syntax error: unclosed double quotes
 
 ***********************************************************
 
+*************Echo with variables*********************************
+1. echo "$USER"$USER$USER
+*****************************************************************
+
 TODO:
 >>>>>>>>>>>>>>>>>>>MARIANNA
 
@@ -36,21 +40,14 @@ TODO:
 
 *****************************************************************
 
-
-**************Execution + environment ***************************
-
-1.last env var in env should be the last executed cmd (always env)
-2. Fix "unset" finished?
-
-*****************************************************************
-
-
-*************Echo with variables*********************************
-1. echo "$USER"$USER$USER
-*****************************************************************
-
-
 write a function check_exit()
+
+**************************thigs left ****************************
+1. memory leaks with copy env
+2. Test for more memory leaks
+3. Norminette everything
+4. Refactor main
+
 THINGS TO DO IF WE ARE STILL ALIVE
 
 1.env?????????

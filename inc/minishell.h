@@ -205,7 +205,7 @@ void	ft_free_parser(t_parser *head);
 void	ft_free_split(char **split);
 char	*my_strjoin(char const *s1, char const *s2);
 void	check_builtin_and_red(t_parser *cmd);
-void	minishell_exit(int status);
+
 
 //Environment
 void	copy_environment(char **envp);
@@ -217,6 +217,9 @@ int		check_builtins(t_parser *cmd);
 void	change_directory(t_parser *cmd);
 void	construct_cd_path(t_parser *cmd);
 void	handle_slash_return(void);
+
+//Exits
+void	minishell_exit(int status);
 
 //BUILTINS
 //export

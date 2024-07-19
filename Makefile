@@ -33,6 +33,7 @@ SRCS = src/lexer/lexer.c \
 	   src/signals/signals.c \
 	   src/builtin/export_sort.c \
 	   src/execution/errors.c \
+	   src/execution/exits.c \
 	   src/execution/execute_pipeline.c \
 
 LIBFT_DIR = ./libft
