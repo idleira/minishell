@@ -220,7 +220,9 @@ void	construct_cd_path(t_parser *cmd);
 void	handle_slash_return(void);
 
 //Exits
-void	minishell_exit(int status);
+void	minishell_exit(int status, bool is_exit);
+void	save_status(pid_t pid, int status);
+void	save_status_in_pipeline(int last_pid, pid_t pid);
 
 //BUILTINS
 //export

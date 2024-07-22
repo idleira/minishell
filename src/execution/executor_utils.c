@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:48:35 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/19 20:09:15 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:16:29 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,33 +63,31 @@ char	*my_strjoin(char const *s1, char const *s2)
 	return (result);
 }
 
-void check_builtin_and_red(t_parser *cmd)
+void	check_builtin_and_red(t_parser *cmd)
 {
 	char	*cmd_w_path;
 	pid_t	pid;
 	int		status;
 
-
+	status = 0;
 	if (!check_builtins(cmd))
 	{
 		pid = fork();
 		if (pid < 0)
-			exit(EXIT_FAILURE);
+			_exit(EXIT_FAILURE);
 		else if (pid == 0)
 		{
 			handle_redirection(cmd);
 			cmd_w_path = get_path(cmd->args[0]);
-			if (!cmd_w_path || (execve(cmd_w_path, cmd->args, env->all_vars) == -1))
+			if (!cmd_w_path
+				|| (execve(cmd_w_path, cmd->args, env->all_vars) == -1))
 			{
 				printf("command not found: %s\n", cmd_w_path);
-				env->exit_status = 127;
-				exit(env->exit_status);
+				_exit(127);
 			}
-			//change to proper exit
-			exit(0);
+			_exit(0);
 		}
 		else
-		waitpid(pid, &status, 0);
+			save_status(pid, status);
 	}
-
 }

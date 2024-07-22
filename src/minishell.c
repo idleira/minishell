@@ -48,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 		head = NULL;
 		return_value = ft_check(scanner, prompt, error);
 		if (return_value == 1)
-			minishell_exit(1);
+			minishell_exit(1, false);
 		if (return_value != 2)
 		{
 			parsed_commands = input_process(scanner, head, error, prompt);// parse the command and store it in t_parser struct

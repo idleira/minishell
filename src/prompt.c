@@ -36,6 +36,7 @@ void	prompt_build(t_prompt *prompt)
 // gets the input from the user
 char	*input_get(t_prompt *prompt)
 {
+	// t_allocs *temp = ft_allocs(NULL);
     char *input;
 
     if (getenv("USER"))
@@ -46,6 +47,7 @@ char	*input_get(t_prompt *prompt)
             prompt->rebuild = 0;
         }
         input = readline(prompt->line);
+		// add_allocnode(&temp, create_alloc(input));
     }
     else
         input = readline("\033[0;36mminishell\033[0m]$ ");

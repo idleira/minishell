@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 15:46:44 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/19 18:36:36 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/22 13:56:26 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	handle_heredoc(t_parser *cmd, char *end)
 	if (cmd->fd < 0)
 	{
 		perror("Heredoc file not opened");
-		minishell_exit(1);
+		minishell_exit(1, false);
 	}
 	get_lines(cmd, end);
 	close(cmd->fd);
@@ -27,7 +27,7 @@ void	handle_heredoc(t_parser *cmd, char *end)
 	if (cmd->fd < 0)
 	{
 		perror("Heredoc is not opened");
-		minishell_exit(1);
+		minishell_exit(1, false);
 	}
 }
 

@@ -7,7 +7,7 @@ DEF_COLOR = \033[0;37m
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 SRCS = src/lexer/lexer.c \
        src/parser/parser_cmd_util.c \
        src/parser/parser_utils.c \

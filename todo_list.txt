@@ -35,22 +35,31 @@ TODO:
 
 1. Implement "echo $?". Should work with correct cmds and incorrect cmd. Gather all of the possible exit codes in bash and change all of them accordingly.
 	1.1 Handle $? + $?
+	write a function check_exit(), use in main for exit with args
 2. exit 100 (implement exit with args)
-3. Exit with signals (Ask Ira about signals to handle correctly)
 
 *****************************************************************
 
-write a function check_exit()
+
+***************execution double command error*********************
+mzhukova | minishell$ cat | cat | ls | echososos
+echososos: command not found
+command not found: echososos
+
+
+SAVED STATUS: -1094795586
+mzhukova | minishell$ 
+******************************************************************
+
 
 **************************thigs left ****************************
-1. memory leaks with copy env
 2. Test for more memory leaks
 3. Norminette everything
 4. Refactor main
+
 
 THINGS TO DO IF WE ARE STILL ALIVE
 
 1.env?????????
 2.SHLVL???
 3. tee 
-4. list of arguments after export

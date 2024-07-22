@@ -84,7 +84,7 @@ char	**copy_env_to_export(char **temp_export)
 		len++;
 	temp_export = ft_malloc((len + 1) * sizeof(char *));
 	if (!temp_export)
-		minishell_exit(1);
+		minishell_exit(1, false);
 	len = 0;
 	while (env->all_vars[len] != NULL)
 	{

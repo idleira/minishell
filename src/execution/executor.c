@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/19 18:35:19 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:27:19 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	handle_redirection(t_parser *cmd)
 		if (cmd->fd < 0)
 		{
 			perror("open file");
-			minishell_exit(1);
+			minishell_exit(1, true);
 		}
 		if (file->type == IN || file->type == HEREDOC)
 			dup2(cmd->fd, STDIN_FILENO);
