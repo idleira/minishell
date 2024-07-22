@@ -32,25 +32,9 @@ TODO:
 >>>>>>>>>>>>>>>>>>>MARIANNA
 
 ****************execution exit************************************
-
-1. Implement "echo $?". Should work with correct cmds and incorrect cmd. Gather all of the possible exit codes in bash and change all of them accordingly.
-	1.1 Handle $? + $?
-	write a function check_exit(), use in main for exit with args
-2. exit 100 (implement exit with args)
+1. Implement a function to check the exit args, draft in exits
 
 *****************************************************************
-
-
-***************execution double command error*********************
-mzhukova | minishell$ cat | cat | ls | echososos
-echososos: command not found
-command not found: echososos
-
-
-SAVED STATUS: -1094795586
-mzhukova | minishell$ 
-******************************************************************
-
 
 **************************thigs left ****************************
 2. Test for more memory leaks
