@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:15:23 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/17 18:32:19 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:03:39 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ void	execute_pipeline(t_parser *head)
 	int			pipefd[2];
 	int			prev_fd;
 	pid_t		pid;
+	pid_t		last_pid;
 	t_parser	*current;
-	int			status;
 
 	current = head;
+	last_pid = -1;
 	prev_fd = -1;
 	while (current)
 	{
@@ -32,12 +33,12 @@ void	execute_pipeline(t_parser *head)
 			pipe_child(prev_fd, pipefd, current);
 		else
 		{
+			last_pid = pid;
 			pipe_parent(&prev_fd, pipefd, current);
 			current = current->next;
 		}
 	}
-	while (wait(&status) > 0)
-		continue ;
+	save_status_in_pipeline(last_pid, pid);
 }
 
 void	pipe_parent(int *prev_fd, int pipefd[2], t_parser *current)
@@ -108,7 +109,7 @@ void	check_next(int pipefd[2], t_parser *current)
 		if (pipe(pipefd) == -1)
 		{
 			perror("pipe");
-			exit(EXIT_FAILURE);
+			minishell_exit(1, true);
 		}
 	}
 }

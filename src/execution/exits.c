@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 20:09:19 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/22 16:15:58 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:08:27 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,19 @@ void	save_status(pid_t pid, int status)
 		env->exit_status = WEXITSTATUS(status);
 }
 
-void	save_status_in_pipeline(int last_pid, pid_t pid)
+void	save_status_in_pipeline(int last_pid)
 {
-	int	status;
+	int		status;
+	pid_t	pid;
 
-	status = 0;
-	while (wait(&status) > 0)
-		continue ;
-	if (last_pid != -1)
-		save_status(pid, status);
+	pid = wait(&status);
+	while (pid > 0)
+	{
+		if (pid == last_pid)
+		{
+			if (WIFEXITED(status))
+				env->exit_status = WEXITSTATUS(status);
+		}
+		pid = wait(&status);
+	}
 }
