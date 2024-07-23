@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/22 15:27:19 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:18:38 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	chose_execution(t_parser *head)
 {
+	if (!check_exit(head))
+		return (minishell_exit(env->exit_status, false));
 	if (head && head->next)
 		execute_pipeline(head);
 	else if (head)

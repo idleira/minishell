@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 20:09:19 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/22 17:31:01 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:15:50 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,53 @@ void	save_status_in_pipeline(int last_pid)
 }
 
 // do it here or using t_parser???
-// void check_exit(t_scanner *scanner, t_prompt *prompt)
-// {
-// 	if (strcmp(scanner->command, "exit") == 0)
-// 	{
-// 		if (second arg)
-// 			if !isnum()
-// 				printf(bash: exit: ghghg: numeric argument required) && exit
-// 			env->exit_status = second arg;
-// 		else if (second arg && 3rd arg)
-// 			printf(bash: exit: too many arguments) && exit
-// 		printf("exit\n");
-// 		ft_free(prompt);
-// 		free(scanner->command);
-// 		ft_free_env();
-// 		ft_destructor();
-// 		exit(EXIT_SUCCESS);
-// 	}
-// }
+int	check_exit(t_parser *cmd)
+{
+	if (ft_strncmp(cmd->args[0], "exit", 4) == 0)
+	{
+		printf("exit\n");
+		if (!(cmd->args[1]))
+			env->exit_status = 0;
+		else if (cmd->args[1] && !cmd->args[2])
+		{
+			if (ft_isnum(cmd->args[1]))
+				env->exit_status = ft_atoi(cmd->args[1]);
+			else
+			{
+				printf("exit: %s: numeric argument required\n", cmd->args[1]);
+				env->exit_status = 2;
+			}
+		}
+		else
+		{
+			printf("exit: too many arguments\n");
+			env->exit_status = 1;
+			return (0);
+		}
+		free_in_exit();
+	}
+	return (1);
+}
+
+int	ft_isnum(char *str)
+{
+	int	i;
+
+	i = 0;
+
+	while (str[i])
+	{
+		if (((str[i] < 48) || (str[i] > 57)))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+void free_in_exit(void)
+{
+		// ft_free(prompt); these will be added when we create a global struct
+	// free(scanner->command); these will be added when we create a global struct
+	ft_free_env();
+	ft_destructor();
+	exit(env->exit_status);
+}
