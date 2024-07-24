@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 14:38:08 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/09 12:42:05 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:15:14 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	ft_free(void *ptr)
 {
 	t_allocs	*lst;
 	t_allocs	*tmp;
-	
-	if(ptr == NULL)
+
+	if (ptr == NULL)
 		return ;
-	if(!FT_DESTR)
+	if (!FT_DESTR)
 		return (free(ptr));
 	lst = ft_allocs(NULL);
 	tmp = NULL;
@@ -42,9 +42,8 @@ void	ft_destructor(void)
 	t_allocs	*lst;
 	t_allocs	*temp;
 
-	if(!FT_DESTR)
+	if (!FT_DESTR)
 		return ;
-
 	lst = ft_allocs(NULL);
 	if (DEBUG)
 		printf("Passing %d allocations to destructor\n", ft_allocsize());

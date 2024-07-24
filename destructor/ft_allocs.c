@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 14:37:44 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/09 12:42:15 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:13:55 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*ft_malloc(size_t size)
 		ft_destructor();
 		exit(EXIT_FAILURE);
 	}
-	if(FT_DESTR)
+	if (FT_DESTR)
 		add_allocnode(&allocs, create_alloc(ptr));
 	return (ptr);
 }
