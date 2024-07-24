@@ -189,8 +189,8 @@ void	traverse_parser(const t_parser *head);
 char	*get_path(char *cmd);
 void	execute_command(t_parser *cmd);
 void	handle_redirection(t_parser *cmd);
-// void	execute_pipeline(t_parser *head);
 void	chose_execution(t_parser *head);
+void	open_fd(t_list *file, t_parser *cmd);
 //Errors:
 void	error_fork(void);
 //Execute_pipeline

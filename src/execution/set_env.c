@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:09:03 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/24 12:51:14 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/24 13:03:44 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	print_env(t_parser *cmd)
 		return (0);
 	while (env->all_vars[i] != NULL)
 	{
-		equals_sign = ft_strchr(env->all_vars[i], '=');
+		equals_sign = ft_strnstr(env->all_vars[i], "=''", 3);
 		if (equals_sign)
 			printf("%s\n", env->all_vars[i]);
 		i++;

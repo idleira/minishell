@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/24 12:39:54 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:54:10 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ int	check_echo(t_parser *cmd)
 			|| ft_strncmp(cmd->args[0], "echo ", 6) == 0))
 		set_newline(is_newline, cmd);
 	else
-	{
 		printf("%s: command not found\n", cmd->args[0]);
-		return (0);
-	}
+	return (0);
 }
 
 void	print_echo(t_parser *cmd, int i)
