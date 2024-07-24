@@ -31,15 +31,13 @@ bash: syntax error: unclosed double quotes
 TODO:
 >>>>>>>>>>>>>>>>>>>MARIANNA
 
-****************execution exit************************************
-1. Implement a function to check the exit args, draft in exits
-
-*****************************************************************
 
 **************************thigs left ****************************
 2. Test for more memory leaks
 3. Norminette everything
 4. Refactor main
+5. Still reachable and 1 leak in export
+6. Last variable in env is correct(change in export too)
 
 
 THINGS TO DO IF WE ARE STILL ALIVE

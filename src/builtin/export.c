@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:26:25 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/24 12:40:40 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/24 14:25:20 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	print_export(void)
 	int		i;
 	int		size;
 	char	**temp_export;
+	char	*temp_name;
 
 	i = 0;
 	size = 0;
@@ -27,10 +28,13 @@ int	print_export(void)
 	sort_env_vars(temp_export, size);
 	while (temp_export[i] != NULL)
 	{
+		temp_name = get_var_name(temp_export[i]);
 		if (ft_strnstr(temp_export[i], "=''", ft_strlen(temp_export[i])))
-			printf("declare -x %s\n", get_var_name(temp_export[i]));
+			printf("declare -x %s\n", temp_name);
 		else
-			printf("declare -x %s\n", temp_export[i]);
+			printf("declare -x %s=\"%s\"\n", get_var_name(temp_export[i]),
+				get_var_value(temp_name));
+		free (temp_name);
 		i++;
 	}
 	ft_free_split(temp_export);
