@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 20:09:19 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/23 17:15:50 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:24:41 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	ft_isnum(char *str)
 	}
 	return (1);
 }
+
 void free_in_exit(void)
 {
 		// ft_free(prompt); these will be added when we create a global struct
