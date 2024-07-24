@@ -67,7 +67,7 @@ void	add_to_env(char *new_val)
 		if (new_var == NULL)
 			return ;
 	}
-	env->all_vars = realloc(env->all_vars, sizeof(char *) * (len + 2));
+	env->all_vars = ft_realloc(env->all_vars, sizeof(char *) * (len + 2));
 	if (env->all_vars == NULL)
 		return (ft_free(new_var));
 	env->all_vars[len] = new_var;
