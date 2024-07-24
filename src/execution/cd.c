@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:27:54 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/17 15:22:53 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:52:54 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	construct_cd_path(t_parser *cmd)
 			perror("getcwd");
 	}
 	else
-		printf("No such file or directory\n");
+		printf("cd: %s: No such file or directory\n", cmd->args[1]);
 }
 
 void	handle_slash_return(void)
