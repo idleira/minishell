@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/23 17:18:38 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:45:10 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,7 @@ void	handle_redirection(t_parser *cmd)
 	file = cmd->file;
 	while (file)
 	{
-		if ((file->type == '|') || (file->type == IN))
-			cmd->fd = open(file->name, O_RDONLY);
-		else if (file->type == HEREDOC)
-			handle_heredoc(cmd, cmd->file->name);
-		else if (file->type == OUT)
-			cmd->fd = open(file->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else if (file->type == APPEND)
-			cmd->fd = open(file->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		else
-			cmd->fd = -1;
+		open_fd(file, cmd);
 		if (cmd->fd < 0)
 		{
 			perror("open file");
@@ -82,4 +73,16 @@ void	handle_redirection(t_parser *cmd)
 	}
 }
 
-
+void	open_fd(t_list *file, t_parser *cmd)
+{
+	if ((file->type == '|') || (file->type == IN))
+		cmd->fd = open(file->name, O_RDONLY);
+	else if (file->type == HEREDOC)
+		handle_heredoc(cmd, cmd->file->name);
+	else if (file->type == OUT)
+		cmd->fd = open(file->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (file->type == APPEND)
+		cmd->fd = open(file->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else
+		cmd->fd = -1;
+}

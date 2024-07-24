@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 20:09:19 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/23 17:24:41 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:50:39 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	minishell_exit(int status, bool is_exit)
 {
 	env->exit_status = status;
-
 	if (!is_exit)
 		return ;
 	_exit(status);
@@ -45,7 +44,6 @@ void	save_status_in_pipeline(int last_pid)
 	}
 }
 
-// do it here or using t_parser???
 int	check_exit(t_parser *cmd)
 {
 	if (ft_strncmp(cmd->args[0], "exit", 4) == 0)
@@ -74,22 +72,8 @@ int	check_exit(t_parser *cmd)
 	return (1);
 }
 
-int	ft_isnum(char *str)
-{
-	int	i;
 
-	i = 0;
-
-	while (str[i])
-	{
-		if (((str[i] < 48) || (str[i] > 57)))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void free_in_exit(void)
+void	free_in_exit(void)
 {
 		// ft_free(prompt); these will be added when we create a global struct
 	// free(scanner->command); these will be added when we create a global struct

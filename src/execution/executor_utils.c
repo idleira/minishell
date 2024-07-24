@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:48:35 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/22 16:16:29 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:51:49 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,18 @@ void	check_builtin_and_red(t_parser *cmd)
 		else
 			save_status(pid, status);
 	}
+}
+
+int	ft_isnum(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (((str[i] < 48) || (str[i] > 57)))
+			return (0);
+		i++;
+	}
+	return (1);
 }
