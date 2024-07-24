@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/24 12:54:10 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/24 13:49:13 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,11 @@
 
 int	check_echo(t_parser *cmd)
 {
-	bool	is_newline;
-
-	is_newline = true;
 	if (cmd->file)
 		return (0);
 	if (cmd->args[0] && (ft_strncmp(cmd->args[0], "echo", 5) == 0
 			|| ft_strncmp(cmd->args[0], "echo ", 6) == 0))
-		set_newline(is_newline, cmd);
+		return (set_newline(cmd));
 	else
 		printf("%s: command not found\n", cmd->args[0]);
 	return (0);
@@ -76,11 +73,13 @@ int	not_only_n(char *str)
 	return (0);
 }
 
-int	set_newline(bool is_newline, t_parser *cmd)
+int	set_newline(t_parser *cmd)
 {
-	int	i;
+	bool	is_newline;
+	int		i;
 
-	i = 0;
+	is_newline = true;
+	i = 1;
 	while (cmd->args[i] && ft_strncmp(cmd->args[i], "-n", 2) == 0)
 	{
 		if (cmd->args[i][2] != '\0' && not_only_n(cmd->args[i]) != 0)

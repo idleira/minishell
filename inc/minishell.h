@@ -252,7 +252,7 @@ char	*my_strnstr(const char *haystack, const char *needle, size_t len);
 int		check_echo(t_parser *cmd);
 void	print_echo(t_parser *cmd, int i);
 int		not_only_n(char *str);
-int		set_newline(bool is_newline, t_parser *cmd);
+int		set_newline(t_parser *cmd);
 
 //unset
 int		unset_var(t_parser *cmd);
