@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 15:46:44 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/22 13:56:26 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:38:58 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	handle_heredoc(t_parser *cmd, char *end)
 	}
 	get_lines(cmd, end);
 	close(cmd->fd);
-
 	cmd->fd = open("/tmp/heredoc", O_RDONLY);
 	if (cmd->fd < 0)
 	{

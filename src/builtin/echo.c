@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/18 17:29:21 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:39:54 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,13 @@
 int	check_echo(t_parser *cmd)
 {
 	bool	is_newline;
-	int		i;
 
 	is_newline = true;
-	i = 1;
 	if (cmd->file)
 		return (0);
-	if (cmd->args[0] && (ft_strncmp(cmd->args[0], "echo", 5) == 0 ||
-			ft_strncmp(cmd->args[0], "echo ", 6) == 0))
-	{
-		while (cmd->args[i] && ft_strncmp(cmd->args[i], "-n", 2) == 0)
-		{
-			if (cmd->args[i][2] != '\0' && not_only_n(cmd->args[i]) != 0)
-				break ;
-			is_newline = false;
-			i++;
-		}
-		print_echo(cmd, i);
-		if (is_newline)
-			printf("\n");
-		return (1);
-	}
+	if (cmd->args[0] && (ft_strncmp(cmd->args[0], "echo", 5) == 0
+			|| ft_strncmp(cmd->args[0], "echo ", 6) == 0))
+		set_newline(is_newline, cmd);
 	else
 	{
 		printf("%s: command not found\n", cmd->args[0]);
@@ -90,4 +76,22 @@ int	not_only_n(char *str)
 		i++;
 	}
 	return (0);
+}
+
+int	set_newline(bool is_newline, t_parser *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd->args[i] && ft_strncmp(cmd->args[i], "-n", 2) == 0)
+	{
+		if (cmd->args[i][2] != '\0' && not_only_n(cmd->args[i]) != 0)
+			break ;
+		is_newline = false;
+		i++;
+	}
+	print_echo(cmd, i);
+	if (is_newline)
+		printf("\n");
+	return (1);
 }

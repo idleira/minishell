@@ -234,7 +234,6 @@ int		check_export(t_parser *cmd);
 int		is_valid_argument(char *arg);
 int		exists_in_env(char *var);
 void	update_env(char *var);
-char	*my_strnstr(const char *haystack, const char *needle, size_t len);
 
 //export_utils
 char	*get_var_value(char *var_name);
@@ -247,11 +246,13 @@ void	swap(char **a, char **b);
 int		partition(char *arr[], int low, int high);
 void	quick_sort(char *arr[], int low, int high);
 void	sort_env_vars(char *env_vars[], int n);
+char	*my_strnstr(const char *haystack, const char *needle, size_t len);
 
 //echo
 int		check_echo(t_parser *cmd);
 void	print_echo(t_parser *cmd, int i);
 int		not_only_n(char *str);
+int		set_newline(bool is_newline, t_parser *cmd);
 
 //unset
 int		unset_var(t_parser *cmd);

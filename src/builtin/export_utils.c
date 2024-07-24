@@ -79,7 +79,6 @@ char	**copy_env_to_export(char **temp_export)
 	int	len;
 
 	len = 0;
-
 	while (env->all_vars[len] != NULL)
 		len++;
 	temp_export = ft_malloc((len + 1) * sizeof(char *));

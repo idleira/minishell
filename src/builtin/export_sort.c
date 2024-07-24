@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:01:33 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/10 15:07:22 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:40:09 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,21 @@ void	quick_sort(char *arr[], int low, int high)
 void	sort_env_vars(char *env_vars[], int n)
 {
 	quick_sort(env_vars, 0, n - 1);
+}
+
+char	*my_strnstr(const char *haystack, const char *needle, size_t len)
+{
+	size_t	nl;
+
+	nl = ft_strlen(needle);
+	if (!nl)
+		return ((char *) haystack);
+	while (*haystack && len >= nl)
+	{
+		if (*haystack == *needle && !ft_strncmp(haystack, needle, nl))
+			return ((char *)haystack);
+		haystack++;
+		len--;
+	}
+	return (NULL);
 }
