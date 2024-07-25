@@ -65,13 +65,12 @@ void	traverse_list(t_dlist *head)
 	{
 		printf("\nvalue ---> %s\n", temp->value);
 		printf("type  ---> %d\n", temp->type);
-		printf("state  ---> %c\n", temp->type);
 		temp = temp->next;
 	}
 }
 
 // ft_frees the doubly linked lexer list
-void	node_ft_free(t_dlist *head, int boolean)
+void	node_ft_free(t_dlist *head)
 {
 	t_dlist	*temp;
 
@@ -79,11 +78,6 @@ void	node_ft_free(t_dlist *head, int boolean)
 	{
 		temp = head;
 		head = head->next;
-		if (boolean)
-		{
-			if (temp->state == q_single || temp->state == q_double)
-				ft_free(temp->value);
-		}
 		ft_free(temp);
 	}
 }

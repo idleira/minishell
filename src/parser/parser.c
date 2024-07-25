@@ -13,88 +13,105 @@
 #include "../../inc/minishell.h"
 
 //handles file redirection
-t_list	*handle_file_redirection(t_dlist **head)
+t_list	*handle_file_redirection(t_dlist **lexer)
 {
 	t_list	*file;
 
 	file = ft_lstnew();
-	file->name = (*head)->next->value;
-	if ((*head)->type == __RED_IN)
+	file->name = (*lexer)->next->value;
+	if ((*lexer)->type == __RED_IN)
 		file->type = IN;
-	else if ((*head)->type == __RED_OUT)
+	else if ((*lexer)->type == __RED_OUT)
 		file->type = OUT;
-	else if ((*head)->type == __RED_APP)
+	else if ((*lexer)->type == __RED_APP)
 		file->type = APPEND;
-	else if ((*head)->type == __HEREDOC)
+	else if ((*lexer)->type == __HEREDOC)
 		file->type = HEREDOC;
 	else
 		file->type = NONE;
 	return (file);
 }
 
-//handles file redirection
-// void	handle_file_redirection(t_dlist **head)
-// {
-// 	t_list	*file;
-
-// 	file = ft_lstnew();
-// 	file->name = (*head)->next->value;
-// 	if ((*head)->type == __RED_IN)
-// 		file->type = IN;
-// 	else if ((*head)->type == __RED_OUT)
-// 		file->type = OUT;
-// 	else if ((*head)->type == __RED_APP)
-// 		file->type = APPEND;
-// 	else if ((*head)->type == __HEREDOC)
-// 		file->type = HEREDOC;
-// 	else
-// 		file->type = NONE;
-// }
-
-void	process_word_tokens(t_dlist **head, t_parser *node,  char **args)
+void	process_word_tokens(t_dlist **lexer, t_parser *node,  char **args)
 {
 	t_list	*file;
-	while (*head && (*head)->type != __PIPE)
+	
+	while (*lexer && (*lexer)->type != __PIPE)
 	{
-		if (((*head)->type == __WORD && !(*head)->prev)
-			|| ((*head)->type == __WORD && ((*head)->prev->type == __WORD
-					|| (*head)->prev->type == __PIPE)))
+		if (((*lexer)->type == __WORD && !(*lexer)->prev)
+			|| ((*lexer)->type == __WORD && ((*lexer)->prev->type == __WORD
+					|| (*lexer)->prev->type == __PIPE)))
 		{
-			*args = ft_strjoin(*args, (*head)->value);
+			*args = ft_strjoin(*args, (*lexer)->value);
 			*args = ft_strjoin(*args, ft_strdup("\n"));
 		}
-		else if (((*head)->type == __RED_APP || (*head)->type == __RED_IN
-				|| (*head)->type == __HEREDOC || (*head)->type == __RED_OUT))
+		else if (((*lexer)->type == __RED_APP || (*lexer)->type == __RED_IN
+				|| (*lexer)->type == __HEREDOC || (*lexer)->type == __RED_OUT))
 		{
-			file = handle_file_redirection(head);
+			file = handle_file_redirection(lexer);
 			ft_lstadd_back(&node->file, file);
 		}
-		if ((*head)->state == q_single)
-			node->q_single = true;
-		else
-			node->q_single = false;
-		*head = (*head)->next;
+		*lexer = (*lexer)->next;
 	}
 }
 
+
+void	remove_quotes(t_dlist **lexer)
+{
+	t_dlist	*node;
+	char	*new_value;
+	int		i;
+	int		j;
+	char	quote;
+
+	quote = '\0';
+	node = *lexer;
+	while (node)
+	{
+		i = 0;
+		j = 0;
+		new_value = malloc(ft_strlen((*lexer)->value) + 1);
+		if (!new_value)
+			return ;
+		while (node->value[i])
+		{
+			if ((node->value[i] == '\'' && quote != '\"')
+				|| (node->value[i] == '\"' && quote != '\''))
+				{
+					if (quote == '\0')
+						quote = node->value[i];
+					else if (quote == node->value[i])
+						quote = '\0';
+				}
+			else
+				new_value[j++] = node->value[i];
+			i++;
+		}
+		new_value[j] = '\0';
+		free(node->value);
+		node->value = new_value;
+		node = node->next;
+	}
+}
 // parses the lexer list and creates a parser list
-void	parse_cmd_list(t_parser **parser, t_dlist *head)
+void	parse_cmd_list(t_parser **parser, t_dlist *lexer)
 {
 	t_parser	*node;
 	char		*args;
 
-	while (head)
+	remove_quotes(&lexer);
+	while (lexer)
 	{
 		node = node_create_pars();
 		node->file = NULL;
 		args = NULL;
-		process_word_tokens(&head, node, &args);
+		process_word_tokens(&lexer, node, &args);
 		if (args)
 			node->args = ft_split(args, '\n');
 		else
 			node->args = NULL;
 		node_append_pars(parser, node);
-		if (head)
-			head = head->next;
+		if (lexer)
+			lexer = lexer->next;
 	}
 }

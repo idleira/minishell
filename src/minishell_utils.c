@@ -58,29 +58,23 @@ int	ft_check(t_scanner *scanner, t_prompt *prompt, t_errors *error)
 }
 
 //handles parsing errors in the command
-t_parser	*input_process(t_scanner *scanner, t_dlist *head, t_errors *error,
-	t_prompt *prompt)
+t_parser	*input_process(t_shell *minishell)
 {
-	t_parser	*parser;
-
-	parser = NULL;
-	(void)prompt;
-	ft_scanner(scanner);						// scan user's input command and store it in scanner->tokens
-	ft_lexer(&head, scanner);					// convert the scanned input into a doubly linked list of tokens
-	ft_error(head, error);						// check for errors in the tokenized input
-	if (error->error_type != no_error)
+	ft_scanner(minishell);						// scan user's input command and store it in scanner->tokens
+	ft_lexer(minishell);					// convert the scanned input into a doubly linked list of tokens
+	ft_error(minishell);						// check for errors in the tokenized input
+	if (minishell->error->error_type != no_error)
 	{
-		error_display(error);
-		node_ft_free(head, 0);
+		error_display(minishell->error);
+		node_ft_free(minishell->lexer);
 	}
 	else										// if no errors, parse the command										
 	{
-		quotes_remove(head);					// remove quotes from the tokens
-		parse_cmd_list(&parser, head);			// parse the tokens and create a parser node for each cmd separated by a pipe
-		//traverse_parser(parser);				// prints out arguments and files associated with each parser node
+		parse_cmd_list(&minishell->parser, minishell->lexer);			// parse the tokens and create a parser node for each cmd separated by a pipe
+		//traverse_parser(minishell->parser);				// prints out arguments and files associated with each parser node
 		// node_ft_free(head, 1);
 	}
-	add_history(scanner->command);				// add the command to the history
+	add_history(minishell->scanner->command);				// add the command to the history
 	// ptrs_ft_free(prompt, scanner, error);
-	return (parser);
+	return (minishell->parser);
 }

@@ -15,12 +15,6 @@
 static void traverse_helper(const t_dlist *temp)
 {
 	printf("[.] value -> %s\n", temp->value);
-	if (temp->state == q_single)
-		printf("[.] state -> IN_SINGLE_QUOTES\n");
-	else if (temp->state == q_double)
-		printf("[.] state -> IN_DOUBLE_QUOTES\n");
-	else
-		printf("[.] state -> WITHOUT_QUOTES\n");
 	if (temp->type == __RED_IN)
 		printf("[.] type -> REDIRECTION_IN\n");
 	else if (temp->type == __RED_OUT)

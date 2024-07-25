@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/18 17:29:21 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/25 22:56:58 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ void	print_echo(t_parser *cmd, int i)
 
 	while (cmd->args[i])
 	{
-		if (cmd->args[i][0] == '$' && cmd->args[i][1] != '\0' &&
-			cmd->q_single == false)
+		if (cmd->args[i][0] == '$' && cmd->args[i][1] != '\0')
 		{
 			j = 1;
 			if (cmd->args[i][1] == '?')

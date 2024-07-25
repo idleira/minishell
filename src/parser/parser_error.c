@@ -25,75 +25,38 @@ void	assign_error_type(t_dlist *node, t_errors *error)
 		error->error_type = error_of_redirection_heredoc;
 	else if (node->type == __RED_APP)
 		error->error_type = error_of_redirection_append;
-	else
-	{
-		if (node->state == q_single)
-			error->error_type = error_of_single_quotes;
-		else
-			error->error_type = error_of_double_quotes;
-	}
-}
-
-// checks if the quotes are closed
-int	error_for_quotes(t_dlist *node)
-{
-	int		i;
-	int		c;
-	char	q;
-
-	if (node->state == q_single)
-		q = '\'';
-	else
-		q = '\"';
-	i = 0;
-	c = 0;
-	while (node->value[i])
-	{
-		if (node->value[i] == q)
-			c++;
-		++i;
-	}
-	return (c % 2 == 0);
 }
 
 // checks for errors in the lexer list
-int	check_errors(t_dlist *temp, t_errors *error)
+int	check_errors(t_dlist *lexer, t_errors *error)
 {
-	if ((temp->type != __WORD && temp->next && temp->next->type != __WORD)
-		|| (temp->type != __WORD && !temp->next))
+	if ((lexer->type != __WORD && lexer->next && lexer->next->type != __WORD)
+		|| (lexer->type != __WORD && !lexer->next))
 	{
-		assign_error_type(temp, error);
+		assign_error_type(lexer, error);
 		return (1);
-	}
-	else
-	{
-		if (!error_for_quotes(temp))
-		{
-			assign_error_type(temp, error);
-			return (1);
-		}
 	}
 	return (0);
 }
 
 // handles the errors in the lexer list
-void	ft_error(t_dlist	*head, t_errors *error)
+void	ft_error(t_shell *minishell)
 {
-	t_dlist	*temp;
+	t_dlist	*lexer;
 
-	temp = head;
-	if (temp->type == __PIPE)
+	lexer = minishell->lexer;
+	if (lexer->type == __PIPE)
 	{
-		assign_error_type(temp, error);
+		assign_error_type(lexer, minishell->error);
 		return ;
 	}
-	while (temp)
+	while (lexer)
 	{
-		if (check_errors(temp, error))
+		if (check_errors(lexer, minishell->error))
 			return ;
-		temp = temp->next;
+		lexer = lexer->next;
 	}
-	error->error_type = no_error;
+	minishell->error->error_type = no_error;
 }
 
 // displays the error message
@@ -109,9 +72,5 @@ void	error_display(t_errors *error)
 		printf("bash: syntax error: unexpected token `<'\n");
 	else if (error->error_type == error_of_redirection_out)
 		printf("bash: syntax error: unexpected token `>'\n");
-	else if (error->error_type == error_of_double_quotes)
-		printf("bash: syntax error: unclosed double quotes\n");
-	else if (error->error_type == error_of_single_quotes)
-		printf("bash: syntax error: unclosed single quotes\n");
-	error->exit_staus = 2;
+	error->exit_status = 2;
 }
