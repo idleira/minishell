@@ -68,12 +68,8 @@ t_parser	*input_process(t_shell *minishell)
 		error_display(minishell->error);
 		node_ft_free(minishell->lexer);
 	}
-	else										// if no errors, parse the command										
-	{
+	else									
 		parse_cmd_list(&minishell->parser, minishell->lexer);			// parse the tokens and create a parser node for each cmd separated by a pipe
-		//traverse_parser(minishell->parser);				// prints out arguments and files associated with each parser node
-		// node_ft_free(head, 1);
-	}
 	add_history(minishell->scanner->command);				// add the command to the history
 	// ptrs_ft_free(prompt, scanner, error);
 	return (minishell->parser);

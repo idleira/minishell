@@ -38,5 +38,4 @@ void	ft_lexer(t_shell *minishell)
 		tokenizer(&minishell->lexer, scanner->tokens[scanner->i]);
 		++scanner->i;
 	}
-	traverse_lexer(minishell->lexer);
 }
