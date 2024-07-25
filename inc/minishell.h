@@ -27,7 +27,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <limits.h>
-# include <linux/limits.h>
+//# include <linux/limits.h>
 # include <dirent.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -222,7 +222,7 @@ void	handle_slash_return(void);
 //Exits
 void	minishell_exit(int status, bool is_exit);
 void	save_status(pid_t pid, int status);
-void	save_status_in_pipeline(int last_pid, pid_t pid);
+void	save_status_in_pipeline(int last_pid);
 
 //BUILTINS
 //export

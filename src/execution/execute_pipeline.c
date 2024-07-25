@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipeline.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:15:23 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/22 17:03:39 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/25 21:36:05 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	execute_pipeline(t_parser *head)
 			current = current->next;
 		}
 	}
-	save_status_in_pipeline(last_pid, pid);
+	save_status_in_pipeline(last_pid);
 }
 
 void	pipe_parent(int *prev_fd, int pipefd[2], t_parser *current)
