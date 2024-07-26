@@ -12,50 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-// handles quotes in the command
-void	handle_quotes(t_scanner *scanner)
-{
-	char	quote;
-
-	quote = scanner->command[scanner->i];
-	scanner->j = scanner->i++;
-	while (scanner->command[scanner->i] != quote
-		&& scanner->command[scanner->i])
-		scanner->i++;
-	if (scanner->command[scanner->i])
-		scanner->line = ft_strjoin(scanner->line,
-				ft_substr(scanner->command, scanner->j,
-					scanner->i - scanner->j + 1));
-}
-
-// handles operators in the command
-void	handle_operators(t_scanner *scanner)
-{
-	if (!ft_memcmp(scanner->command + scanner->i, ">>", 2)
-		|| !ft_memcmp(scanner->command + scanner->i, "<<", 2))
-	{
-		scanner->line = ft_strjoin(scanner->line, ft_strdup("\n"));
-		scanner->line = ft_strjoin(scanner->line,
-				ft_substr(scanner->command, scanner->i, 2));
-		scanner->line = ft_strjoin(scanner->line, ft_strdup("\n"));
-		scanner->i++;
-	}
-	else if (scanner->command[scanner->i] == '|')
-	{
-		scanner->line = ft_strjoin(scanner->line, ft_strdup("\n"));
-		scanner->line = ft_strjoin(scanner->line,
-				ft_substr(scanner->command, scanner->i, 1));
-		scanner->line = ft_strjoin(scanner->line, ft_strdup("\n"));
-	}
-	else
-	{
-		scanner->line = ft_strjoin(scanner->line, ft_strdup("\n"));
-		scanner->line = ft_strjoin(scanner->line,
-				ft_substr(scanner->command, scanner->i, 1));
-		scanner->line = ft_strjoin(scanner->line, ft_strdup("\n"));
-	}
-}
-
 // splits the command into tokens
 void	cmds_split(t_scanner *scanner)
 {

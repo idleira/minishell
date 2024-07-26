@@ -16,7 +16,7 @@
 void	tokenizer(t_dlist **head, char *token)
 {
 	if (token[0] == '\'' || token[0] == '\"')
-			node_append_lex(head, node_quotes(token));
+		node_append_lex(head, node_quotes(token));
 	else if (!strcmp(token, ">") || !strcmp(token, "<")
 		|| !strcmp(token, ">>") || !strcmp(token, "<<"))
 		node_append_lex(head, node_redirection(token));
