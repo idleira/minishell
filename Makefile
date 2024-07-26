@@ -12,11 +12,14 @@ SRCS =	src/prompt.c \
 		src/lexer/scanner.c \
 		src/lexer/scanner_utils.c \
 		src/lexer/lexer.c \
+		src/lexer/lexer_error.c \
 		src/lexer/lexer_utils.c \
 		src/lexer/lexer_utils_list.c \
+		src/expand/expander.c \
+		src/expand/expander_utils.c \
+		src/expand/expander_utils_2.c \
 		src/parser/parser.c \
 		src/parser/parser_utils.c \
-		src/parser/parser_error.c \
 		src/parser/parser_utils_list.c \
 		src/execution/executor.c \
 		src/execution/executor_utils.c \

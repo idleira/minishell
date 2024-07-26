@@ -27,7 +27,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <limits.h>
-//# include <linux/limits.h>
 # include <dirent.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -132,6 +131,10 @@ void	handle_quotes(t_scanner *scanner);
 void	handle_operators(t_scanner *scanner);
 void	cmds_split(t_scanner *scanner);
 void	scanner_ft_free(char **tokens);
+
+//expander functions
+char	**ft_expander(char	**split_tokens);
+char	*expand_var(char *token);
 
 // lexer functions
 void	ft_lexer(t_shell *minishell);

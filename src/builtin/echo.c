@@ -6,7 +6,7 @@
 /*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/25 22:56:58 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/07/26 20:13:53 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,36 +45,18 @@ int	check_echo(t_parser *cmd)
 
 void	print_echo(t_parser *cmd, int i)
 {
-	char	*var_name;
-	char	*var_value;
-	int		j;
-
-	while (cmd->args[i])
-	{
-		if (cmd->args[i][0] == '$' && cmd->args[i][1] != '\0')
-		{
-			j = 1;
-			if (cmd->args[i][1] == '?')
-			{
-				printf("%d", env->exit_status);
-				return ;
-			}
-			while (cmd->args[i][j] && (ft_isalnum(cmd->args[i][j]) ||
-				cmd->args[i][j] == '_'))
-				j++;
-			var_name = ft_substr(cmd->args[i], 1, j - 1);
-			var_value = get_var_value(var_name);
-			if (var_value)
-				printf("%s", var_value);
-			printf("%s", cmd->args[i] + j);
-			ft_free(var_name);
-		}
-		else
-			printf("%s", cmd->args[i]);
-		if (cmd->args[i + 1])
-			printf(" ");
-		i++;
-	}
+    while (cmd->args[i])
+    {
+        if (strcmp(cmd->args[i], "$?") == 0)
+            printf("%d", env->exit_status);
+        else
+        {
+            printf("%s", cmd->args[i]);
+        }
+        if (cmd->args[i + 1])
+            printf(" ");
+        i++;
+    }
 }
 
 int	not_only_n(char *str)

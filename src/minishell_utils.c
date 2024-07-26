@@ -12,16 +12,6 @@
 
 #include "../inc/minishell.h"
 
-// void	initialise(t_shell *minishell, char **envp)
-// {
-// 	ft_alloc_init();
-// 	signal_handlers_setup();
-// 	env = (t_env *)ft_malloc(sizeof(t_env));
-// 	copy_environment(envp);
-// 	minishell->prompt->line = NULL;
-// 	minishell->prompt->rebuild = 1;
-// }
-
 //handles parsing errors in the command
 int	input_process(t_shell *minishell)
 {
@@ -43,7 +33,6 @@ int	input_process(t_shell *minishell)
 
 void	process_and_execute(t_shell *minishell)
 {
-
 	minishell->scanner = (t_scanner *)ft_malloc(sizeof(t_scanner));
 	minishell->error = (t_errors *)ft_malloc(sizeof(t_errors));
 	minishell->parser = (t_parser *)ft_malloc(sizeof(t_parser));

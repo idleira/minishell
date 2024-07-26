@@ -3,26 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:03:16 by ibeliaie          #+#    #+#             */
-/*   Updated: 2024/07/15 18:33:19 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/26 20:15:26 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	expander_check(t_parser *cmd,  )
+// check if expansion is needed
+static int	is_expansion_needed(char *lexer_token)
 {
-	
-	if (cmd->args[i][0] == '$' && cmd->args[i][1] == '\0')
-				printf("$");
-			if (cmd->args[i][0] == '$' && cmd->q_single == false)
-			{
-				var_name = cmd->args[i] + 1;
-				var_value = get_var_value(env, var_name);
-				if (var_value)
-					printf("%s", var_value);
-			}
-			else
+	int		i;
+	bool	expand;
+
+	i = 0;
+	expand = false;
+	if (!ft_strchr(lexer_token, '$'))
+		return (0);
+	while (lexer_token[i])
+	{
+		if (lexer_token[i] == '"')
+			expand = !expand;
+		if (lexer_token[i] == '\'' && !expand)
+		{
+			while (lexer_token[++i] != '\'')
+				i++;
+		}
+		if (lexer_token[i] == '$')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+// expand variables when needed
+char	**ft_expander(char	**split_tokens)
+{
+	int		i;
+	char	*temp;
+
+	i = 0;
+	if (!split_tokens)
+		return (NULL);
+	while (split_tokens[i])
+	{
+		if (is_expansion_needed(split_tokens[i]))
+		{
+			temp = expand_var(split_tokens[i]);
+			split_tokens[i] = temp;
+		}
+		i++;
+	}
+	return (split_tokens);
 }
