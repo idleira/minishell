@@ -27,6 +27,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <limits.h>
+# include <linux/limits.h>
 # include <dirent.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -187,8 +188,8 @@ void	node_append_pars(t_parser **head, t_parser *new);
 char	*get_path(char *cmd);
 void	execute_command(t_parser *cmd);
 void	handle_redirection(t_parser *cmd);
-// void	execute_pipeline(t_parser *head);
 void	chose_execution(t_parser *head);
+void	open_fd(t_list *file, t_parser *cmd);
 //Errors:
 void	error_fork(void);
 //Execute_pipeline
@@ -221,6 +222,9 @@ void	handle_slash_return(void);
 void	minishell_exit(int status, bool is_exit);
 void	save_status(pid_t pid, int status);
 void	save_status_in_pipeline(int last_pid);
+int		check_exit(t_parser *cmd);
+int		ft_isnum(char *str);
+void	free_in_exit(void);
 
 //BUILTINS
 //export
@@ -229,7 +233,6 @@ int		check_export(t_parser *cmd);
 int		is_valid_argument(char *arg);
 int		exists_in_env(char *var);
 void	update_env(char *var);
-char	*my_strnstr(const char *haystack, const char *needle, size_t len);
 
 //export_utils
 char	*get_var_value(char *var_name);
@@ -242,11 +245,13 @@ void	swap(char **a, char **b);
 int		partition(char *arr[], int low, int high);
 void	quick_sort(char *arr[], int low, int high);
 void	sort_env_vars(char *env_vars[], int n);
+char	*my_strnstr(const char *haystack, const char *needle, size_t len);
 
 //echo
 int		check_echo(t_parser *cmd);
 void	print_echo(t_parser *cmd, int i);
 int		not_only_n(char *str);
+int		set_newline(t_parser *cmd);
 
 //unset
 int		unset_var(t_parser *cmd);

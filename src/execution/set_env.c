@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:09:03 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/22 15:30:36 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/24 13:37:57 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	copy_environment(char **envp)
 	env->all_vars[i] = NULL;
 	env->all_vars[i - 1] = ft_strdup("_=/usr/bin/env");
 }
-
 
 void	ft_free_env(void)
 {
@@ -74,6 +73,7 @@ int	print_env(t_parser *cmd)
 {
 	int		i;
 	char	*equals_sign;
+	char	*unset;
 
 	i = 0;
 	if (cmd->file)
@@ -81,7 +81,9 @@ int	print_env(t_parser *cmd)
 	while (env->all_vars[i] != NULL)
 	{
 		equals_sign = ft_strchr(env->all_vars[i], '=');
-		if (equals_sign)
+		unset = ft_strnstr(env->all_vars[i], "=''",
+				ft_strlen(env->all_vars[i]));
+		if (equals_sign && (!unset))
 			printf("%s\n", env->all_vars[i]);
 		i++;
 	}

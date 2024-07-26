@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 12:07:37 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/15 18:34:53 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:22:59 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,28 @@ int	unset_var(t_parser *cmd)
 	int		index;
 	int		len;
 	char	**new_all_vars;
+	int		i;
 
 	len = 0;
 	while (env->all_vars[len] != NULL)
 		len++;
-	index = find_var_index(cmd->args[1], env->all_vars);
-	if (index == -1)
-		return (1);
-	new_all_vars = copy_new_export(env->all_vars, index, len);
-	if (new_all_vars == NULL)
-		return (1);
-	ft_free(env->all_vars[index]);
-	ft_free(env->all_vars);
-	env->all_vars = new_all_vars;
+	i = 1;
+	while (cmd->args[i])
+	{
+		index = find_var_index(cmd->args[i], env->all_vars);
+		if (index == -1)
+			return (1);
+		new_all_vars = copy_new_export(env->all_vars, index, len);
+		if (new_all_vars == NULL)
+			return (1);
+		ft_free(env->all_vars[index]);
+		ft_free(env->all_vars);
+		env->all_vars = new_all_vars;
+		i++;
+	}
 	return (1);
 }
+
 
 char	**copy_new_export(char **all_vars, int exclude_index, int len)
 {

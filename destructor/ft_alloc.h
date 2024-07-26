@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 14:37:51 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/09 12:43:54 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:33:46 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #  define DEBUG 0
 # endif
 
-#define FT_DESTR 1
+# define FT_DESTR 1
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -35,6 +35,8 @@ bool				ft_alloc_init(void);
 /* allocations */
 void				*ft_calloc(size_t count, size_t size);
 void				*ft_malloc(size_t size);
+void				*ft_realloc(void *ptr, size_t size);
+void				*my_memcpy(void *dst, const void *src, size_t len);
 
 /* utils */
 t_allocs			*ft_allocs(t_allocs *lst);

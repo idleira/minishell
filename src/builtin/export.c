@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:26:25 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/18 21:43:49 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/26 20:32:03 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	print_export(void)
 	int		i;
 	int		size;
 	char	**temp_export;
+	char	*temp_name;
 
 	i = 0;
 	size = 0;
@@ -27,10 +28,13 @@ int	print_export(void)
 	sort_env_vars(temp_export, size);
 	while (temp_export[i] != NULL)
 	{
+		temp_name = get_var_name(temp_export[i]);
 		if (ft_strnstr(temp_export[i], "=''", ft_strlen(temp_export[i])))
-			printf("declare -x %s\n", get_var_name(temp_export[i]));
+			printf("declare -x %s\n", temp_name);
 		else
-			printf("declare -x %s\n", temp_export[i]);
+			printf("declare -x %s=\"%s\"\n", get_var_name(temp_export[i]),
+				get_var_value(temp_name));
+		ft_free (temp_name);
 		i++;
 	}
 	ft_free_split(temp_export);
@@ -84,9 +88,7 @@ int	is_valid_argument(char *arg)
 	return (1);
 }
 
-int	
-
-exists_in_env(char *var)
+int	exists_in_env(char *var)
 {
 	int		i;
 	char	*var_name;
@@ -127,28 +129,10 @@ void	update_env(char *var)
 				ft_free(env->all_vars[i]);
 				env->all_vars[i] = ft_strdup(var);
 			}
-			//ft_free(current_name);
-			break;
+			break ;
 		}
 		ft_free(current_name);
 		i++;
 	}
 	ft_free(var_name);
-}
-
-char	*my_strnstr(const char *haystack, const char *needle, size_t len)
-{
-	size_t	nl;
-
-	nl = ft_strlen(needle);
-	if (!nl)
-		return ((char *) haystack);
-	while (*haystack && len >= nl)
-	{
-		if (*haystack == *needle && !ft_strncmp(haystack, needle, nl))
-			return ((char *)haystack);
-		haystack++;
-		len--;
-	}
-	return (NULL);
 }

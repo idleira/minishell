@@ -67,7 +67,7 @@ void	add_to_env(char *new_val)
 		if (new_var == NULL)
 			return ;
 	}
-	env->all_vars = realloc(env->all_vars, sizeof(char *) * (len + 2));
+	env->all_vars = ft_realloc(env->all_vars, sizeof(char *) * (len + 2));
 	if (env->all_vars == NULL)
 		return (ft_free(new_var));
 	env->all_vars[len] = new_var;
@@ -79,7 +79,6 @@ char	**copy_env_to_export(char **temp_export)
 	int	len;
 
 	len = 0;
-
 	while (env->all_vars[len] != NULL)
 		len++;
 	temp_export = ft_malloc((len + 1) * sizeof(char *));
