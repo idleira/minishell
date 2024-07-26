@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pointers_ft_free.c                                    :+:      :+:    :+:   */
+/*   pointers_ft_free.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,45 +12,15 @@
 
 #include "../inc/minishell.h"
 
-// checks if the string is only spaces and tabs
-int	check_spaces(char *s)
-{
-	while (*s && (*s == '\t' || *s == ' '))
-		++s;
-	if (*s)
-		return (0);
-	return (1);
-}
-
-// ft_frees all pointers
-void	ptrs_ft_free(t_prompt *prompt, t_scanner *scanner,
-	t_errors *error)
-{
-	ft_free(prompt->line);
-	ft_free(prompt);
-	ft_free(scanner->command);
-	scanner_ft_free(scanner->tokens);
-	ft_free(scanner);
-	ft_free(error);
-}
-
-// checks if the command is empty
-int	ft_check(t_scanner *scanner, t_prompt *prompt, t_errors *error)
-{
-	// (void)error;
-	if (!scanner->command)
-	{
-		ft_free(prompt);
-		ft_free(scanner);
-		return (1);
-	}
-	if (check_spaces(scanner->command))
-	{
-		(void)error;
-		return (2);
-	}
-	return (0);
-}
+// void	initialise(t_shell *minishell, char **envp)
+// {
+// 	ft_alloc_init();
+// 	signal_handlers_setup();
+// 	env = (t_env *)ft_malloc(sizeof(t_env));
+// 	copy_environment(envp);
+// 	minishell->prompt->line = NULL;
+// 	minishell->prompt->rebuild = 1;
+// }
 
 //handles parsing errors in the command
 int	input_process(t_shell *minishell)
@@ -65,8 +35,31 @@ int	input_process(t_shell *minishell)
 		add_history(minishell->scanner->command);
 		return (1);
 	}
-	else									
+	else
 		parse_cmd_list(&minishell->parser, minishell->lexer);
 	add_history(minishell->scanner->command);
 	return (0);
+}
+
+void	process_and_execute(t_shell *minishell)
+{
+
+	minishell->scanner = (t_scanner *)ft_malloc(sizeof(t_scanner));
+	minishell->error = (t_errors *)ft_malloc(sizeof(t_errors));
+	minishell->parser = (t_parser *)ft_malloc(sizeof(t_parser));
+	minishell->scanner->command = input_get(minishell->prompt);
+	minishell->lexer = NULL;
+	if (ft_check(minishell->scanner, minishell->prompt, minishell->error) == 1)
+		minishell_exit(1, false);
+	if (ft_check(minishell->scanner, minishell->prompt, minishell->error) != 2)
+	{
+		if (input_process(minishell) == 0)
+		{
+			free(minishell->scanner->command);
+			chose_execution(minishell->parser);
+		}
+		ft_free_parser(minishell->parser);
+	}
+	ft_free(minishell->scanner);
+	ft_free(minishell->error);
 }

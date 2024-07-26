@@ -148,24 +148,26 @@ void	node_append_lex(t_dlist **head, t_dlist *new);
 void	traverse_list(t_dlist *head);
 void	node_ft_free(t_dlist *head);
 
-// error fucntions
+// error functions
 void	ft_error(t_shell *minishell);
+int		pipe_start_end(t_shell *minishell);
+int		syntax_check(t_dlist *temp, int op_count, bool expecting_word, t_errors *error);
 void	error_display(t_errors *error);
 
 // minishell functions
 int		check_spaces(char *s);
 void	ptrs_ft_free(t_prompt *prompt, t_scanner *scanner, t_errors *error);
 int		ft_check(t_scanner *scanner, t_prompt *prompt, t_errors *error);
-t_parser	*input_process(t_shell *minishell);
+int		input_process(t_shell *minishell);
+void	process_and_execute(t_shell *minishell);
+//void	initialise(t_shell *minishell, char **envp);
 
 // parser function
 void	parse_cmd_list(t_parser **parser, t_dlist *head);
+void	remove_quotes(t_dlist **lexer);
+char	*process_node(t_dlist *node, char *new_value);
 t_list	*handle_file_redirection(t_dlist **head);
 void	process_word_tokens(t_dlist **head, t_parser *node,  char **args);
-// int		count_files(t_dlist	*head);
-int		count_args(t_dlist *head);
-// void	assign_file(t_dlist *head, t_parser *node, int i);
-void	assign_args(t_dlist *head, t_parser *node, char *args);
 
 // doubly linked list functions for parser
 t_parser	*node_create_pars(void);
@@ -173,9 +175,9 @@ t_parser	*node_last_pars(t_parser *head);
 void	node_append_pars(t_parser **head, t_parser *new);
 
 // traverse functions
-void	traverse_lexer(const t_dlist *head);
-void	traverse_scanner(char **scanner);
-void	traverse_parser(const t_parser *head);
+// void	traverse_lexer(const t_dlist *head);
+// void	traverse_scanner(char **scanner);
+// void	traverse_parser(const t_parser *head);
 
 //EXECUTION:
 //Executor:
