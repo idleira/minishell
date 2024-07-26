@@ -70,4 +70,5 @@ void	ft_scanner(t_shell *minishell)
 	cmds_split(scanner);
 	scanner->tokens = ft_split(scanner->line, '\n');
 	ft_free(scanner->line);
+	ft_expander(scanner->tokens);
 }
