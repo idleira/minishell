@@ -12,7 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-// assigns the error type to the error struct
 void	assign_error_type(t_dlist *node, t_errors *error)
 {
 	if (node->type == __PIPE)
@@ -27,15 +26,47 @@ void	assign_error_type(t_dlist *node, t_errors *error)
 		error->error_type = error_of_redirection_append;
 }
 
-// checks for errors in the lexer list
-int	check_errors(t_dlist *lexer, t_errors *error)
+int	pipe_start_end(t_shell *minishell)
 {
-	if ((lexer->type != __WORD && lexer->next && lexer->next->type != __WORD)
-		|| (lexer->type != __WORD && !lexer->next))
+	t_dlist	*lexer;
+
+	lexer = minishell->lexer;
+	if (lexer->type == __PIPE)
+	{
+		if (lexer->next == NULL || lexer->prev == NULL)
+		{
+			minishell->error->error_type = error_of_pipeline;
+			return (1);
+		}
+	}
+	return (0);
+}
+
+int	syntax_check(t_dlist *lexer, int op_count,
+				bool expecting_word, t_errors *error)
+{
+	if (expecting_word == true
+		&& (lexer->type != __WORD || lexer->next == NULL))
 	{
 		assign_error_type(lexer, error);
 		return (1);
 	}
+	if (op_count > 1 && lexer->type == __PIPE)
+	{
+		error->error_type = error_of_pipeline;
+		return (1);
+	}
+	if (lexer->prev && lexer->prev->type == __HEREDOC && lexer->type != __WORD)
+	{
+		assign_error_type(lexer, error);
+		return (1);
+	}
+	if (op_count >= 3)
+	{
+		assign_error_type(lexer, error);
+		return (1);
+	}
+	error->error_type = no_error;
 	return (0);
 }
 
@@ -43,20 +74,29 @@ int	check_errors(t_dlist *lexer, t_errors *error)
 void	ft_error(t_shell *minishell)
 {
 	t_dlist	*lexer;
+	int		op_count;
+	bool	expecting_word;
 
+	op_count = 0;
+	expecting_word = false;
 	lexer = minishell->lexer;
-	if (lexer->type == __PIPE)
-	{
-		assign_error_type(lexer, minishell->error);
+	if (pipe_start_end(minishell) == 1)
 		return ;
-	}
 	while (lexer)
 	{
-		if (check_errors(lexer, minishell->error))
+		if (lexer->type != __WORD)
+			op_count++;
+		else
+			op_count = 0;
+		if (syntax_check(lexer, op_count, expecting_word,
+				minishell->error) == 1)
 			return ;
+		else if (lexer->type != __PIPE && lexer->type != __WORD)
+			expecting_word = true;
+		else if (expecting_word == true || lexer->type == __PIPE)
+			expecting_word = false;
 		lexer = lexer->next;
 	}
-	minishell->error->error_type = no_error;
 }
 
 // displays the error message

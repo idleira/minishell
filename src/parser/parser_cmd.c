@@ -15,11 +15,12 @@
 // handles quotes in the command
 void	handle_quotes(t_scanner *scanner)
 {
-	char quote;
+	char	quote;
 
 	quote = scanner->command[scanner->i];
 	scanner->j = scanner->i++;
-	while (scanner->command[scanner->i] != quote && scanner->command[scanner->i])
+	while (scanner->command[scanner->i] != quote
+		&& scanner->command[scanner->i])
 		scanner->i++;
 	if (scanner->command[scanner->i])
 		scanner->line = ft_strjoin(scanner->line,
@@ -84,18 +85,19 @@ int	quote_check(char *str)
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
-			{
-				if (quote == '\0')
-					quote = str[i];
-				else if (quote == str[i])
-					quote = '\0';
-			}
+		{
+			if (quote == '\0')
+				quote = str[i];
+			else if (quote == str[i])
+				quote = '\0';
+		}
 		i++;
 	}
 	if (quote != '\0')
 		return (1);
 	return (0);
 }
+
 // initializes the scanner struct, splits and tokenizes input commands
 void	ft_scanner(t_shell *minishell)
 {

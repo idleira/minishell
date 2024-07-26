@@ -32,10 +32,10 @@ t_list	*handle_file_redirection(t_dlist **lexer)
 	return (file);
 }
 
-void	process_word_tokens(t_dlist **lexer, t_parser *node,  char **args)
+void	process_word_tokens(t_dlist **lexer, t_parser *node, char **args)
 {
 	t_list	*file;
-	
+
 	while (*lexer && (*lexer)->type != __PIPE)
 	{
 		if (((*lexer)->type == __WORD && !(*lexer)->prev)
@@ -55,44 +55,51 @@ void	process_word_tokens(t_dlist **lexer, t_parser *node,  char **args)
 	}
 }
 
-
-void	remove_quotes(t_dlist **lexer)
+char	*process_node(t_dlist *node, char *new_value)
 {
-	t_dlist	*node;
-	char	*new_value;
 	int		i;
 	int		j;
 	char	quote;
 
+	i = 0;
+	j = 0;
 	quote = '\0';
+	while (node->value[i])
+	{
+		if ((node->value[i] == '\'' && quote != '\"')
+			|| (node->value[i] == '\"' && quote != '\''))
+		{
+			if (quote == '\0')
+				quote = node->value[i];
+			else if (quote == node->value[i])
+				quote = '\0';
+		}
+		else
+			new_value[j++] = node->value[i];
+		i++;
+	}
+	new_value[j] = '\0';
+	return (new_value);
+}
+
+void	remove_quotes(t_dlist **lexer)
+{
+	char	*new_value;
+	t_dlist	*node;
+
 	node = *lexer;
 	while (node)
 	{
-		i = 0;
-		j = 0;
 		new_value = malloc(ft_strlen((*lexer)->value) + 1);
 		if (!new_value)
 			return ;
-		while (node->value[i])
-		{
-			if ((node->value[i] == '\'' && quote != '\"')
-				|| (node->value[i] == '\"' && quote != '\''))
-				{
-					if (quote == '\0')
-						quote = node->value[i];
-					else if (quote == node->value[i])
-						quote = '\0';
-				}
-			else
-				new_value[j++] = node->value[i];
-			i++;
-		}
-		new_value[j] = '\0';
+		new_value = process_node(node, new_value);
 		free(node->value);
 		node->value = new_value;
 		node = node->next;
 	}
 }
+
 // parses the lexer list and creates a parser list
 void	parse_cmd_list(t_parser **parser, t_dlist *lexer)
 {
