@@ -8,33 +8,34 @@ NAME = minishell
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-SRCS = src/lexer/lexer.c \
-       src/parser/parser_cmd_util.c \
-       src/parser/parser_utils.c \
-       src/lexer/lexer_utils.c \
-       src/parser/parser_cmd.c \
-       src/parser/parser_utils_list.c \
-       src/lexer/lexer_utils_list.c \
-       src/parser/parser_error.c \
-       src/minishell_utils.c \
-       src/parser/parser_traverse.c \
-       src/minishell.c \
-       src/parser/parser.c \
-       src/prompt.c \
-	   src/execution/executor.c \
-	   src/execution/executor_utils.c \
-       src/execution/set_env.c \
-	   src/execution/cd.c \
-	   src/builtin/export.c \
-	   src/builtin/export_utils.c \
-	   src/builtin/echo.c \
-	   src/builtin/heredoc.c \
-	   src/builtin/unset.c \
-	   src/signals/signals.c \
-	   src/builtin/export_sort.c \
-	   src/execution/errors.c \
-	   src/execution/exits.c \
-	   src/execution/execute_pipeline.c \
+SRCS =	src/prompt.c \
+		src/lexer/scanner.c \
+		src/lexer/scanner_utils.c \
+		src/lexer/lexer.c \
+		src/lexer/lexer_utils.c \
+		src/lexer/lexer_utils_list.c \
+		src/parser/parser.c \
+		src/parser/parser_utils.c \
+		src/parser/parser_error.c \
+		src/parser/parser_utils_list.c \
+		src/execution/executor.c \
+		src/execution/executor_utils.c \
+		src/execution/set_env.c \
+		src/execution/cd.c \
+		src/execution/errors.c \
+		src/execution/exits.c \
+		src/execution/execute_pipeline.c \
+		src/builtin/export.c \
+		src/builtin/export_utils.c \
+		src/builtin/echo.c \
+		src/builtin/heredoc.c \
+		src/builtin/unset.c \
+		src/builtin/export_sort.c \
+		src/signals/signals.c \
+		src/traverse.c \
+		src/minishell.c \
+		src/minishell_utils.c \
+		src/minishell_utils_2.c \
 
 LIBFT_DIR = ./libft
 FT_ALLOC = ./destructor/ft_alloc.a
