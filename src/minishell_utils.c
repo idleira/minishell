@@ -38,6 +38,7 @@ void	process_and_execute(t_shell *minishell)
 	minishell->parser = (t_parser *)ft_malloc(sizeof(t_parser));
 	minishell->scanner->command = input_get(minishell->prompt);
 	minishell->lexer = NULL;
+	minishell->parser = NULL;
 	if (ft_check(minishell->scanner, minishell->prompt, minishell->error) == 1)
 		minishell_exit(1, false);
 	if (ft_check(minishell->scanner, minishell->prompt, minishell->error) != 2)
