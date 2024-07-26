@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:26:25 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/24 14:25:20 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/26 20:32:03 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	print_export(void)
 		else
 			printf("declare -x %s=\"%s\"\n", get_var_name(temp_export[i]),
 				get_var_value(temp_name));
-		free (temp_name);
+		ft_free (temp_name);
 		i++;
 	}
 	ft_free_split(temp_export);
