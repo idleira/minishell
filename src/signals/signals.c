@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:52:34 by ibeliaie          #+#    #+#             */
-/*   Updated: 2024/07/27 14:19:23 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:47:00 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ void	signal_handler(int signum)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		env->exit_status = 130;
+		g_env->exit_status = 130;
 	}
 }

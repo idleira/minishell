@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:53:19 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/17 15:56:30 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:48:30 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 void	error_fork(void)
 {
 	perror("fork");
-	env->exit_status = 1;
+	g_env->exit_status = 1;
 	exit(EXIT_FAILURE);
 }

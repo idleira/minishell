@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/24 12:45:10 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:50:44 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	chose_execution(t_parser *head)
 {
 	if (!check_exit(head))
-		return (minishell_exit(env->exit_status, false));
+		return (minishell_exit(g_env->exit_status, false));
 	if (head && head->next)
 		execute_pipeline(head);
 	else if (head)
@@ -31,9 +31,9 @@ char	*get_path(char *cmd)
 	if (access(cmd, X_OK) == 0)
 		return (cmd);
 	i = 0;
-	while (env->paths[i])
+	while (g_env->paths[i])
 	{
-		temp_path = my_strjoin(env->paths[i], "/");
+		temp_path = my_strjoin(g_env->paths[i], "/");
 		cmd_path = my_strjoin(temp_path, cmd);
 		ft_free(temp_path);
 		if (access(cmd_path, X_OK) == 0)

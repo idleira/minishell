@@ -12,7 +12,7 @@
 
 #include "../inc/minishell.h"
 
-t_env	*env;
+t_env	*g_env;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **envp)
 	minishell = (t_shell *)ft_malloc(sizeof(t_shell));
 	ft_alloc_init();
 	signal_handlers_setup();
-	env = (t_env *)ft_malloc(sizeof(t_env));
+	g_env = (t_env *)ft_malloc(sizeof(t_env));
 	copy_environment(envp);
 	minishell->prompt = (t_prompt *)ft_malloc(sizeof(t_prompt));
 	minishell->prompt->line = NULL;
@@ -32,6 +32,6 @@ int	main(int argc, char **argv, char **envp)
 		process_and_execute(minishell);
 	ft_free(minishell->prompt);
 	ft_destructor();
-	//ft_free_split(env->all_vars);
+	//ft_free_split(g_env->all_vars);
 	return (0);
 }

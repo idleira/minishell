@@ -19,12 +19,12 @@ char	*get_var_value(char *var_name)
 
 	i = 0;
 	var_name_len = ft_strlen(var_name);
-	while (env->all_vars[i] != NULL)
+	while (g_env->all_vars[i] != NULL)
 	{
-		if ((ft_strncmp(env->all_vars[i], var_name, var_name_len) == 0)
-			&& env->all_vars[i][var_name_len] == '=')
+		if ((ft_strncmp(g_env->all_vars[i], var_name, var_name_len) == 0)
+			&& g_env->all_vars[i][var_name_len] == '=')
 		{
-			return (env->all_vars[i] + var_name_len + 1);
+			return (g_env->all_vars[i] + var_name_len + 1);
 		}
 		i++;
 	}
@@ -53,7 +53,7 @@ void	add_to_env(char *new_val)
 	char	*new_var;
 
 	len = 0;
-	while (env->all_vars[len] != NULL)
+	while (g_env->all_vars[len] != NULL)
 		len++;
 	if (ft_strchr(new_val, '=') == NULL)
 	{
@@ -81,13 +81,13 @@ void	reallocate_env(int len, char *new_var)
 		return (ft_free(new_var));
 	while (i < len)
 	{
-		new_env_vars[i] = env->all_vars[i];
+		new_env_vars[i] = g_env->all_vars[i];
 		i++;
 	}
 	new_env_vars[len] = new_var;
 	new_env_vars[len + 1] = NULL;
-	ft_free(env->all_vars);
-	env->all_vars = new_env_vars;
+	ft_free(g_env->all_vars);
+	g_env->all_vars = new_env_vars;
 }
 
 char	**copy_env_to_export(char **temp_export)
@@ -95,15 +95,15 @@ char	**copy_env_to_export(char **temp_export)
 	int	len;
 
 	len = 0;
-	while (env->all_vars[len] != NULL)
+	while (g_env->all_vars[len] != NULL)
 		len++;
 	temp_export = ft_malloc((len + 1) * sizeof(char *));
 	if (!temp_export)
 		minishell_exit(1, false);
 	len = 0;
-	while (env->all_vars[len] != NULL)
+	while (g_env->all_vars[len] != NULL)
 	{
-		temp_export[len] = ft_strdup(env->all_vars[len]);
+		temp_export[len] = ft_strdup(g_env->all_vars[len]);
 		len++;
 	}
 	temp_export[len] = NULL;

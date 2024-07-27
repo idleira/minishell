@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/26 21:41:44 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:47:14 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	print_echo(t_parser *cmd, int i)
     while (cmd->args[i])
     {
         if (strcmp(cmd->args[i], "$?") == 0)
-            printf("%d", env->exit_status);
+            printf("%d", g_env->exit_status);
         else
         {
             printf("%s", cmd->args[i]);

@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:27:54 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/24 17:52:54 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:50:55 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_builtins(t_parser *cmd)
 		if (cmd->file)
 			return (0);
 		else
-			return (printf("%s\n", env->pwd));
+			return (printf("%s\n", g_env->pwd));
 	}
 	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "export", 6) == 0)
 		return (check_export(cmd));
@@ -41,12 +41,12 @@ void	change_directory(t_parser *cmd)
 {
 	if (!cmd->args[1] || (cmd->args[1][0] == '~' && !cmd->args[1][1]))
 	{
-		env->old_pwd = env->pwd;
-		change_variable("OLDPWD=", env->old_pwd);
-		if (chdir(env->home) == 0)
+		g_env->old_pwd = g_env->pwd;
+		change_variable("OLDPWD=", g_env->old_pwd);
+		if (chdir(g_env->home) == 0)
 		{
-			env->pwd = ft_strdup(env->home);
-			change_variable("PWD=", env->pwd);
+			g_env->pwd = ft_strdup(g_env->home);
+			change_variable("PWD=", g_env->pwd);
 		}
 		else
 			perror("chdir");
@@ -67,10 +67,10 @@ void	construct_cd_path(t_parser *cmd)
 	{
 		if (getcwd(buffer, sizeof(buffer)) != NULL)
 		{
-			env->old_pwd = env->pwd;
-			env->pwd = ft_strdup(buffer);
-			change_variable("PWD=", env->pwd);
-			change_variable("OLDPWD=", env->old_pwd);
+			g_env->old_pwd = g_env->pwd;
+			g_env->pwd = ft_strdup(buffer);
+			change_variable("PWD=", g_env->pwd);
+			change_variable("OLDPWD=", g_env->old_pwd);
 		}
 		else
 			perror("getcwd");
@@ -83,13 +83,13 @@ void	handle_slash_return(void)
 {
 	char	*temp;
 
-	printf("%s\n", env->old_pwd);
-	if (chdir(env->old_pwd) == 0)
+	printf("%s\n", g_env->old_pwd);
+	if (chdir(g_env->old_pwd) == 0)
 	{
-		temp = env->pwd;
-		env->pwd = env->old_pwd;
-		change_variable("PWD=", env->old_pwd);
-		env->old_pwd = temp;
+		temp = g_env->pwd;
+		g_env->pwd = g_env->old_pwd;
+		change_variable("PWD=", g_env->old_pwd);
+		g_env->old_pwd = temp;
 		change_variable("OLDPWD=", temp);
 	}
 	else

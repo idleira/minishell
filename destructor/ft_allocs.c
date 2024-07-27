@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 17:30:23 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/24 17:33:26 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:31:12 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,12 @@ void	*ft_realloc(void *ptr, size_t size)
 		ft_free(ptr);
 		return (NULL);
 	}
-
 	allocs = ft_allocs(NULL);
 	if (allocs == NULL)
 		return (realloc(ptr, size));
-
 	new_ptr = ft_malloc(size);
 	if (new_ptr == NULL)
 		return (NULL);
-
 	my_memcpy(new_ptr, ptr, size);
 	ft_free(ptr);
 	return (new_ptr);

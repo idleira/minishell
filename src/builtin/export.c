@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:26:25 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/26 20:32:03 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:42:45 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	print_export(void)
 	i = 0;
 	size = 0;
 	temp_export = NULL;
-	while (env->all_vars[size])
+	while (g_env->all_vars[size])
 		size++;
 	temp_export = copy_env_to_export(temp_export);
 	sort_env_vars(temp_export, size);
@@ -96,9 +96,9 @@ int	exists_in_env(char *var)
 
 	i = 0;
 	new_var_name = get_var_name(var);
-	while (env->all_vars[i] != NULL)
+	while (g_env->all_vars[i] != NULL)
 	{
-		var_name = get_var_name(env->all_vars[i]);
+		var_name = get_var_name(g_env->all_vars[i]);
 		if ((ft_strncmp(var_name, new_var_name, ft_strlen(var_name)) == 0)
 			&& (ft_strlen(var_name) == ft_strlen(new_var_name)))
 		{
@@ -119,15 +119,15 @@ void	update_env(char *var)
 
 	var_name = get_var_name(var);
 	i = 0;
-	while (env->all_vars[i] != NULL)
+	while (g_env->all_vars[i] != NULL)
 	{
-		current_name = get_var_name(env->all_vars[i]);
+		current_name = get_var_name(g_env->all_vars[i]);
 		if (ft_strncmp(current_name, var_name, ft_strlen(current_name)) == 0)
 		{
 			if (ft_strchr(var, '=') != NULL)
 			{
-				ft_free(env->all_vars[i]);
-				env->all_vars[i] = ft_strdup(var);
+				ft_free(g_env->all_vars[i]);
+				g_env->all_vars[i] = ft_strdup(var);
 			}
 			break ;
 		}

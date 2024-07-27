@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef MINISHELL_H
+#ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include "../libft/libft.h"
@@ -60,11 +60,11 @@ typedef struct s_error
 // struct for the scanner
 typedef struct s_scanner
 {
-	char	*command;		// raw input from user (echo Hello, World! >> output.txt)
-	char	*line;			// processed version, where tokens have been identified and separated (echo\nHello,\nWorld!\n>>\noutput.txt\n)
-	char	**tokens;		// array of strings, where each string is a token (echo, Hello,, World!, >>, output.txt)
-	int		i;				// index of the current character in the command
-	int		j;				// index of the current character in the line
+	char	*command;
+	char	*line;
+	char	**tokens;
+	int		i;				
+	int		j;				
 }	t_scanner;
 
 // token types
@@ -82,8 +82,8 @@ typedef enum e_types
 typedef struct s_parser
 {
 	int				fd;
-	char			**args;		// in parse_cmd_list, words that are not redirections or pipes are stored here (so technically not just arg, but cmds for now as well)
-	t_list			*file;		// the files assosiated with the command (redirections for now)
+	char			**args;
+	t_list			*file;
 	struct s_parser	*next;
 	struct s_parser	*prev;		
 }	t_parser;
@@ -111,12 +111,13 @@ typedef struct s_env
 	char	*pwd;
 	char	*old_pwd;
 	char	*home;
+	char	*user;
 	char	**paths;
 	char	**all_vars;
 	int		exit_status;
 }	t_env;
 
-extern t_env		*env;
+extern t_env		*g_env;
 
 // prompt functions
 void	prompt_build(t_prompt *prompt);
@@ -155,7 +156,8 @@ void	node_ft_free(t_dlist *head);
 // error functions
 void	ft_error(t_shell *minishell);
 int		pipe_start_end(t_shell *minishell);
-int		syntax_check(t_dlist *temp, int op_count, bool expecting_word, t_errors *error);
+int		syntax_check(t_dlist *temp, int op_count,
+			bool expecting_word, t_errors *error);
 void	error_display(t_errors *error);
 
 // minishell functions
@@ -171,12 +173,12 @@ void	parse_cmd_list(t_parser **parser, t_dlist *head);
 void	remove_quotes(t_dlist **lexer);
 char	*process_node(t_dlist *node, char *new_value);
 t_list	*handle_file_redirection(t_dlist **head);
-void	process_word_tokens(t_dlist **head, t_parser *node,  char **args);
+void	process_word_tokens(t_dlist **head, t_parser *node, char **args);
 
 // doubly linked list functions for parser
 t_parser	*node_create_pars(void);
 t_parser	*node_last_pars(t_parser *head);
-void	node_append_pars(t_parser **head, t_parser *new);
+void		node_append_pars(t_parser **head, t_parser *new);
 
 // traverse functions
 // void	traverse_lexer(const t_dlist *head);
@@ -204,7 +206,6 @@ void	ft_free_parser(t_parser *head);
 void	ft_free_split(char **split);
 char	*my_strjoin(char const *s1, char const *s2);
 void	check_builtin_and_red(t_parser *cmd);
-
 
 //Environment
 void	copy_environment(char **envp);
