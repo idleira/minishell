@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 13:41:39 by ibeliaie          #+#    #+#             */
-/*   Updated: 2024/07/27 17:57:51 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:09:47 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ char	*expand_var(char *token)
 		else
 		{
 			i++;
-			printf("start_var: %i\n", i);
 			start_var = i;
 			if (token[i] == '?')
 				i++;
