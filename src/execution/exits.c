@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 20:09:19 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/27 15:48:19 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:54:27 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,11 @@ int	check_exit(t_parser *cmd)
 	return (1);
 }
 
-
 void	free_in_exit(void)
 {
 	int	exit;
 
 	exit = g_env->exit_status;
-		// ft_free(prompt); these will be added when we create a global struct
-	// free(scanner->command); these will be added when we create a global struct
-	//ft_free_env(); delete this function
 	ft_destructor();
 	_exit(exit);
 }

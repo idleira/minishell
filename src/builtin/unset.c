@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 12:07:37 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/27 15:42:45 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:53:39 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	unset_var(t_parser *cmd)
 	}
 	return (1);
 }
-
 
 char	**copy_new_export(char **all_vars, int exclude_index, int len)
 {

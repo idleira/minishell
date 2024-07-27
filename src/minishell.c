@@ -32,6 +32,5 @@ int	main(int argc, char **argv, char **envp)
 		process_and_execute(minishell);
 	ft_free(minishell->prompt);
 	ft_destructor();
-	//ft_free_split(g_env->all_vars);
 	return (0);
 }
