@@ -93,11 +93,11 @@ void	remove_quotes(t_dlist **lexer)
 	node = *lexer;
 	while (node)
 	{
-		new_value = malloc(ft_strlen((*lexer)->value) + 1);
+		new_value = ft_malloc(ft_strlen((*lexer)->value) + 1);
 		if (!new_value)
 			return ;
 		new_value = process_node(node, new_value);
-		free(node->value);
+		ft_free(node->value);
 		node->value = new_value;
 		node = node->next;
 	}
