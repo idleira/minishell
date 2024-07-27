@@ -32,6 +32,20 @@ t_list	*handle_file_redirection(t_dlist **lexer)
 	return (file);
 }
 
+static void	vibe_check(char **args, t_dlist **lexer)
+{
+	if ((*lexer)->type == __HEREDOC)
+	{
+		*args = ft_strjoin(*args, "<< ");
+		*args = ft_strjoin(*args, ft_strdup("\n"));
+	}
+	else
+	{
+		if (!(*lexer)->prev)
+			*args = ft_strjoin(*args, "help\n");
+	}
+}
+
 // processes the word tokens in the lexer list and creates a parser node
 void	process_word_tokens(t_dlist **lexer, t_parser *node, char **args)
 {
@@ -49,6 +63,7 @@ void	process_word_tokens(t_dlist **lexer, t_parser *node, char **args)
 		else if (((*lexer)->type == __RED_APP || (*lexer)->type == __RED_IN
 				|| (*lexer)->type == __HEREDOC || (*lexer)->type == __RED_OUT))
 		{
+			vibe_check(args, lexer);
 			file = handle_file_redirection(lexer);
 			ft_lstadd_back(&node->file, file);
 		}
