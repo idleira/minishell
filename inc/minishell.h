@@ -206,7 +206,6 @@ void		ft_free_parser(t_parser *head);
 void		ft_free_split(char **split);
 char		*my_strjoin(char const *s1, char const *s2);
 void		check_builtin_and_red(t_parser *cmd);
-void		print_error(t_parser *cmd, char *cmd_w_path);
 
 //Environment
 void		copy_environment(char **envp);
@@ -254,7 +253,7 @@ char		*my_strnstr(const char *haystack, const char *needle, size_t len);
 int			check_echo(t_parser *cmd);
 void		print_echo(t_parser *cmd, int i);
 int			not_only_n(char *str);
-
+void		print_stupid_errors(char *cmd_w_path, t_parser *cmd);
 //unset
 int			unset_var(t_parser *cmd);
 int			find_var_index(char *var, char **all_vars);

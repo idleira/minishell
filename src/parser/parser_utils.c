@@ -34,7 +34,7 @@ t_list	*handle_file_redirection(t_dlist **lexer)
 
 static void	vibe_check(char **args, t_dlist **lexer)
 {
-	if ((*lexer)->type == __HEREDOC)
+	if ((*lexer)->type == __HEREDOC && !(*lexer)->prev)
 	{
 		*args = ft_strjoin(*args, "<< ");
 		*args = ft_strjoin(*args, ft_strdup("\n"));

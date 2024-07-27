@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/27 21:22:39 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/27 21:45:24 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,14 @@ int	not_only_n(char *str)
 	return (0);
 }
 
-void	print_error(t_parser *cmd, char *cmd_w_path)
+void	print_stupid_errors(char *cmd_w_path, t_parser *cmd)
 {
-	printf("command not found: %s\n", cmd_w_path);
-	_exit(127);
+	if ((!cmd_w_path || (execve(cmd_w_path, cmd->args, g_env->all_vars) == -1)))
+	{
+		if (cmd->file == NULL || cmd->file->type != HEREDOC)
+		{
+			printf("command not found: %s\n", cmd_w_path);
+			_exit(127);
+		}
+	}
 }
