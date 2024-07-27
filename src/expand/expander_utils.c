@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 13:41:39 by ibeliaie          #+#    #+#             */
-/*   Updated: 2024/07/27 14:30:09 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:44:15 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ static char	*expand_var_name(char *token, int start_var, int end_var)
 	var_name = ft_substr(token, start_var, end_var - start_var);
 	if (!var_name)
 		return (NULL);
-	var_value = get_var_value(var_name);
+	if (var_name[0] == '?')
+		var_value = ft_itoa(g_env->exit_status);
+	else
+		var_value = get_var_value(var_name);
 	ft_free(var_name);
 	if (!var_value)
 		return (expand_no_value(token, start_var, end_var));
@@ -73,14 +76,14 @@ char	*expand_var(char *token)
 		else
 		{
 			i++;
-			if (token[i] == '?')
-			{
-				i++;
-				continue ;
-			}
 			start_var = i;
-			while ((ft_isalnum(token[i]) || token[i] == '_') && token[i])
+			if (token[i] == '?')
 				i++;
+			else
+			{
+				while ((ft_isalnum(token[i]) || token[i] == '_') && token[i])
+					i++;
+			}
 			token = expand_var_name(token, start_var, i);
 			i = start_var - 1;
 		}

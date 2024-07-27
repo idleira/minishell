@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/27 15:47:14 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:23:08 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
 
 int	check_echo(t_parser *cmd)
 {
@@ -36,11 +37,7 @@ int	check_echo(t_parser *cmd)
 			printf("\n");
 		return (1);
 	}
-	else
-	{
-		printf("%s: command not found\n", cmd->args[0]);
-		return (0);
-	}
+	return (0);
 }
 
 void	print_echo(t_parser *cmd, int i)
