@@ -183,7 +183,7 @@ void		node_append_pars(t_parser **head, t_parser *new);
 // traverse functions
 // void		traverse_lexer(const t_dlist *head);
 // void		traverse_scanner(char **scanner);
-// void		traverse_parser(const t_parser *head);
+void		traverse_parser(const t_parser *head);
 
 //EXECUTION:
 //Executor:

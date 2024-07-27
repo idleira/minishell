@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 15:46:44 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/24 12:38:58 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/27 20:59:42 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	get_lines(t_parser *cmd, char *end)
 	{
 		line = readline("> ");
 		len = ft_strlen(line);
-		if ((ft_strncmp(line, end, len) == 0) || !line)
+		if ((ft_strcmp(line, end) == 0) || !line)
 		{
 			free(line);
 			break ;
