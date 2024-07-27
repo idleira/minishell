@@ -27,6 +27,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <limits.h>
+# include <linux/limits.h>
 # include <dirent.h>
 # include <sys/types.h>
 # include <sys/wait.h>
