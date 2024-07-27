@@ -6,7 +6,7 @@
 /*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 13:41:39 by ibeliaie          #+#    #+#             */
-/*   Updated: 2024/07/27 16:44:15 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:57:51 by ibeliaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ static char	*expand_no_value(char *token, int start_var, int end_var)
 	new_token = (char *)ft_malloc(sizeof(char) * (token_len + 1));
 	if (!new_token)
 		return (NULL);
-	ft_strlcpy(new_token, token, start_var - 1);
-	ft_strlcat(new_token, token + end_var, token_len + 1);
+	ft_bzero(new_token, token_len + 1);
+	ft_strlcpy(new_token, token, start_var);
+	if (token_len > 0)
+		ft_strlcat(new_token, token + end_var, token_len + 1);
 	ft_free(token);
 	return (new_token);
 }
@@ -76,6 +78,7 @@ char	*expand_var(char *token)
 		else
 		{
 			i++;
+			printf("start_var: %i\n", i);
 			start_var = i;
 			if (token[i] == '?')
 				i++;
