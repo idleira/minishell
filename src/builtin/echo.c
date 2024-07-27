@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/27 16:23:08 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:10:12 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
 
 int	check_echo(t_parser *cmd)
 {
@@ -22,8 +21,8 @@ int	check_echo(t_parser *cmd)
 	i = 1;
 	if (cmd->file)
 		return (0);
-	if (cmd->args[0] && (ft_strncmp(cmd->args[0], "echo", 5) == 0 ||
-			ft_strncmp(cmd->args[0], "echo ", 6) == 0))
+	if (cmd->args[0] && (ft_strncmp(cmd->args[0], "echo", 5) == 0
+			|| ft_strncmp(cmd->args[0], "echo ", 6) == 0))
 	{
 		while (cmd->args[i] && ft_strncmp(cmd->args[i], "-n", 2) == 0)
 		{
@@ -42,18 +41,18 @@ int	check_echo(t_parser *cmd)
 
 void	print_echo(t_parser *cmd, int i)
 {
-    while (cmd->args[i])
-    {
-        if (strcmp(cmd->args[i], "$?") == 0)
-            printf("%d", g_env->exit_status);
-        else
-        {
-            printf("%s", cmd->args[i]);
-        }
-        if (cmd->args[i + 1])
-            printf(" ");
-        i++;
-    }
+	while (cmd->args[i])
+	{
+		if (ft_strcmp(cmd->args[i], "$?") == 0)
+			printf("%d", g_env->exit_status);
+		else
+		{
+			printf("%s", cmd->args[i]);
+		}
+		if (cmd->args[i + 1])
+			printf(" ");
+		i++;
+	}
 }
 
 int	not_only_n(char *str)

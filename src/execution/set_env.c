@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:09:03 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/27 15:43:56 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:58:32 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	copy_environment(char **envp)
 	g_env->home = getenv("HOME");
 	g_env->user = getenv("USER");
 	g_env->paths = ft_split(getenv("PATH"), ':');
+	g_env->exit_status = 0;
 	envp_count = 0;
 	while (envp[envp_count] != NULL)
 		envp_count++;

@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:26:25 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/27 15:42:45 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:50:10 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	check_export(t_parser *cmd)
 		}
 		else
 		{
-			perror(cmd->args[i]);
+			printf("export: '%s': not a valid identifier\n", cmd->args[i]);
 			return (0);
 		}
 		i++;

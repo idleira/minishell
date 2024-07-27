@@ -7,3 +7,4 @@ libft/*.o
 libft/libft.a
 destructor/*.o
 settings.json
+ft_alloc.a
