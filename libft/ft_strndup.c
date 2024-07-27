@@ -18,7 +18,7 @@ char	*ft_strndup(const char *s, int n)
 	char	*dup;
 
 	i = 0;
-	dup = malloc(n + 1);
+	dup = ft_malloc(n + 1);
 	if (!dup)
 		return (NULL);
 	while (i < n)

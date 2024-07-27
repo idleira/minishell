@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 13:41:39 by ibeliaie          #+#    #+#             */
-/*   Updated: 2024/07/26 20:17:04 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/07/27 14:30:09 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static char	*expand_no_value(char *token, int start_var, int end_var)
 	char	*new_token;
 
 	token_len = ft_strlen(token) - (end_var - start_var + 1);
-	new_token = (char *)malloc(sizeof(char) * (token_len + 1));
+	new_token = (char *)ft_malloc(sizeof(char) * (token_len + 1));
 	if (!new_token)
 		return (NULL);
 	ft_strlcpy(new_token, token, start_var - 1);
 	ft_strlcat(new_token, token + end_var, token_len + 1);
-	free(token);
+	ft_free(token);
 	return (new_token);
 }
 
@@ -34,13 +34,13 @@ static char	*expand_with_value(char	*var_value, char *token,
 	char	*new_token;
 
 	token_len = ft_strlen(token) - (end_var - start_var) + ft_strlen(var_value);
-	new_token = (char *)malloc(sizeof(char) * (token_len + 1));
+	new_token = (char *)ft_malloc(sizeof(char) * (token_len + 1));
 	if (!new_token)
 		return (NULL);
 	ft_strlcpy(new_token, token, start_var);
 	ft_strlcat(new_token, var_value, token_len + 1);
 	ft_strlcat(new_token, token + end_var, token_len + 1);
-	free(token);
+	ft_free(token);
 	return (new_token);
 }
 
@@ -53,7 +53,7 @@ static char	*expand_var_name(char *token, int start_var, int end_var)
 	if (!var_name)
 		return (NULL);
 	var_value = get_var_value(var_name);
-	free(var_name);
+	ft_free(var_name);
 	if (!var_value)
 		return (expand_no_value(token, start_var, end_var));
 	else

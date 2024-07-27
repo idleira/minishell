@@ -67,11 +67,27 @@ void	add_to_env(char *new_val)
 		if (new_var == NULL)
 			return ;
 	}
-	env->all_vars = ft_realloc(env->all_vars, sizeof(char *) * (len + 2));
-	if (env->all_vars == NULL)
+	reallocate_env(len, new_var);
+}
+
+void	reallocate_env(int len, char *new_var)
+{
+	char	**new_env_vars;
+	int		i;
+
+	i = 0;
+	new_env_vars = (char **)ft_malloc(sizeof(char *) * (len + 2));
+	if (new_env_vars == NULL)
 		return (ft_free(new_var));
-	env->all_vars[len] = new_var;
-	env->all_vars[len + 1] = NULL;
+	while (i < len)
+	{
+		new_env_vars[i] = env->all_vars[i];
+		i++;
+	}
+	new_env_vars[len] = new_var;
+	new_env_vars[len + 1] = NULL;
+	ft_free(env->all_vars);
+	env->all_vars = new_env_vars;
 }
 
 char	**copy_env_to_export(char **temp_export)

@@ -14,7 +14,9 @@ bash: syntax error: unexpected token `|'
 TODO:
 >>>>>>>>>>>>>>>>>>>MARIANNA
 
-
+export var+13
+change the error message:
+export: not valid in this context: var+13
 **************************thigs left ****************************
 2. Test for more memory leaks
 3. Norminette everything
@@ -27,3 +29,8 @@ THINGS TO DO IF WE ARE STILL ALIVE
 
 1.env?????????
 2.SHLVL???
+
+*****************************************************************
+Leaks:
+
+export var leaks

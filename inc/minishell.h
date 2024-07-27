@@ -238,6 +238,7 @@ void	update_env(char *var);
 char	*get_var_value(char *var_name);
 char	*get_var_name(char *var);
 void	add_to_env(char *new_val);
+void	reallocate_env(int len, char *new_var);
 char	**copy_env_to_export(char **temp_export);
 
 //export sort
