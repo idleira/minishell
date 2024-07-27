@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:42:38 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/07/27 17:46:03 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/07/27 21:22:39 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,10 @@ int	not_only_n(char *str)
 		i++;
 	}
 	return (0);
+}
+
+void	print_error(t_parser *cmd, char *cmd_w_path)
+{
+	printf("command not found: %s\n", cmd_w_path);
+	_exit(127);
 }

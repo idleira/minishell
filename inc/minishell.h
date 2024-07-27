@@ -206,6 +206,7 @@ void		ft_free_parser(t_parser *head);
 void		ft_free_split(char **split);
 char		*my_strjoin(char const *s1, char const *s2);
 void		check_builtin_and_red(t_parser *cmd);
+void		print_error(t_parser *cmd, char *cmd_w_path);
 
 //Environment
 void		copy_environment(char **envp);

@@ -6,7 +6,7 @@
 /*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:48:35 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/27 20:58:28 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/07/27 21:22:32 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,9 @@ void	check_builtin_and_red(t_parser *cmd)
 			handle_redirection(cmd);
 			cmd_w_path = get_path(cmd->args[0]);
 			if (!cmd_w_path
-				|| ((execve(cmd_w_path, cmd->args, g_env->all_vars) == -1) && (cmd->file->type != HEREDOC)))
-			{
-				printf("command not found: %s\n", cmd_w_path);
-				_exit(127);
-			}
+				|| ((execve(cmd_w_path, cmd->args, g_env->all_vars) == -1)
+					&& (cmd->file->type != HEREDOC)))
+				print_error(cmd, cmd_w_path);
 			_exit(0);
 		}
 		else
