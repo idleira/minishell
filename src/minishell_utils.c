@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pointers_free.c                                    :+:      :+:    :+:   */
+/*   pointers_ft_free.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,74 +12,44 @@
 
 #include "../inc/minishell.h"
 
-// checks if the string is only spaces and tabs
-int	check_spaces(char *s)
+//handles parsing errors in the command
+int	input_process(t_shell *minishell)
 {
-	while (*s && (*s == '\t' || *s == ' '))
-		++s;
-	if (*s)
-		return (0);
-	return (1);
-}
-
-// frees all pointers
-void	ptrs_free(t_prompt *prompt, t_scanner *scanner,
-	t_errors *error)
-{
-	free(prompt->line);
-	free(prompt);
-	free(scanner->command);
-	scanner_free(scanner->tokens);
-	free(scanner);
-	free(error);
-}
-
-// checks if the command is empty
-int	ft_check(t_scanner *scanner, t_prompt *prompt, t_errors *error)
-{
-	// (void)error;
-	if (!scanner->command)
+	ft_scanner(minishell);
+	ft_lexer(minishell);
+	ft_error(minishell);
+	if (minishell->error->error_type != no_error)
 	{
-		free(prompt);
-		free(scanner);
+		error_display(minishell->error);
+		node_ft_free(minishell->lexer);
+		add_history(minishell->scanner->command);
 		return (1);
 	}
-	if (check_spaces(scanner->command))
-	{
-		free(prompt->line);
-		free(prompt);
-		free(scanner->command);
-		free(scanner);
-		free(error);
-		return (2);
-	}
+	else
+		parse_cmd_list(&minishell->parser, minishell->lexer);
+	add_history(minishell->scanner->command);
 	return (0);
 }
 
-//handles parsing errors in the command
-t_parser	*input_process(t_scanner *scanner, t_dlist *head, t_errors *error,
-	t_prompt *prompt)
+void	process_and_execute(t_shell *minishell)
 {
-	t_parser	*parser;
-
-	parser = NULL;
-	(void)prompt;
-	ft_scanner(scanner);						// scan user's input command and store it in scanner->tokens
-	ft_lexer(&head, scanner);					// convert the scanned input into a doubly linked list of tokens
-	ft_error(head, error);						// check for errors in the tokenized input
-	if (error->error_type != no_error)
+	minishell->scanner = (t_scanner *)ft_malloc(sizeof(t_scanner));
+	minishell->error = (t_errors *)ft_malloc(sizeof(t_errors));
+	minishell->parser = (t_parser *)ft_malloc(sizeof(t_parser));
+	minishell->scanner->command = input_get(minishell->prompt);
+	minishell->lexer = NULL;
+	minishell->parser = NULL;
+	if (ft_check(minishell->scanner, minishell->prompt, minishell->error) == 1)
+		minishell_exit(1, false);
+	if (ft_check(minishell->scanner, minishell->prompt, minishell->error) != 2)
 	{
-		error_display(error);
-		node_free(head, 0);
+		if (input_process(minishell) == 0 && minishell->parser->args[0])
+		{
+			free(minishell->scanner->command);
+			chose_execution(minishell->parser);
+		}
+		ft_free_parser(minishell->parser);
 	}
-	else										// if no errors, parse the command										
-	{
-		quotes_remove(head);					// remove quotes from the tokens
-		parse_cmd_list(&parser, head);			// parse the tokens and create a parser node for each cmd separated by a pipe
-		traverse_parser(parser);				// prints out arguments and files associated with each parser node
-		// node_free(head, 1);
-	}
-	add_history(scanner->command);				// add the command to the history
-	// ptrs_free(prompt, scanner, error);
-	return (parser);
+	ft_free(minishell->scanner);
+	ft_free(minishell->error);
 }

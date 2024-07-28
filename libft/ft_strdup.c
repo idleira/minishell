@@ -21,7 +21,7 @@ char	*ft_strdup(const char *str)
 
 	i = 0;
 	strlen = ft_strlen (str);
-	dup = malloc(sizeof(char) * (strlen + 1));
+	dup = ft_malloc(sizeof(char) * (strlen + 1));
 	if (!dup)
 		return (NULL);
 	while (str[i] != '\0')
@@ -41,7 +41,7 @@ char	*ft_strdup(const char *str)
 //     {
 //         printf("Original string: %s\n", str);
 //         printf("Duplicated string: %s\n", duplicate);
-//         free(duplicate); 
+//         ft_free(duplicate); 
 //     }
 //     return (0);
 // }

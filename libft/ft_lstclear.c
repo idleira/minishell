@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-/* delete and free given node and every successor */
+/* delete and ft_free given node and every successor */
 // void	ft_lstclear(t_list **lst, void (*del)(void *))
 // {
 // 	t_list	*ptr;

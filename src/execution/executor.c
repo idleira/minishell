@@ -3,146 +3,86 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariannazhukova <mariannazhukova@studen    +#+  +:+       +#+        */
+/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:58:13 by mariannazhu       #+#    #+#             */
-/*   Updated: 2024/05/30 16:22:30 by mariannazhu      ###   ########.fr       */
+/*   Updated: 2024/07/27 15:50:44 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	execute_command(t_parser *cmd)
-{
-	pid_t	pid;
-	int		status;
-
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-	else if (pid == 0)
-	{
-		handle_redirection(cmd);
-		if (execvp(cmd->args[0], cmd->args) == -1)
-		{
-			perror("execvp");
-			exit(EXIT_FAILURE);
-		}
-	}
-	else
-		waitpid(pid, &status, 0);
-}
-
-void	handle_redirection(t_parser *cmd)
-{
-	t_list	*file;
-	int		fd;
-
-	file = cmd->file;
-	while (file)
-	{
-		if (file->type == '|')
-			fd = open(file->name, O_RDONLY);
-		else if (file->type == '>')
-			fd = open(file->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else if (file->type == 256)
-			fd = open(file->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		else
-			fd = -1;
-		if (fd < 0)
-		{
-			perror("open file");
-			exit(EXIT_FAILURE);
-		}
-		if (file->type == '<')
-			dup2(fd, STDIN_FILENO);
-		else
-			dup2(fd, STDOUT_FILENO);
-		close(fd);
-		file = file->next;
-	}
-}
-
 void	chose_execution(t_parser *head)
 {
+	if (!check_exit(head))
+		return (minishell_exit(g_env->exit_status, false));
 	if (head && head->next)
 		execute_pipeline(head);
 	else if (head)
 		execute_command(head);
 }
 
-void	execute_pipeline(t_parser *head)
+char	*get_path(char *cmd)
 {
-	int		pipefd[2];
-	int		prev_fd;
-	pid_t	pid;
-	t_parser	*current;
+	char	*temp_path;
+	char	*cmd_path;
+	int		i;
 
-	prev_fd = -1;
-	current = head;
-	while (current)
+	if (access(cmd, X_OK) == 0)
+		return (cmd);
+	i = 0;
+	while (g_env->paths[i])
 	{
-		if (current->next)
+		temp_path = my_strjoin(g_env->paths[i], "/");
+		cmd_path = my_strjoin(temp_path, cmd);
+		ft_free(temp_path);
+		if (access(cmd_path, X_OK) == 0)
+			return (cmd_path);
+		ft_free(cmd_path);
+		i++;
+	}
+	return (cmd);
+}
+
+void	execute_command(t_parser *cmd)
+{
+	check_builtin_and_red(cmd);
+}
+
+void	handle_redirection(t_parser *cmd)
+{
+	t_list	*file;
+
+	file = cmd->file;
+	while (file)
+	{
+		open_fd(file, cmd);
+		if (cmd->fd < 0)
 		{
-			if (pipe(pipefd) == -1)
-			{
-				perror("pipe");
-				exit(EXIT_FAILURE);
-			}
+			perror("open file");
+			minishell_exit(1, true);
 		}
-		pid = fork();
-		if (pid == -1)
-		{
-			perror("fork");
-			exit(EXIT_FAILURE);
-		}
-		else if (pid == 0)
-		{
-			if (prev_fd != -1)
-			{
-				dup2(prev_fd, STDIN_FILENO);
-				close(prev_fd);
-			}
-			if (current->next)
-			{
-				close(pipefd[0]);
-				dup2(pipefd[1], STDOUT_FILENO);
-				close(pipefd[1]);
-			}
-			handle_redirection(current);
-			if (execvp(current->args[0], current->args) == -1)
-			{
-				perror("execvp");
-				exit(EXIT_FAILURE);
-			}
-		}
+		if (file->type == IN || file->type == HEREDOC)
+			dup2(cmd->fd, STDIN_FILENO);
 		else
-		{
-			if (prev_fd != -1)
-				close(prev_fd);
-			if (current->next)
-			{
-				close(pipefd[1]);
-				prev_fd = pipefd[0];
-			}
-			waitpid(pid, NULL, 0);
-		}
-		current = current->next;
+			dup2(cmd->fd, STDOUT_FILENO);
+		close(cmd->fd);
+		if (file->type == HEREDOC)
+			unlink("/tmp/heredoc");
+		file = file->next;
 	}
 }
 
-void free_parser(t_parser *head)
+void	open_fd(t_list *file, t_parser *cmd)
 {
-	t_parser *tmp;
-
-	while (head)
-	{
-		tmp = head;
-		head = head->next;
-		free(tmp->args);
-		free(tmp);
-	}
+	if ((file->type == '|') || (file->type == IN))
+		cmd->fd = open(file->name, O_RDONLY);
+	else if (file->type == HEREDOC)
+		handle_heredoc(cmd, cmd->file->name);
+	else if (file->type == OUT)
+		cmd->fd = open(file->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (file->type == APPEND)
+		cmd->fd = open(file->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else
+		cmd->fd = -1;
 }

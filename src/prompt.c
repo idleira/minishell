@@ -17,26 +17,44 @@ void	prompt_build(t_prompt *prompt)
 {
 	char	*user;
 	char	*cwd;
+	char	*a;
 
 	user = getenv("USER");
 	cwd = getcwd(NULL, PATH_MAX);
-	prompt->line = ft_strjoin(ft_strdup("[\033[0;32m"), ft_strdup(user));
+	a = "\001\033[0m\002\001\033[1;37m\002 | \001\033[0m\002\001\033[0;36m\002";
+	if (cwd == NULL)
+		return ;
+	if (prompt->line != NULL)
+		free(prompt->line);
+	prompt->line = ft_strjoin(ft_strdup("\001\033[0;32m\002"), ft_strdup(user));
 	prompt->line = ft_strjoin(prompt->line,
-			ft_strdup("\033[0m\033[1;37m | \033[0m\033[0;36m "));
+			ft_strdup(a));
 	prompt->line = ft_strjoin(prompt->line,
 			ft_strdup(ft_strrchr(cwd, '/') + 1));
-	prompt->line = ft_strjoin(prompt->line, ft_strdup("\033[0m]$ "));
+	prompt->line = ft_strjoin(prompt->line, ft_strdup("\001\033[0m\002$ "));
 	free(cwd);
 }
 
 // gets the input from the user
 char	*input_get(t_prompt *prompt)
 {
+	char	*input;
+
 	if (getenv("USER"))
 	{
-		prompt_build(prompt);
-		return (readline(prompt->line));
+		if (prompt->rebuild)
+		{
+			prompt_build(prompt);
+			prompt->rebuild = 0;
+		}
+		input = readline(prompt->line);
 	}
 	else
-		return (readline("\033[0;36mminishell\033[0m]$ "));
+		input = readline("\033[0;36mminishell\033[0m]$ ");
+	if (input == NULL)
+	{
+		write(1, "exit\n", 5);
+		exit(EXIT_SUCCESS);
+	}
+	return (input);
 }

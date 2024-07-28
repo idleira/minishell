@@ -16,12 +16,7 @@
 void	tokenizer(t_dlist **head, char *token)
 {
 	if (token[0] == '\'' || token[0] == '\"')
-	{
-		if (token[0] == '\'')
-			node_append_lex(head, node_quotes(token, '\''));
-		else
-			node_append_lex(head, node_quotes(token, '\"'));
-	}
+		node_append_lex(head, node_quotes(token));
 	else if (!strcmp(token, ">") || !strcmp(token, "<")
 		|| !strcmp(token, ">>") || !strcmp(token, "<<"))
 		node_append_lex(head, node_redirection(token));
@@ -31,26 +26,16 @@ void	tokenizer(t_dlist **head, char *token)
 		node_append_lex(head, node_word(token));
 }
 
-// // removes token quotes from lexer
-void	quotes_remove(t_dlist *head)
-{
-	while (head)
-	{
-		if (head->state == __s_quotes)
-			quotes_strip(head, '\'');
-		else if (head->state == __d_quotes)
-			quotes_strip(head, '\"');
-		head = head->next;
-	}
-}
-
 // processes the input string and tokenizes it
-void	ft_lexer(t_dlist **head, t_scanner *scanner)
+void	ft_lexer(t_shell *minishell)
 {
+	t_scanner	*scanner;
+
+	scanner = minishell->scanner;
 	scanner->i = 0;
 	while (scanner->tokens[scanner->i])
 	{
-		tokenizer(head, scanner->tokens[scanner->i]);
+		tokenizer(&minishell->lexer, scanner->tokens[scanner->i]);
 		++scanner->i;
 	}
 }

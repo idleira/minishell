@@ -17,7 +17,7 @@ t_parser	*node_create_pars(void)
 {
 	t_parser	*new;
 
-	new = (t_parser *)malloc(sizeof(t_parser));
+	new = (t_parser *)ft_malloc(sizeof(t_parser));
 	if (!new)
 		return (NULL);
 	new->next = NULL;

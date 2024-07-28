@@ -12,44 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-// handles quotes in the command
-void	handle_quotes(t_scanner *scanner)
-{
-	scanner->j = scanner->i++;
-	while (scanner->command[scanner->i] != scanner->t_quote
-		&& scanner->command[scanner->i])
-		scanner->i++;
-	if (scanner->command[scanner->i])
-		scanner->line = ft_strjoin(scanner->line,
-				ft_substr(scanner->command, scanner->j,
-					scanner->i - scanner->j + 1));
-	else
-		scanner->line = ft_strjoin(scanner->line,
-				ft_substr(scanner->command, scanner->j,
-					scanner->i - scanner->j));
-}
-
-// handles operators in the command
-void	handle_operators(t_scanner *scanner)
-{
-	if (!ft_memcmp(scanner->command + scanner->i, ">>", 2)
-		|| !ft_memcmp(scanner->command + scanner->i, "<<", 2))
-	{
-		scanner->line = ft_strjoin(scanner->line, ft_strdup("\n"));
-		scanner->line = ft_strjoin(scanner->line,
-				ft_substr(scanner->command, scanner->i, 2));
-		scanner->line = ft_strjoin(scanner->line, ft_strdup("\n"));
-		scanner->i++;
-	}
-	else
-	{
-		scanner->line = ft_strjoin(scanner->line, ft_strdup("\n"));
-		scanner->line = ft_strjoin(scanner->line,
-				ft_substr(scanner->command, scanner->i, 1));
-		scanner->line = ft_strjoin(scanner->line, ft_strdup("\n"));
-	}
-}
-
 // splits the command into tokens
 void	cmds_split(t_scanner *scanner)
 {
@@ -57,10 +19,7 @@ void	cmds_split(t_scanner *scanner)
 	{
 		if (scanner->command[scanner->i] == '\"'
 			|| scanner->command[scanner->i] == '\'')
-		{
-			scanner->t_quote = scanner->command[scanner->i];
 			handle_quotes(scanner);
-		}
 		else if (ft_strchr("<>|", scanner->command[scanner->i]))
 			handle_operators(scanner);
 		else if (ft_strchr(" \t\n\v\f\r", scanner->command[scanner->i]))
@@ -72,12 +31,44 @@ void	cmds_split(t_scanner *scanner)
 	}
 }
 
-// initializes the scanner struct, splits and tokenizes input commands
-void	ft_scanner(t_scanner *scanner)
+int	quote_check(char *str)
 {
+	int		i;
+	char	quote;
+
+	i = 0;
+	quote = '\0';
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			if (quote == '\0')
+				quote = str[i];
+			else if (quote == str[i])
+				quote = '\0';
+		}
+		i++;
+	}
+	if (quote != '\0')
+		return (1);
+	return (0);
+}
+
+// initializes the scanner struct, splits and tokenizes input commands
+void	ft_scanner(t_shell *minishell)
+{
+	t_scanner	*scanner;
+
+	scanner = minishell->scanner;
+	if (quote_check(scanner->command) == 1)
+	{
+		printf("bash: syntax error: unclosed quotes\n");
+		exit(2);
+	}
 	scanner->i = 0;
 	scanner->line = NULL;
 	cmds_split(scanner);
 	scanner->tokens = ft_split(scanner->line, '\n');
-	free(scanner->line);
+	ft_free(scanner->line);
+	ft_expander(scanner->tokens);
 }

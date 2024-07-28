@@ -54,7 +54,7 @@ static char	*wcopy(const char *s, int len)
 	int		i;
 	char	*word;
 
-	word = (char *)malloc((len + 1) * sizeof(char));
+	word = (char *)ft_malloc((len + 1) * sizeof(char));
 	if (!word)
 		return (NULL);
 	i = 0;
@@ -78,7 +78,7 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	count = wcount(s, c);
-	result = (char **)malloc((count + 1) * sizeof(char *));
+	result = (char **)ft_malloc((count + 1) * sizeof(char *));
 	if (!result)
 		return (NULL);
 	i = 0;

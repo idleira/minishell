@@ -1,8 +1,10 @@
 minishell
 
+.vscode/*.json
 .idea/
 a.out
 libft/*.o
 libft/libft.a
+destructor/*.o
 settings.json
-.vscode
+ft_alloc.a

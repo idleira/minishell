@@ -12,7 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-// assigns the error type to the error struct
 void	assign_error_type(t_dlist *node, t_errors *error)
 {
 	if (node->type == __PIPE)
@@ -25,75 +24,79 @@ void	assign_error_type(t_dlist *node, t_errors *error)
 		error->error_type = error_of_redirection_heredoc;
 	else if (node->type == __RED_APP)
 		error->error_type = error_of_redirection_append;
-	else
-	{
-		if (node->state == __s_quotes)
-			error->error_type = error_of_single_quotes;
-		else
-			error->error_type = error_of_double_quotes;
-	}
 }
 
-// checks if the quotes are closed
-int	error_for_quotes(t_dlist *node)
+int	pipe_start_end(t_shell *minishell)
 {
-	int		i;
-	int		c;
-	char	q;
+	t_dlist	*lexer;
 
-	if (node->state == __s_quotes)
-		q = '\'';
-	else
-		q = '\"';
-	i = 0;
-	c = 0;
-	while (node->value[i])
+	lexer = minishell->lexer;
+	if (lexer->type == __PIPE)
 	{
-		if (node->value[i] == q)
-			c++;
-		++i;
-	}
-	return (c % 2 == 0);
-}
-
-// checks for errors in the lexer list
-int	check_errors(t_dlist *temp, t_errors *error)
-{
-	if ((temp->type != __WORD && temp->next && temp->next->type != __WORD)
-		|| (temp->type != __WORD && !temp->next))
-	{
-		assign_error_type(temp, error);
-		return (1);
-	}
-	else
-	{
-		if (!error_for_quotes(temp))
+		if (lexer->next == NULL || lexer->prev == NULL)
 		{
-			assign_error_type(temp, error);
+			minishell->error->error_type = error_of_pipeline;
 			return (1);
 		}
 	}
 	return (0);
 }
 
-// handles the errors in the lexer list
-void	ft_error(t_dlist	*head, t_errors *error)
+int	syntax_check(t_dlist *lexer, int op_count,
+				bool expecting_word, t_errors *error)
 {
-	t_dlist	*temp;
-
-	temp = head;
-	if (temp->type == __PIPE)
+	if (expecting_word == true
+		&& (lexer->type != __WORD || lexer->next == NULL))
 	{
-		assign_error_type(temp, error);
-		return ;
+		assign_error_type(lexer, error);
+		return (1);
 	}
-	while (temp)
+	if (op_count > 1 && lexer->type == __PIPE)
 	{
-		if (check_errors(temp, error))
-			return ;
-		temp = temp->next;
+		error->error_type = error_of_pipeline;
+		return (1);
+	}
+	if (lexer->prev && lexer->prev->type == __HEREDOC && lexer->type != __WORD)
+	{
+		assign_error_type(lexer, error);
+		return (1);
+	}
+	if (op_count >= 3)
+	{
+		assign_error_type(lexer, error);
+		return (1);
 	}
 	error->error_type = no_error;
+	return (0);
+}
+
+// handles the errors in the lexer list
+void	ft_error(t_shell *minishell)
+{
+	t_dlist	*lexer;
+	int		op_count;
+	bool	expecting_word;
+
+	op_count = 0;
+	expecting_word = false;
+	lexer = minishell->lexer;
+	if (pipe_start_end(minishell) == 1)
+		return ;
+	while (lexer)
+	{
+		if (lexer->type != __WORD)
+			op_count++;
+		else
+			op_count = 0;
+		if (syntax_check(lexer, op_count, expecting_word,
+				minishell->error) == 1)
+			return ;
+		else if (lexer->type != __PIPE && lexer->type != __WORD)
+			expecting_word = true;
+		else if (expecting_word == true || lexer->type == __PIPE)
+			expecting_word = false;
+		lexer = lexer->next;
+	}
 }
 
 // displays the error message
@@ -109,9 +112,5 @@ void	error_display(t_errors *error)
 		printf("bash: syntax error: unexpected token `<'\n");
 	else if (error->error_type == error_of_redirection_out)
 		printf("bash: syntax error: unexpected token `>'\n");
-	else if (error->error_type == error_of_double_quotes)
-		printf("bash: syntax error: unclosed double quotes\n");
-	else if (error->error_type == error_of_single_quotes)
-		printf("bash: syntax error: unclosed single quotes\n");
-	error->exit_staus = 2;
+	error->exit_status = 2;
 }
