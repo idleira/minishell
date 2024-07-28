@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibeliaie <ibeliaie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:03:16 by ibeliaie          #+#    #+#             */
-/*   Updated: 2024/07/26 20:15:26 by ibeliaie         ###   ########.fr       */
+/*   Updated: 2024/07/28 20:58:11 by mzhukova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	is_expansion_needed(char *lexer_token)
 			expand = !expand;
 		if (lexer_token[i] == '\'' && !expand)
 		{
-			while (lexer_token[++i] != '\'')
+			while (lexer_token[++i] != '\'' && lexer_token[i])
 				i++;
 		}
 		if (lexer_token[i] == '$')

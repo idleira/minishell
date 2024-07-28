@@ -43,7 +43,7 @@ void	process_and_execute(t_shell *minishell)
 		minishell_exit(1, false);
 	if (ft_check(minishell->scanner, minishell->prompt, minishell->error) != 2)
 	{
-		if (input_process(minishell) == 0)
+		if (input_process(minishell) == 0 && minishell->parser->args[0])
 		{
 			free(minishell->scanner->command);
 			chose_execution(minishell->parser);
