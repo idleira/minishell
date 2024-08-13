@@ -1,7 +1,7 @@
 # minishell - @42Wolfsburg
 project about creating your own simple (mini)shell, taking bash as reference.
 
-our very first group project, that i got to work on with [marianna](https://github.com/fraumarzhuk) 🎉🤝
+our very first group project, that i got to work on with [marianna](https://github.com/fraumarzhuk) (ง •̀_•́)ง (ง •̀_•́)ง
 
 ## description
 minishell is a re-creation of a basic unix shell, which is a tool that lets users interact with the computer by typing commands. 
@@ -13,6 +13,8 @@ it replicates key features of a full-fledged shell, such as command parsing, exe
 these are some **resources** we used:
 
 • [shell command language](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html)
+
+• [lexical analysis](https://en.wikipedia.org/wiki/Lexical_analysis)
 
 • [playlist with videos about all things minishell](https://www.youtube.com/playlist?list=PLGU1kcPKHMKj5yA0RPb5AK4QAhexmQwrW)
 
@@ -73,6 +75,15 @@ these are some **resources** we used:
   → our minishell doesn’t support command chaining with ;, &&, or ||, but excels in other features.
 
 ##
+
+completing this project was both challenging and demanding, pushing us to the limits of our coding abilities. ᕦ(ò_óˇ)ᕤ
+
+however, it also provided invaluable learning experiences that have given us the confidence to tackle almost any programming challenge.
+
+## a huge thank you
+
+ to [marianna](https://github.com/fraumarzhuk) for collaboration — it was a great experience working together. (´｡• ᵕ •｡`)♡
+
 
 ## our final grade:
 
