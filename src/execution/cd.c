@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhukova <mzhukova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mariannazhukova <mariannazhukova@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:27:54 by mzhukova          #+#    #+#             */
-/*   Updated: 2024/07/27 15:50:55 by mzhukova         ###   ########.fr       */
+/*   Updated: 2024/08/31 00:02:00 by mariannazhu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 
 int	check_builtins(t_parser *cmd)
 {
-	if (cmd->args[0] && ft_strncmp(cmd->args[0], "cd", 2) == 0)
+	if (cmd->args[0] && ft_strcmp(cmd->args[0], "cd") == 0)
 	{
 		change_directory(cmd);
 		return (1);
 	}
-	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "env", 3) == 0)
+	else if (cmd->args[0] && ft_strcmp(cmd->args[0], "env") == 0)
 		return (print_env(cmd));
-	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "pwd", 3) == 0)
+	else if (cmd->args[0] && ft_strcmp(cmd->args[0], "pwd") == 0)
 	{
 		if (cmd->file)
 			return (0);
 		else
 			return (printf("%s\n", g_env->pwd));
 	}
-	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "export", 6) == 0)
+	else if (cmd->args[0] && ft_strcmp(cmd->args[0], "export") == 0)
 		return (check_export(cmd));
-	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "echo", 4) == 0)
+	else if (cmd->args[0] && ft_strcmp(cmd->args[0], "echo") == 0)
 		return (check_echo(cmd));
-	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "unset", 5) == 0)
+	else if (cmd->args[0] && ft_strcmp(cmd->args[0], "unset") == 0)
 		return (unset_var(cmd));
 	return (0);
 }
