@@ -8,3 +8,5 @@ libft/libft.a
 destructor/*.o
 settings.json
 ft_alloc.a
+.dSYM
+.yml
